@@ -5,14 +5,17 @@ import { useStateContext } from "../Contexts/ContextProvider.jsx";
 export default function Register() {
   const [values, setValues] = useState({
     username: "123",
-    email: "123@gmail.com",
-    password: "123",
-    password_confirmation: "123",
+    email: "123123123@gmail.com",
+    password: "123123123",
+    password_confirmation: "123123123",
   });
 
   const { setUser, setToken } = useStateContext();
 
   const handleSubmit = () => {
+      // axiosClient.get("/test").then(({ data }) => {
+      //   console.log(data);
+      // });
     axiosClient
       .post("/register", values)
       .then(({ data }) => {
