@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import {createBrowserRouter} from "react-router-dom";
 import Login from "./Pages/Login.jsx";
 import Register from "./Pages/Register.jsx";
 import Users from "./Pages/Users.jsx";
@@ -10,38 +10,42 @@ import Home from "./Pages/Home.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <DefaultLayout />,
+    element: <DefaultLayout/>,
     children: [
       {
         path: "/users",
-        element: <Users />,
+        element: <Users/>,
       },
       {
         path: "/",
-        element: <Home />,
+        element: <Home/>,
       },
       {
         path: "/home",
-        element: <Home />,
+        element: <Home/>,
       },
     ],
   },
   {
     path: "/",
-    element: <GuestLayout />,
+    element: <GuestLayout/>,
     children: [
       {
         path: "/login",
-        element: <Login />,
+        element: <Login/>,
       },
       {
         path: "/register",
-        element: <Register />,
+        element: <Register/>,
       },
 
       {
         path: "*",
-        element: <NotFound />,
+        element: <NotFound/>,
+      },
+      {
+        path: "/home",
+        element: <Home/>,
       },
     ],
   },
