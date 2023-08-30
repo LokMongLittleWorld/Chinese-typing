@@ -5,6 +5,8 @@ export default {
     extend: {
       fontFamily: {
         hanyi: "Hanyi",
+        seaSpray: "SeaSpray",
+        test: "Test",
       },
     },
   },

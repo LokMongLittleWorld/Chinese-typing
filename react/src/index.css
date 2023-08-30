@@ -3,8 +3,19 @@
 @tailwind utilities;
 
 @layer base {
+    body {
+        font-family: 'Noto Serif TC', serif;
+    }
     @font-face {
         font-family: "Hanyi";
         src: url("../public/fonts/HanyiSentyZHAO.woff2") format("woff2")
+    }
+    @font-face {
+        font-family: "SeaSpray";
+        src: url("../public/fonts/HanyiSentySeaSpray.woff2") format("woff2")
+    }
+    @font-face {
+        font-family: "Test";
+        src: url("../public/fonts/test.woff2") format("woff2")
     }
 }
