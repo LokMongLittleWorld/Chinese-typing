@@ -1,3 +1,6 @@
 export default function Home() {
-  return <div>Welcome home my friend!</div>;
+  return <div>
+    <div>Welcome home my friend!</div>
+    <div className="text-green-500">早上好！</div>
+  </div>;
 }
