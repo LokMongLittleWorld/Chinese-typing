@@ -8,14 +8,31 @@ export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
   const [currentCategory, setCurrentCategory] = useState(category[0]);
   const [record, setRecord] = useState({ speed: 75, accuracy: 0.9 });
-  const [currentRadicalIndex, setCurrentRadicalIndex] = useState(1);
+  const [currentRadicalIndex, setCurrentRadicalIndex] = useState(0);
   const [currentRadicalStatus, setCurrentRadicalStatus] = useState("default");
   const [shouldTransition, setShouldTransition] = useState(false);
+  const [amount, setAmount] = useState(20);
+  const [randomRadicals, setRandomRadicals] = useState([]);
+
+  const getRandomRadicals = () => {
+    const radicalKeys = Object.keys(Radicals);
+    const shuffledRadicals = radicalKeys.sort(() => 0.5 - Math.random());
+    const selectedRadicals = shuffledRadicals.slice(0, amount);
+    return selectedRadicals;
+  };
+
+  useEffect(() => {
+    const initialRandomRadicals = getRandomRadicals();
+    setRandomRadicals(initialRandomRadicals);
+  }, [amount]);
 
   const handleKeyDown = async (e) => {
+    if (currentRadicalIndex === amount) {
+      return;
+    }
     if (/^[a-zA-Z]$/.test(e.key)) {
       if (
-        Object.values(Radicals)[currentRadicalIndex] === e.key.toLowerCase()
+        Radicals[randomRadicals[currentRadicalIndex]] === e.key.toLowerCase()
       ) {
         setCurrentRadicalStatus("correct");
         // Wait 60ms
@@ -33,8 +50,7 @@ export default function Index() {
     setShouldTransition(false);
   }, [currentRadicalIndex]);
 
-  useKeyDownHandler(handleKeyDown, [currentRadicalIndex]);
-
+  useKeyDownHandler(handleKeyDown, [currentRadicalIndex, randomRadicals]);
   return (
     <>
       <section className="mt-4 flex flex-row items-center justify-center gap-4">
@@ -65,7 +81,7 @@ export default function Index() {
               : "text-gray-500"
           }`}
         >
-          {Object.keys(Radicals)[currentRadicalIndex]}
+          {randomRadicals[currentRadicalIndex]}
         </div>
       </main>
     </>
