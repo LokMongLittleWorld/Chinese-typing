@@ -3,6 +3,8 @@ import Record from "../../Components/Record.jsx";
 import PracticeCategory from "../../Components/PracticeCategory.jsx";
 import Radicals from "../../../static/cangjie/radicals.json";
 import useKeyDownHandler from "../../hooks/useKeyDownHandler.jsx";
+import useTimer from "../../hooks/useTimer.jsx";
+import useRecorder from "../../hooks/useRecorder.jsx";
 
 export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
@@ -11,8 +13,11 @@ export default function Index() {
   const [currentRadicalIndex, setCurrentRadicalIndex] = useState(0);
   const [currentRadicalStatus, setCurrentRadicalStatus] = useState("default");
   const [shouldTransition, setShouldTransition] = useState(false);
-  const [amount, setAmount] = useState(20);
+  const [amount, setAmount] = useState(5);
   const [randomRadicals, setRandomRadicals] = useState([]);
+  const { time, setTime, setIsRunning } = useTimer();
+  const { speed, accuracy } = useRecorder();
+  const [wrongAmount, setWrongAmount] = useState(0);
 
   const getRandomRadicals = () => {
     const radicalKeys = Object.keys(Radicals);
@@ -27,21 +32,35 @@ export default function Index() {
   }, [amount]);
 
   const handleKeyDown = async (e) => {
-    if (currentRadicalIndex === amount) {
+    if (currentRadicalIndex === 0) {
+      setIsRunning(true);
+    }
+    if (currentRadicalIndex === amount - 1) {
+      setIsRunning(false);
+      setRecord({
+        speed: speed(amount, time),
+        accuracy: accuracy(amount, wrongAmount),
+      });
+      setCurrentRadicalIndex(0);
+      setTime(0);
+      setWrongAmount(0);
+      setRandomRadicals(getRandomRadicals());
       return;
     }
     if (/^[a-zA-Z]$/.test(e.key)) {
       if (
         Radicals[randomRadicals[currentRadicalIndex]] === e.key.toLowerCase()
       ) {
-        setCurrentRadicalStatus("correct");
+        setCurrentRadicalStatus(() => "correct");
         // Wait 60ms
         await new Promise((resolve) => setTimeout(resolve, 60));
         setCurrentRadicalIndex((prev) => prev + 1);
-        setCurrentRadicalStatus("default");
+        setCurrentRadicalStatus(() => "default");
         setShouldTransition(true); // Set to true to enable transition
       } else {
-        setCurrentRadicalStatus("wrong");
+        // TODO: turn wrongAmount to array, store wrong radicals
+        setWrongAmount((prev) => prev + 1);
+        setCurrentRadicalStatus(() => "wrong");
       }
     }
   };
