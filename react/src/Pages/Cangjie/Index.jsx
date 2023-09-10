@@ -53,7 +53,7 @@ export default function Index() {
       ) {
         setCurrentRadicalStatus(() => "correct");
         // Wait 60ms
-        await new Promise((resolve) => setTimeout(resolve, 60));
+        // await new Promise((resolve) => setTimeout(resolve, 60));
         setCurrentRadicalIndex((prev) => prev + 1);
         setCurrentRadicalStatus(() => "default");
         setShouldTransition(true); // Set to true to enable transition
