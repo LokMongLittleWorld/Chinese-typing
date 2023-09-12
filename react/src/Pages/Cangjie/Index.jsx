@@ -17,7 +17,7 @@ export default function Index() {
   const [randomRadicals, setRandomRadicals] = useState([]);
   const { time, setTime, setIsRunning } = useTimer();
   const { speed, accuracy } = useRecorder();
-  const [wrongAmount, setWrongAmount] = useState(0);
+  const [wrongRaidcals, setWrongRadicals] = useState(new Map());
 
   const getRandomRadicals = () => {
     const radicalKeys = Object.keys(Radicals);
@@ -39,11 +39,11 @@ export default function Index() {
       setIsRunning(false);
       setRecord({
         speed: speed(amount, time),
-        accuracy: accuracy(amount, wrongAmount),
+        accuracy: accuracy(amount, wrongRaidcals.size),
       });
       setCurrentRadicalIndex(0);
       setTime(0);
-      setWrongAmount(0);
+      setWrongRadicals(new Map());
       setRandomRadicals(getRandomRadicals());
       return;
     }
@@ -59,7 +59,7 @@ export default function Index() {
         setShouldTransition(true); // Set to true to enable transition
       } else {
         // TODO: turn wrongAmount to array, store wrong radicals
-        setWrongAmount((prev) => prev + 1);
+        setWrongRadicals((prev) => prev.set(currentRadicalIndex, e.key));
         setCurrentRadicalStatus(() => "wrong");
       }
     }
