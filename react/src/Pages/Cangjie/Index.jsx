@@ -13,7 +13,8 @@ export default function Index() {
   const [currentRadicalIndex, setCurrentRadicalIndex] = useState(0);
   const [currentRadicalStatus, setCurrentRadicalStatus] = useState("default");
   const [shouldTransition, setShouldTransition] = useState(false);
-  const [amount, setAmount] = useState(5);
+  const [amounts, setAmounts] = useState([25, 50, 100]);
+  const [amount, setAmount] = useState(amounts[0]);
   const [randomRadicals, setRandomRadicals] = useState([]);
   const { time, setTime, setIsRunning } = useTimer();
   const { speed, accuracy } = useRecorder();
@@ -88,7 +89,7 @@ export default function Index() {
           })}
         </div>
         <div
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 xl:text-[400px] 2xl:text-[500px] cursor-default select-none -z-10
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[200px] md:text-[300px] xl:text-[400px] 2xl:text-[500px] cursor-default select-none -z-10
           ${
             shouldTransition ? "transition-colors duration-500 ease-in-out" : ""
           }
@@ -103,6 +104,23 @@ export default function Index() {
           {randomRadicals[currentRadicalIndex]}
         </div>
       </main>
+      <section className="absolute bottom-[12vh] left-1/2 -translate-x-1/2">
+        <div className="flex flex-row items-center bg-gray-200 gap-6 py-1 px-2 rounded-lg">
+          {amounts.map((item) => {
+            return (
+              <div
+                onClick={() => setAmount(item)}
+                className={`text-2xl cursor-pointer ${
+                  amount === item ? "text-blue-500" : "text-gray-700"
+                }`}
+                key={item}
+              >
+                {item}
+              </div>
+            );
+          })}
+        </div>
+      </section>
     </>
   );
 }
