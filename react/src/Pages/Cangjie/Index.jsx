@@ -9,7 +9,7 @@ import useRecorder from "../../hooks/useRecorder.jsx";
 export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
   const [currentCategory, setCurrentCategory] = useState(category[0]);
-  const [record, setRecord] = useState({ speed: 75, accuracy: 0.9 });
+  const [record, setRecord] = useState({ speed: null, accuracy: null });
   const [currentRadicalIndex, setCurrentRadicalIndex] = useState(0);
   const [currentRadicalStatus, setCurrentRadicalStatus] = useState("default");
   const [shouldTransition, setShouldTransition] = useState(false);
