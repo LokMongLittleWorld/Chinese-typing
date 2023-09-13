@@ -11,7 +11,9 @@ export default function DefaultLayout() {
     cangjie: "倉頡練習",
     jyutping: "粵拼練習",
   };
-  const [currentPage, setCurrentPage] = useState("speedTyping");
+  const [currentPage, setCurrentPage] = useState(
+    localStorage.getItem("currentPage") || "speedTyping"
+  );
 
   useEffect(() => {
     axiosClient.get("/user").then(({ data }) => {
@@ -44,7 +46,10 @@ export default function DefaultLayout() {
             {Object.entries(pages).map(([key, value]) => {
               return (
                 <Link
-                  onClick={() => setCurrentPage(key)}
+                  onClick={() => {
+                    setCurrentPage(key);
+                    localStorage.setItem("currentPage", key);
+                  }}
                   key={key}
                   to={"/" + key}
                   className={`hover:text-blue-300 hover:-translate-y-0.5 transition-all duration-500 ${
