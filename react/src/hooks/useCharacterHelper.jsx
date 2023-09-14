@@ -3,6 +3,7 @@ import useTimer from "./useTimer.jsx";
 import useRecorder from "./useRecorder.jsx";
 
 function useCharacterHelper(Radicals) {
+  const [wordJSON, setWordJSON] = useState(Radicals);
   const [record, setRecord] = useState({ speed: null, accuracy: null });
   const [currentRadicalIndex, setCurrentRadicalIndex] = useState(0);
   const [currentRadicalStatus, setCurrentRadicalStatus] = useState("default");
@@ -13,6 +14,14 @@ function useCharacterHelper(Radicals) {
   const [wrongRaidcals, setWrongRadicals] = useState(new Map());
   const { time, setTime, setIsRunning } = useTimer();
   const { speed, accuracy } = useRecorder();
+
+  const reset = (newWordJSON) => {
+    setCurrentRadicalIndex(0);
+    setTime(0);
+    setWrongRadicals(new Map());
+    setRandomRadicals(getRandomRadicals(newWordJSON));
+    setWordJSON(newWordJSON);
+  };
   const handleKeyDown = async (e) => {
     if (currentRadicalIndex === 0) {
       setIsRunning(true);
@@ -26,12 +35,12 @@ function useCharacterHelper(Radicals) {
       setCurrentRadicalIndex(0);
       setTime(0);
       setWrongRadicals(new Map());
-      setRandomRadicals(getRandomRadicals(Radicals));
+      setRandomRadicals(getRandomRadicals(wordJSON));
       return;
     }
     if (/^[a-zA-Z]$/.test(e.key)) {
       if (
-        Radicals[randomRadicals[currentRadicalIndex]] === e.key.toLowerCase()
+        wordJSON[randomRadicals[currentRadicalIndex]] === e.key.toLowerCase()
       ) {
         setCurrentRadicalStatus(() => "correct");
         // Wait 60ms
@@ -63,6 +72,7 @@ function useCharacterHelper(Radicals) {
   }, [currentRadicalIndex]);
   return {
     handleKeyDown,
+    reset,
     record,
     currentRadicalIndex,
     currentRadicalStatus,
@@ -72,6 +82,7 @@ function useCharacterHelper(Radicals) {
     randomRadicals,
     wrongRaidcals,
     time,
+    setAmount,
     setTime,
     setIsRunning,
   };
