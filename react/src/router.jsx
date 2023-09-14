@@ -6,8 +6,8 @@ import NotFound from "./Pages/NotFound.jsx";
 import DefaultLayout from "./Layouts/DefaultLayout.jsx";
 import GuestLayout from "./Layouts/GuestLayout.jsx";
 import Home from "./Pages/Home.jsx";
-import Index from "./Pages/Cangjie/index.jsx";
-import InitialPractice from "./Pages/Jyutping/InitialPractice.jsx";
+import CangjieIndex from "./Pages/Cangjie/index.jsx";
+import JyutpingIndex from "./Pages/Jyutping/Index.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,11 +31,11 @@ const router = createBrowserRouter([
         children: [
           {
             path: "",
-            element: <Index />,
+            element: <CangjieIndex />,
           },
           {
             path: "radical-practice",
-            element: <Index />,
+            element: <CangjieIndex />,
           },
         ],
       },
@@ -44,11 +44,11 @@ const router = createBrowserRouter([
         children: [
           {
             path: "",
-            element: <InitialPractice />,
+            element: <JyutpingIndex />,
           },
           {
             path: "initial-practice",
-            element: <InitialPractice />,
+            element: <JyutpingIndex />,
           },
         ],
       },
