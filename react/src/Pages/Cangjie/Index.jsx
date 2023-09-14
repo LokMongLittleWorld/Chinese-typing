@@ -10,8 +10,8 @@ import AmountSelector from "../../Components/AmountSelector.jsx";
 
 export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
-  const [currentCategory, setCurrentCategory] = useState(
-    localStorage.getItem("currentCategory") || category[0]
+  const [currentCategoryIndex, setCurrentCategoryIndex] = useState(
+    localStorage.getItem("currentCategoryIndex") || 0
   );
   const {
     record,
@@ -27,10 +27,10 @@ export default function Index() {
   } = useCharacterHelper(Radicals);
   useKeyDownHandler(handleKeyDown, [currentRadicalIndex, randomRadicals]);
 
-  const handleCategoryChange = (category) => {
+  const handleCategoryChange = (category, index) => {
     // TODO: dynamic import
-    setCurrentCategory(category);
-    localStorage.setItem("currentCategory", category);
+    setCurrentCategoryIndex(index);
+    localStorage.setItem("currentCategoryIndex", index);
     if (category === "字根訓練") reset(Radicals);
     if (category === "字形訓練") reset(Initials);
     if (category === "單字訓練") reset(Radicals);
@@ -42,7 +42,7 @@ export default function Index() {
         <Record speed={record.speed} accuracy={record.accuracy} />
         <PracticeCategory
           category={category}
-          currentCategory={currentCategory}
+          currentCategoryIndex={currentCategoryIndex}
           handleCategoryChange={handleCategoryChange}
         />
       </section>
