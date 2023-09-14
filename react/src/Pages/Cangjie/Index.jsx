@@ -20,15 +20,15 @@ export default function Index() {
   const { speed, accuracy } = useRecorder();
   const [wrongRaidcals, setWrongRadicals] = useState(new Map());
 
-  const getRandomRadicals = () => {
-    const radicalKeys = Object.keys(Radicals);
+  const getRandomRadicals = (radicals) => {
+    const radicalKeys = Object.keys(radicals);
     const shuffledRadicals = radicalKeys.sort(() => 0.5 - Math.random());
     const selectedRadicals = shuffledRadicals.slice(0, amount);
     return selectedRadicals;
   };
 
   useEffect(() => {
-    const initialRandomRadicals = getRandomRadicals();
+    const initialRandomRadicals = getRandomRadicals(Radicals);
     setRandomRadicals(initialRandomRadicals);
   }, [amount]);
 
@@ -45,7 +45,7 @@ export default function Index() {
       setCurrentRadicalIndex(0);
       setTime(0);
       setWrongRadicals(new Map());
-      setRandomRadicals(getRandomRadicals());
+      setRandomRadicals(getRandomRadicals(Radicals));
       return;
     }
     if (/^[a-zA-Z]$/.test(e.key)) {
