@@ -57,8 +57,10 @@ function useCharacterHelper(Radicals) {
   };
   const getRandomRadicals = (radicals) => {
     const radicalKeys = Object.keys(radicals);
-    const shuffledRadicals = radicalKeys.sort(() => 0.5 - Math.random());
-    const selectedRadicals = shuffledRadicals.slice(0, amount);
+    const selectedRadicals = [];
+    for (let i = 0; i < amount; i++) {
+      const randomIndex = Math.floor(Math.random() * radicalKeys.length);
+      selectedRadicals.push(radicalKeys[randomIndex]);
     return selectedRadicals;
   };
 
