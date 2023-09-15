@@ -50,11 +50,11 @@ export default function Index() {
       </section>
       <main className="mt-2">
         {/* TODO: hover to display speed and accuracy, color to indicate proficiency */}
-        <div className="flex flex-row gap-4 justify-center text-2xl">
+        <section className="flex flex-row gap-4 justify-center text-2xl">
           {Object.keys(Radicals).map((radical) => {
             return <div key={radical}>{radical}</div>;
           })}
-        </div>
+        </section>
         <Character
           shouldTransition={shouldTransition}
           currentRadicalStatus={currentRadicalStatus}
