@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import Record from "../../Components/Record.jsx";
 import PracticeCategory from "../../Components/PracticeCategory.jsx";
-import Radicals from "../../../static/cangjie/radicals.json";
-import Initials from "../../../static/jyutping/initials.json";
+import Initials from "../../../static/jyutping/initial_practice.json";
 import useKeyDownHandler from "../../hooks/useKeyDownHandler.jsx";
 import useCharacterHelper from "../../hooks/useCharacterHelper.jsx";
 import Character from "../../Components/Character.jsx";
 import AmountSelector from "../../Components/AmountSelector.jsx";
 
+//prettier-ignore
+const intials = ["b", "p", "m", "f", "d", "t", "n", "l", "g", "k", "ng", "h", "gw", "kw", "w", "z", "c", "s", "j"];
 export default function Index() {
   const category = ["聲母訓練", "韻母訓練", "單字訓練"];
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(
@@ -51,8 +52,8 @@ export default function Index() {
       <main className="mt-2">
         {/* TODO: hover to display speed and accuracy, color to indicate proficiency */}
         <section className="flex flex-row gap-4 justify-center text-2xl">
-          {Object.keys(Radicals).map((radical) => {
-            return <div key={radical}>{radical}</div>;
+          {intials.map((radical) => {
+            return <div key={radical}>{radical.toUpperCase()}</div>;
           })}
         </section>
         <Character
