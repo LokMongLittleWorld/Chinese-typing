@@ -13,6 +13,7 @@ export default function Index() {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(
     localStorage.getItem("currentCategoryIndex") || 0
   );
+  const wordJSON = [Radicals, Initials, Radicals];
   const {
     record,
     currentRadicalIndex,
@@ -24,7 +25,8 @@ export default function Index() {
     handleKeyDown,
     setAmount,
     reset,
-  } = useCharacterHelper(Radicals);
+  } = useCharacterHelper(wordJSON[currentCategoryIndex]);
+
   useKeyDownHandler(handleKeyDown, [currentRadicalIndex, randomRadicals]);
 
   const handleCategoryChange = (category, index) => {
