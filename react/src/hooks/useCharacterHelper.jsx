@@ -3,6 +3,7 @@ import useTimer from "./useTimer.jsx";
 import useRecorder from "./useRecorder.jsx";
 
 function useCharacterHelper(Radicals) {
+  let currentKeyIndex = 0;
   const [wordJSON, setWordJSON] = useState(Radicals);
   const [record, setRecord] = useState({ speed: null, accuracy: null });
   const [currentRadicalIndex, setCurrentRadicalIndex] = useState(0);
@@ -23,9 +24,11 @@ function useCharacterHelper(Radicals) {
     setWordJSON(newWordJSON);
   };
   const handleKeyDown = async (e) => {
+    //start case
     if (currentRadicalIndex === 0) {
       setIsRunning(true);
     }
+    //end case
     if (currentRadicalIndex === amount - 1) {
       setIsRunning(false);
       setRecord({
@@ -38,21 +41,29 @@ function useCharacterHelper(Radicals) {
       setRandomRadicals(getRandomRadicals(wordJSON));
       return;
     }
-    if (/^[a-zA-Z]$/.test(e.key)) {
-      if (
-        wordJSON[randomRadicals[currentRadicalIndex]] === e.key.toLowerCase()
-      ) {
-        setCurrentRadicalStatus(() => "correct");
-        // Wait 60ms
-        // await new Promise((resolve) => setTimeout(resolve, 60));
-        setCurrentRadicalIndex((prev) => prev + 1);
-        setCurrentRadicalStatus(() => "default");
-        setShouldTransition(true); // Set to true to enable transition
-      } else {
-        // TODO: turn wrongAmount to array, store wrong radicals
-        setWrongRadicals((prev) => prev.set(currentRadicalIndex, e.key));
-        setCurrentRadicalStatus(() => "wrong");
-      }
+    const targetValue = wordJSON[randomRadicals[currentRadicalIndex]];
+    //neglect non-alphabet
+    if (!/^[a-zA-Z]$/.test(e.key)) {
+      return;
+    }
+
+    // incorrect
+    if (targetValue[currentKeyIndex] !== e.key.toLowerCase()) {
+      setWrongRadicals((prev) => prev.set(currentRadicalIndex, e.key));
+      setCurrentRadicalStatus(() => "wrong");
+      return;
+    }
+
+    // correct
+    if (currentKeyIndex === targetValue.length - 1) {
+      // Wait 60ms
+      // await new Promise((resolve) => setTimeout(resolve, 60));
+      setCurrentRadicalIndex((prev) => prev + 1);
+      setCurrentRadicalStatus(() => "default");
+      setShouldTransition(true); // Set to true to enable transition
+    } else {
+      setCurrentRadicalStatus(() => "default");
+      currentKeyIndex++;
     }
   };
   const getRandomRadicals = (radicals) => {
@@ -61,6 +72,7 @@ function useCharacterHelper(Radicals) {
     for (let i = 0; i < amount; i++) {
       const randomIndex = Math.floor(Math.random() * radicalKeys.length);
       selectedRadicals.push(radicalKeys[randomIndex]);
+    }
     return selectedRadicals;
   };
 
