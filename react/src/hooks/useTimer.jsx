@@ -21,8 +21,4 @@ function useTimer() {
   return { time, setTime, isRunning, setIsRunning };
 }
 
-function speedToWPM(speed) {
-  return Math.floor(600 / speed);
-}
-
 export default useTimer;
