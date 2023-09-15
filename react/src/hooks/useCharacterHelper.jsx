@@ -13,6 +13,7 @@ function useCharacterHelper(Radicals) {
   const [amount, setAmount] = useState(amounts[0]);
   const [randomRadicals, setRandomRadicals] = useState([]);
   const [wrongRaidcals, setWrongRadicals] = useState(new Map());
+  const [targetPart, setTargetPart] = useState(0);
   const { time, setTime, setIsRunning } = useTimer();
   const { speed, accuracy } = useRecorder();
 
@@ -41,11 +42,13 @@ function useCharacterHelper(Radicals) {
       setRandomRadicals(getRandomRadicals(wordJSON));
       return;
     }
-    const targetValue = wordJSON[randomRadicals[currentRadicalIndex]];
     //neglect non-alphabet
     if (!/^[a-zA-Z]$/.test(e.key)) {
       return;
     }
+    //prettier-ignore
+    const targetValueParts = wordJSON[randomRadicals[currentRadicalIndex]].split(" ");
+    const targetValue = targetValueParts[targetPart];
 
     // incorrect
     if (targetValue[currentKeyIndex] !== e.key.toLowerCase()) {
