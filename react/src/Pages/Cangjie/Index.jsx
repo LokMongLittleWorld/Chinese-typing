@@ -25,6 +25,7 @@ export default function Index() {
     handleKeyDown,
     setAmount,
     reset,
+    isRunning,
   } = useCharacterHelper(wordJSON[currentCategoryIndex]);
 
   useKeyDownHandler(handleKeyDown, [currentRadicalIndex, randomRadicals]);
@@ -66,6 +67,7 @@ export default function Index() {
           amounts={amounts}
           amount={amount}
           setAmount={setAmount}
+          isRunning={isRunning}
         />
       </div>
     </>

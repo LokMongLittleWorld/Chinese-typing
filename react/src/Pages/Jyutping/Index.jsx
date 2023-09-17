@@ -26,10 +26,10 @@ export default function Index() {
     handleKeyDown,
     setAmount,
     reset,
+    isRunning,
   } = useCharacterHelper(wordJSON[currentCategoryIndex]);
 
   useKeyDownHandler(handleKeyDown, [currentRadicalIndex, randomRadicals]);
-
   const handleCategoryChange = (category, index) => {
     // TODO: dynamic import
     setCurrentCategoryIndex(index);

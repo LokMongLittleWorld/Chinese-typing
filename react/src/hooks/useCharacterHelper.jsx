@@ -14,7 +14,7 @@ function useCharacterHelper(Radicals) {
   const [randomRadicals, setRandomRadicals] = useState([]);
   const [wrongRaidcals, setWrongRadicals] = useState(new Map());
   const [targetPart, setTargetPart] = useState(0);
-  const { time, setTime, setIsRunning } = useTimer();
+  const { time, setTime, isRunning, setIsRunning } = useTimer();
   const { speed, accuracy } = useRecorder();
 
   const reset = (newWordJSON) => {
@@ -101,7 +101,7 @@ function useCharacterHelper(Radicals) {
     time,
     setAmount,
     setTime,
-    setIsRunning,
+    isRunning,
   };
 }
 export default useCharacterHelper;
