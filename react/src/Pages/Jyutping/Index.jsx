@@ -27,6 +27,7 @@ export default function Index() {
     setAmount,
     reset,
     isRunning,
+    answer,
   } = useCharacterHelper(wordJSON[currentCategoryIndex]);
 
   useKeyDownHandler(handleKeyDown, [currentRadicalIndex, randomRadicals]);
@@ -63,25 +64,36 @@ export default function Index() {
         />
       </main>
       <div className="flex flex-col items-center absolute bottom-[10vh] left-1/2 -translate-x-1/2 gap-6">
-        <section>
-          <div className="flex flex-row gap-2 items-end">
-            {[...word].map((char, index) => (
-              <div
-                key={`${char}-${currentRadicalIndex}`}
-                className="flex flex-col items-center"
-              >
-                <div className="text-gray-900 text-[40px] -pb-2">
-                  {inputKeys[index]}
-                </div>
-                <div className="w-6 h-[3px] rounded-full bg-gray-600" />
+        {/*<section>*/}
+        {/*  <div className="flex flex-row gap-2 items-end">*/}
+        {/*    {[...word].map((char, index) => (*/}
+        {/*      <div*/}
+        {/*        key={`${char}-${currentRadicalIndex}`}*/}
+        {/*        className="flex flex-col items-center"*/}
+        {/*      >*/}
+        {/*        <div className="text-gray-900 text-[40px] -pb-2">*/}
+        {/*          {inputKeys[index]}*/}
+        {/*        </div>*/}
+        {/*        <div className="w-6 h-[3px] rounded-full bg-gray-600" />*/}
+        {/*      </div>*/}
+        {/*    ))}*/}
+        {/*  </div>*/}
+        {/*</section>*/}
+        {isRunning && (
+          <section className="flex flex-row items-center gap-4">
+            {[...answer].map((char, index) => (
+              <div className="flex flex-col" key={char}>
+                <div className="text-gray-900 text-[40px]">{char}</div>
+                <div className="w-8 h-[3px] rounded-full bg-gray-600" />
               </div>
             ))}
-          </div>
-        </section>
+          </section>
+        )}
         <AmountSelector
           amounts={amounts}
           amount={amount}
           setAmount={setAmount}
+          isRunning={isRunning}
         />
       </div>
     </>

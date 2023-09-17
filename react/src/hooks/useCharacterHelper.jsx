@@ -14,6 +14,7 @@ function useCharacterHelper(Radicals) {
   const [randomRadicals, setRandomRadicals] = useState([]);
   const [wrongRaidcals, setWrongRadicals] = useState(new Map());
   const [targetPart, setTargetPart] = useState(0);
+  const [answer, setAnswer] = useState("");
   const { time, setTime, isRunning, setIsRunning } = useTimer();
   const { speed, accuracy } = useRecorder();
 
@@ -23,6 +24,13 @@ function useCharacterHelper(Radicals) {
     setWrongRadicals(new Map());
     setRandomRadicals(getRandomRadicals(newWordJSON));
     setWordJSON(newWordJSON);
+  };
+
+  const getTargetValue = (index) => {
+    //prettier-ignore
+    const targetValueParts = wordJSON[randomRadicals[index]].split(" ");
+    const targetValue = targetValueParts[targetPart];
+    return targetValue;
   };
   const handleKeyDown = async (e) => {
     //start case
@@ -46,9 +54,7 @@ function useCharacterHelper(Radicals) {
     if (!/^[a-zA-Z]$/.test(e.key)) {
       return;
     }
-    //prettier-ignore
-    const targetValueParts = wordJSON[randomRadicals[currentRadicalIndex]].split(" ");
-    const targetValue = targetValueParts[targetPart];
+    const targetValue = getTargetValue(currentRadicalIndex);
 
     // incorrect
     if (targetValue[currentKeyIndex] !== e.key.toLowerCase()) {
@@ -61,6 +67,7 @@ function useCharacterHelper(Radicals) {
     if (currentKeyIndex === targetValue.length - 1) {
       // Wait 60ms
       // await new Promise((resolve) => setTimeout(resolve, 60));
+      setAnswer(getTargetValue(currentRadicalIndex + 1));
       setCurrentRadicalIndex((prev) => prev + 1);
       setCurrentRadicalStatus(() => "default");
       setShouldTransition(true); // Set to true to enable transition
@@ -82,6 +89,8 @@ function useCharacterHelper(Radicals) {
   useEffect(() => {
     const initialRandomRadicals = getRandomRadicals(Radicals);
     setRandomRadicals(initialRandomRadicals);
+    const targetValueParts = Radicals[initialRandomRadicals[0]].split(" ");
+    setAnswer(targetValueParts[targetPart]);
   }, [amount]);
 
   useEffect(() => {
@@ -102,6 +111,7 @@ function useCharacterHelper(Radicals) {
     setAmount,
     setTime,
     isRunning,
+    answer,
   };
 }
 export default useCharacterHelper;
