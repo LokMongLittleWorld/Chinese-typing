@@ -61,7 +61,13 @@ export default function Index() {
           character={randomRadicals[currentRadicalIndex]}
         />
       </main>
-      <AmountSelector amounts={amounts} amount={amount} setAmount={setAmount} />
+      <div className="flex flex-col items-center absolute bottom-[10vh] left-1/2 -translate-x-1/2 gap-6">
+        <AmountSelector
+          amounts={amounts}
+          amount={amount}
+          setAmount={setAmount}
+        />
+      </div>
     </>
   );
 }

@@ -62,7 +62,28 @@ export default function Index() {
           character={randomRadicals[currentRadicalIndex]}
         />
       </main>
-      <AmountSelector amounts={amounts} amount={amount} setAmount={setAmount} />
+      <div className="flex flex-col items-center absolute bottom-[10vh] left-1/2 -translate-x-1/2 gap-6">
+        <section>
+          <div className="flex flex-row gap-2 items-end">
+            {[...word].map((char, index) => (
+              <div
+                key={`${char}-${currentRadicalIndex}`}
+                className="flex flex-col items-center"
+              >
+                <div className="text-gray-900 text-[40px] -pb-2">
+                  {inputKeys[index]}
+                </div>
+                <div className="w-6 h-[3px] rounded-full bg-gray-600" />
+              </div>
+            ))}
+          </div>
+        </section>
+        <AmountSelector
+          amounts={amounts}
+          amount={amount}
+          setAmount={setAmount}
+        />
+      </div>
     </>
   );
 }
