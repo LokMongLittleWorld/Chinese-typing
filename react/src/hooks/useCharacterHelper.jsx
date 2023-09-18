@@ -56,8 +56,6 @@ function useCharacterHelper(Radicals) {
       setRandomRadicals(getRandomRadicals(wordJSON));
       return;
     }
-    console.log(currentKeyIndexRef.current);
-
     // neglect non-alphabet
     if (!/^[a-zA-Z]$/.test(e.key)) {
       return;
