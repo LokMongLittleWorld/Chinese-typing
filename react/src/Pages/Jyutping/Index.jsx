@@ -80,14 +80,14 @@ export default function Index() {
         {/*  </div>*/}
         {/*</section>*/}
         {isRunning && (
-          <section className="flex flex-row items-center gap-4">
+          <div className="flex flex-row items-end gap-4">
             {[...answer].map((char, index) => (
-              <div className="flex flex-col" key={char}>
-                <div className="text-gray-900 text-[40px]">{char}</div>
+              <div key={index} className="flex flex-col items-center">
+                <div className="font-nunito text-4xl">{char}</div>
                 <div className="w-8 h-[3px] rounded-full bg-gray-600" />
               </div>
             ))}
-          </section>
+          </div>
         )}
         <AmountSelector
           amounts={amounts}
