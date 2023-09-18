@@ -6,6 +6,7 @@ import useKeyDownHandler from "../../hooks/useKeyDownHandler.jsx";
 import useCharacterHelper from "../../hooks/useCharacterHelper.jsx";
 import Character from "../../Components/Character.jsx";
 import AmountSelector from "../../Components/AmountSelector.jsx";
+import InputDisplay from "../../Components/InputDisplay.jsx";
 
 //prettier-ignore
 const initials = ["b", "p", "m", "f", "d", "t", "n", "l", "g", "k", "ng", "h", "gw", "kw", "w", "z", "c", "s", "j"];
@@ -65,37 +66,12 @@ export default function Index() {
         />
       </main>
       <div className="flex flex-col items-center absolute bottom-[10vh] left-1/2 -translate-x-1/2 gap-6">
-        {/*<section>*/}
-        {/*  <div className="flex flex-row gap-2 items-end">*/}
-        {/*    {[...word].map((char, index) => (*/}
-        {/*      <div*/}
-        {/*        key={`${char}-${currentRadicalIndex}`}*/}
-        {/*        className="flex flex-col items-center"*/}
-        {/*      >*/}
-        {/*        <div className="text-gray-900 text-[40px] -pb-2">*/}
-        {/*          {inputKeys[index]}*/}
-        {/*        </div>*/}
-        {/*        <div className="w-6 h-[3px] rounded-full bg-gray-600" />*/}
-        {/*      </div>*/}
-        {/*    ))}*/}
-        {/*  </div>*/}
-        {/*</section>*/}
-        {isRunning && (
-          <div className="flex flex-row items-end gap-4">
-            {[...answer].map((char, index) => {
-              // console.log(input);
-              return (
-                <div
-                  key={`${index}-${currentRadicalIndex}`}
-                  className="flex flex-col items-center"
-                >
-                  <div className="font-nunito text-4xl">{input[index]}</div>
-                  <div className="w-8 h-[3px] rounded-full bg-gray-600" />
-                </div>
-              );
-            })}
-          </div>
-        )}
+        <InputDisplay
+          answer={answer}
+          input={input}
+          isRunning={isRunning}
+          currentRadicalIndex={currentRadicalIndex}
+        />
         <AmountSelector
           amounts={amounts}
           amount={amount}
