@@ -18,4 +18,8 @@
         font-family: "Test";
         src: url("../public/fonts/test.woff2") format("woff2")
     }
+    @font-face {
+        font-family: 'Nunito', sans-serif;
+    }
 }
+

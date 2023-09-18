@@ -13,6 +13,7 @@ export default {
         hanyi: "Hanyi",
         seaSpray: "SeaSpray",
         test: "Test",
+        nunito: "Nunito",
       },
     },
   },
