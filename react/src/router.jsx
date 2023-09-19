@@ -5,9 +5,9 @@ import Users from "./Pages/Users.jsx";
 import NotFound from "./Pages/NotFound.jsx";
 import DefaultLayout from "./Layouts/DefaultLayout.jsx";
 import GuestLayout from "./Layouts/GuestLayout.jsx";
-import Index from "./Pages/SpeedTyping/Index.jsx";
-import CangjieIndex from "./Pages/Cangjie/index.jsx";
-import JyutpingIndex from "./Pages/Jyutping/Index.jsx";
+import Index from "./Pages/speed-typing/Index.jsx";
+import CangjieIndex from "./Pages/cangjie/index.jsx";
+import JyutpingIndex from "./Pages/jyutping/Index.jsx";
 
 const router = createBrowserRouter([
   {
