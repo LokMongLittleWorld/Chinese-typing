@@ -8,7 +8,7 @@ function useCharacterHelper(JSON) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentWordStatus, setCurrentWordStatus] = useState("default");
   const [shouldTransition, setShouldTransition] = useState(false);
-  const [amounts, setAmounts] = useState([25, 50, 100]);
+  const [amounts, setAmounts] = useState([5, 50, 100]);
   const [amount, setAmount] = useState(amounts[0]);
   const [randomWords, setRandomWords] = useState([]);
   const [wrongRadicals, setWrongRadicals] = useState(new Map());
@@ -43,19 +43,6 @@ function useCharacterHelper(JSON) {
       setIsRunning(true);
     }
 
-    // end case
-    if (currentWordIndex === amount - 1) {
-      setIsRunning(false);
-      setRecord({
-        speed: speed(amount, time),
-        accuracy: accuracy(amount, wrongRadicals.size),
-      });
-      setCurrentWordIndex(0);
-      setTime(0);
-      setWrongRadicals(new Map());
-      setRandomWords(getRandomRadicals(wordJSON));
-      return;
-    }
     // neglect non-alphabet
     if (!/^[a-zA-Z]$/.test(e.key)) {
       return;
@@ -71,6 +58,20 @@ function useCharacterHelper(JSON) {
     if (targetValue[currentKeyIndexRef.current] !== e.key.toLowerCase()) {
       setWrongRadicals((prev) => prev.set(currentWordIndex, e.key));
       setCurrentWordStatus(() => "wrong");
+      return;
+    }
+
+    // end case
+    if (currentWordIndex === amount - 1) {
+      setIsRunning(false);
+      setRecord({
+        speed: speed(amount, time),
+        accuracy: accuracy(amount, wrongRadicals.size),
+      });
+      setCurrentWordIndex(0);
+      setTime(0);
+      setWrongRadicals(new Map());
+      setRandomWords(getRandomRadicals(wordJSON));
       return;
     }
 
