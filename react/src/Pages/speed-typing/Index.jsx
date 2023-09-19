@@ -7,7 +7,7 @@ export default function Index() {
       <div className="grid grid-cols-3 gap-4 w-[80%]">
         {Object.values(Essays).map((essay, index) => (
           <div key={index}>
-            <ArticleDisplayCard title={essay?.title} content={essay.content} />
+            <ArticleDisplayCard title={essay?.title} content={essay?.content} />
           </div>
         ))}
       </div>
