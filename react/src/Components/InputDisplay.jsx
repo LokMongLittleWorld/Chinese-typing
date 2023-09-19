@@ -4,7 +4,7 @@ export default function InputDisplay({
   answer,
   input,
   isRunning,
-  currentRadicalIndex,
+  currentWordIndex,
 }) {
   return (
     <>
@@ -14,7 +14,7 @@ export default function InputDisplay({
             // console.log(input);
             return (
               <div
-                key={`${index}-${currentRadicalIndex}`}
+                key={`${index}-${currentWordIndex}`}
                 className="flex flex-col items-center"
               >
                 <div className="font-nunito text-4xl">{input[index]}</div>

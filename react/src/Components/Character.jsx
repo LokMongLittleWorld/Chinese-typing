@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Character({
   shouldTransition,
-  currentRadicalStatus,
+  currentWordStatus,
   character,
 }) {
   return (
@@ -12,9 +12,9 @@ export default function Character({
             shouldTransition ? "transition-colors duration-500 ease-in-out" : ""
           }
           ${
-            currentRadicalStatus === "correct"
+            currentWordStatus === "correct"
               ? "text-black"
-              : currentRadicalStatus === "wrong"
+              : currentWordStatus === "wrong"
               ? "text-rose-400"
               : "text-gray-500"
           }`}

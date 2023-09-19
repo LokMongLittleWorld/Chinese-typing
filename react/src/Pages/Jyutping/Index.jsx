@@ -18,12 +18,12 @@ export default function Index() {
   const wordJSON = [Initials, Initials, Initials];
   const {
     record,
-    currentRadicalIndex,
-    currentRadicalStatus,
+    currentWordIndex,
+    currentWordStatus,
     shouldTransition,
     amounts,
     amount,
-    randomRadicals,
+    randomWords,
     handleKeyDown,
     setAmount,
     reset,
@@ -32,7 +32,7 @@ export default function Index() {
     input,
   } = useCharacterHelper(wordJSON[currentCategoryIndex]);
 
-  useKeyDownHandler(handleKeyDown, [currentRadicalIndex, randomRadicals]);
+  useKeyDownHandler(handleKeyDown, [currentWordIndex, randomWords]);
   const handleCategoryChange = (category, index) => {
     // TODO: dynamic import
     setCurrentCategoryIndex(index);
@@ -61,8 +61,8 @@ export default function Index() {
         </section>
         <Character
           shouldTransition={shouldTransition}
-          currentRadicalStatus={currentRadicalStatus}
-          character={randomRadicals[currentRadicalIndex]}
+          currentWordStatus={currentWordStatus}
+          character={randomWords[currentWordIndex]}
         />
       </main>
       <div className="flex flex-col items-center absolute bottom-[10vh] left-1/2 -translate-x-1/2 gap-6">
@@ -70,7 +70,7 @@ export default function Index() {
           answer={answer}
           input={input}
           isRunning={isRunning}
-          currentRadicalIndex={currentRadicalIndex}
+          currentWordIndex={currentWordIndex}
         />
         <AmountSelector
           amounts={amounts}

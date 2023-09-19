@@ -16,19 +16,19 @@ export default function Index() {
   const wordJSON = [Radicals, Initials, Radicals];
   const {
     record,
-    currentRadicalIndex,
-    currentRadicalStatus,
+    currentWordIndex,
+    currentWordStatus,
     shouldTransition,
     amounts,
     amount,
-    randomRadicals,
+    randomWords,
     handleKeyDown,
     setAmount,
     reset,
     isRunning,
   } = useCharacterHelper(wordJSON[currentCategoryIndex]);
 
-  useKeyDownHandler(handleKeyDown, [currentRadicalIndex, randomRadicals]);
+  useKeyDownHandler(handleKeyDown, [currentWordIndex, randomWords]);
 
   const handleCategoryChange = (category, index) => {
     // TODO: dynamic import
@@ -58,8 +58,8 @@ export default function Index() {
         </div>
         <Character
           shouldTransition={shouldTransition}
-          currentRadicalStatus={currentRadicalStatus}
-          character={randomRadicals[currentRadicalIndex]}
+          currentWordStatus={currentWordStatus}
+          character={randomWords[currentWordIndex]}
         />
       </main>
       <div className="flex flex-col items-center absolute bottom-[10vh] left-1/2 -translate-x-1/2 gap-6">
