@@ -14,7 +14,7 @@ export default function AmountSelector({
             return (
               <div
                 onClick={() => setAmount(item)}
-                className={`text-2xl cursor-pointer ${
+                className={`text-2xl cursor-pointer select-none ${
                   amount === item ? "text-blue-500" : "text-gray-700"
                 }`}
                 key={item}

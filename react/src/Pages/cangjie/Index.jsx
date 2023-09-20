@@ -53,7 +53,11 @@ export default function Index() {
         {/* TODO: hover to display speed and accuracy, color to indicate proficiency */}
         <div className="flex flex-row gap-4 justify-center text-2xl">
           {Object.keys(Radicals).map((radical) => {
-            return <div key={radical}>{radical}</div>;
+            return (
+              <div key={radical} className="select-none">
+                {radical}
+              </div>
+            );
           })}
         </div>
         <Character

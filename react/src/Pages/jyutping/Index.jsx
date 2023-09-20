@@ -56,7 +56,11 @@ export default function Index() {
         {/* TODO: hover to display speed and accuracy, color to indicate proficiency */}
         <section className="flex flex-row gap-4 justify-center text-2xl">
           {initials.map((radical) => {
-            return <div key={radical}>{radical.toUpperCase()}</div>;
+            return (
+              <div key={radical} className="select-none">
+                {radical.toUpperCase()}
+              </div>
+            );
           })}
         </section>
         <Character
