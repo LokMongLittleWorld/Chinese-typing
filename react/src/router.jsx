@@ -8,6 +8,7 @@ import GuestLayout from "./Layouts/GuestLayout.jsx";
 import Index from "./Pages/speed-typing/Index.jsx";
 import CangjieIndex from "./Pages/cangjie/index.jsx";
 import JyutpingIndex from "./Pages/jyutping/Index.jsx";
+import JapaneseIndex from "./Pages/japanese/Index.jsx";
 
 const router = createBrowserRouter([
   {
@@ -33,10 +34,6 @@ const router = createBrowserRouter([
             path: "",
             element: <CangjieIndex />,
           },
-          {
-            path: "radical-practice",
-            element: <CangjieIndex />,
-          },
         ],
       },
       {
@@ -49,6 +46,15 @@ const router = createBrowserRouter([
           {
             path: "initial-practice",
             element: <JyutpingIndex />,
+          },
+        ],
+      },
+      {
+        path: "/japanese",
+        children: [
+          {
+            path: "",
+            element: <JapaneseIndex />,
           },
         ],
       },
