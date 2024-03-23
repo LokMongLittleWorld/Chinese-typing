@@ -5,6 +5,7 @@ export default function Character({
   currentWordStatus,
   character,
   font = null,
+  test = null,
 }) {
   return (
     <section
