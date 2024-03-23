@@ -5,9 +5,10 @@ import Users from "./Pages/Users.jsx";
 import NotFound from "./Pages/NotFound.jsx";
 import DefaultLayout from "./Layouts/DefaultLayout.jsx";
 import GuestLayout from "./Layouts/GuestLayout.jsx";
-import Home from "./Pages/Home.jsx";
-import CangjieIndex from "./Pages/Cangjie/index.jsx";
-import JyutpingIndex from "./Pages/Jyutping/Index.jsx";
+import Index from "./Pages/speed-typing/Index.jsx";
+import CangjieIndex from "./Pages/cangjie/index.jsx";
+import JyutpingIndex from "./Pages/jyutping/Index.jsx";
+import JapaneseIndex from "./Pages/japanese/Index.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,21 +21,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/",
-        element: <Home />,
+        element: <Index />,
       },
       {
         path: "/home",
-        element: <Home />,
+        element: <Index />,
       },
       {
         path: "/cangjie",
         children: [
           {
             path: "",
-            element: <CangjieIndex />,
-          },
-          {
-            path: "radical-practice",
             element: <CangjieIndex />,
           },
         ],
@@ -49,6 +46,15 @@ const router = createBrowserRouter([
           {
             path: "initial-practice",
             element: <JyutpingIndex />,
+          },
+        ],
+      },
+      {
+        path: "/japanese",
+        children: [
+          {
+            path: "",
+            element: <JapaneseIndex />,
           },
         ],
       },
@@ -73,7 +79,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/home",
-        element: <Home />,
+        element: <Index />,
       },
     ],
   },

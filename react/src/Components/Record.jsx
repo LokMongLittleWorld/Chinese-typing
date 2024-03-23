@@ -1,6 +1,6 @@
 export default function Record({ speed, accuracy }) {
   return (
-    <div className="flex flex-row items-center bg-gray-200 gap-4 py-1 px-2 rounded-lg">
+    <div className="flex flex-row items-center bg-gray-200 gap-4 py-1 px-2 rounded-lg select-none">
       <div className="flex flex-row">
         <div className="text-2xl text-gray-700">速度：</div>
         <div className="text-2xl text-emerald-500">{speed}</div>

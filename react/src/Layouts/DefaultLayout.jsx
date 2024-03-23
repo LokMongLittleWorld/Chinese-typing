@@ -52,7 +52,7 @@ export default function DefaultLayout() {
                   }}
                   key={key}
                   to={"/" + key}
-                  className={`hover:text-blue-300 hover:-translate-y-0.5 transition-all duration-500 ${
+                  className={`hover:text-blue-300 hover:-translate-y-0.5 transition-all duration-500 select-none ${
                     currentPage === key ? "text-blue-500" : "text-black"
                   }`}
                 >
