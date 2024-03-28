@@ -3,17 +3,19 @@ import Record from "../../Components/Record.jsx";
 import PracticeCategory from "../../Components/PracticeCategory.jsx";
 import Radicals from "../../../static/cangjie/radicals.json";
 import Initials from "../../../static/jyutping/initial_practice.json";
+import Words from "../../../static/cangjie/words.json";
 import useKeyDownHandler from "../../hooks/useKeyDownHandler.jsx";
 import useCharacterHelper from "../../hooks/useCharacterHelper.jsx";
 import Character from "../../Components/Character.jsx";
 import AmountSelector from "../../Components/AmountSelector.jsx";
+import InputDisplay from "../../Components/InputDisplay.jsx";
 
 export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(
     localStorage.getItem("currentCategoryIndex") || 0
   );
-  const wordJSON = [Radicals, Initials, Radicals];
+  const wordJSON = [Radicals, Initials, Words];
   const {
     record,
     currentWordIndex,
@@ -26,6 +28,8 @@ export default function Index() {
     setAmount,
     reset,
     isRunning,
+    answer,
+    input,
   } = useCharacterHelper(wordJSON[currentCategoryIndex]);
 
   useKeyDownHandler(handleKeyDown, [currentWordIndex, randomWords]);
@@ -36,7 +40,7 @@ export default function Index() {
     localStorage.setItem("currentCategoryIndex", index);
     if (category === "字根訓練") reset(Radicals);
     if (category === "字形訓練") reset(Initials);
-    if (category === "單字訓練") reset(Radicals);
+    if (category === "單字訓練") reset(Words);
   };
 
   return (
@@ -61,12 +65,19 @@ export default function Index() {
           })}
         </div>
         <Character
-          shouldTransition={shouldTransition}
-          currentWordStatus={currentWordStatus}
+          //shouldTransition={shouldTransition}
+          //currentWordStatus={currentWordStatus}
           character={randomWords[currentWordIndex]}
         />
       </main>
       <div className="flex flex-col items-center absolute bottom-[10vh] left-1/2 -translate-x-1/2 gap-6">
+        <InputDisplay
+          answer={answer}
+          input={input}
+          isRunning={isRunning}
+          currentWordIndex={currentWordIndex}
+          currentWordStatus={currentWordStatus}
+        />
         <AmountSelector
           amounts={amounts}
           amount={amount}

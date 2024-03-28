@@ -83,7 +83,8 @@ function useCharacterHelper(JSON) {
       setCurrentWordIndex((prev) => prev + 1);
       inputRef.current = []; // Reset the input
       setCurrentWordStatus(() => "default");
-      setShouldTransition(true); // Set to true to enable transition
+      //transition moved to InputDisplay
+      //setShouldTransition(true); // Set to true to enable transition
       currentKeyIndexRef.current = 0; // Reset the key index
     } else {
       setCurrentWordStatus(() => "default");
