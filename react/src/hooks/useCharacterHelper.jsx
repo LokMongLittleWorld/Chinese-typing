@@ -24,8 +24,12 @@ function useCharacterHelper(JSON) {
     setCurrentWordIndex(0);
     setTime(0);
     setWrongRadicals(new Map());
-    setRandomWords(getRandomRadicals(newWordJSON));
+    const newRandomWords = getRandomRadicals(newWordJSON);
+    setRandomWords(newRandomWords);
+    setAnswer(newWordJSON[newRandomWords[0]].split(" ")[0]);
     setWordJSON(newWordJSON);
+    setCurrentWordStatus("default");
+    setIsRunning(false);
     currentKeyIndexRef.current = 0; // Reset the key index
     inputRef.current = []; // Reset the input
   };
@@ -83,8 +87,6 @@ function useCharacterHelper(JSON) {
       setCurrentWordIndex((prev) => prev + 1);
       inputRef.current = []; // Reset the input
       setCurrentWordStatus(() => "default");
-      //transition moved to InputDisplay
-      //setShouldTransition(true); // Set to true to enable transition
       currentKeyIndexRef.current = 0; // Reset the key index
     } else {
       setCurrentWordStatus(() => "default");
@@ -109,9 +111,9 @@ function useCharacterHelper(JSON) {
     setAnswer(targetValueParts[targetPart]);
   }, [amount]);
 
-  useEffect(() => {
-    setShouldTransition(false);
-  }, [currentWordIndex]);
+  // useEffect(() => {
+  //   setShouldTransition(false);
+  // }, [currentWordIndex]);
 
   return {
     handleKeyDown,

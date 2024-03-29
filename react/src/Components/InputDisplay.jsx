@@ -3,13 +3,12 @@ import React from "react";
 export default function InputDisplay({
   answer,
   input,
-  isRunning,
   currentWordIndex,
   currentWordStatus,
 }) {
   return (
     <>
-      {isRunning && answer.length > 1 && (
+      {answer.length > 1 && (
         <div className="flex flex-row items-end gap-4">
           {[...answer].map((char, index) => {
             const isLastWrong =

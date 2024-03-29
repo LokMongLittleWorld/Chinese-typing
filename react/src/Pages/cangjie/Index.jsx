@@ -20,7 +20,6 @@ export default function Index() {
     record,
     currentWordIndex,
     currentWordStatus,
-    shouldTransition,
     amounts,
     amount,
     randomWords,
@@ -65,8 +64,8 @@ export default function Index() {
           })}
         </div>
         <Character
-          //shouldTransition={shouldTransition}
-          //currentWordStatus={currentWordStatus}
+          shouldTransition={answer.length === 1}
+          currentWordStatus={currentWordStatus}
           character={randomWords[currentWordIndex]}
         />
       </main>
@@ -74,7 +73,6 @@ export default function Index() {
         <InputDisplay
           answer={answer}
           input={input}
-          isRunning={isRunning}
           currentWordIndex={currentWordIndex}
           currentWordStatus={currentWordStatus}
         />
