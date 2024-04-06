@@ -75,6 +75,7 @@ export default function Index() {
           input={input}
           currentWordIndex={currentWordIndex}
           currentWordStatus={currentWordStatus}
+          Radicals={Radicals}
         />
         <AmountSelector
           amounts={amounts}

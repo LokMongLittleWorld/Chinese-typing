@@ -5,7 +5,19 @@ export default function InputDisplay({
   input,
   currentWordIndex,
   currentWordStatus,
+  Radicals,
 }) {
+  const getKeyByValue = (value) => {
+    const object = Object(Radicals);
+    const key = Object.keys(object).find((key) => object[key] === value);
+    if (key !== undefined) {
+      return key;
+    }
+    if (value === undefined) {
+      return "";
+    }
+    return value;
+  };
   return (
     <>
       {answer.length > 1 && (
@@ -23,7 +35,7 @@ export default function InputDisplay({
                     isLastWrong ? "text-rose-400" : ""
                   }`}
                 >
-                  {input[index]}
+                  {`${getKeyByValue(input[index])}`}
                 </div>
                 <div className="w-8 h-[3px] rounded-full bg-gray-600" />
               </div>
