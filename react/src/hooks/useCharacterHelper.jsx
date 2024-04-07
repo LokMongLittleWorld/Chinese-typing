@@ -75,6 +75,7 @@ function useCharacterHelper(JSON) {
       setCurrentWordIndex(0);
       setTime(0);
       setWrongRadicals(new Map());
+      setCurrentWordStatus("default");
       setRandomWords(getRandomRadicals(wordJSON));
       return;
     }
