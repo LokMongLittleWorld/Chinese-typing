@@ -6,7 +6,7 @@ function useCharacterHelper(JSON) {
   const [wordJSON, setWordJSON] = useState(JSON);
   const [record, setRecord] = useState({ speed: null, accuracy: null });
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [currentWordStatus, setCurrentWordStatus] = useState("default");
+  const currentWordStatusRef = useRef("default");
   const [shouldTransition, setShouldTransition] = useState(false);
   const [amounts, setAmounts] = useState([5, 50, 100]);
   const [amount, setAmount] = useState(amounts[0]);
@@ -15,10 +15,10 @@ function useCharacterHelper(JSON) {
   const [targetPart, setTargetPart] = useState(0);
   const [answer, setAnswer] = useState("");
   const inputRef = useRef([]);
+  const inputIndexRef = useRef(0);
+
   const { time, setTime, isRunning, setIsRunning } = useTimer();
   const { speed, accuracy } = useRecorder();
-
-  const inputIndexRef = useRef(0);
 
   const reset = (newWordJSON) => {
     // game reset based on new wordJSON
@@ -29,7 +29,7 @@ function useCharacterHelper(JSON) {
     setRandomWords(newRandomWords);
     setAnswer(newWordJSON[newRandomWords[0]].split(" ")[0]);
     setWordJSON(newWordJSON);
-    setCurrentWordStatus("default");
+    currentWordStatusRef.current = "default";
     setIsRunning(false);
     inputIndexRef.current = 0; // Reset the key index
     inputRef.current = []; // Reset the input
@@ -51,47 +51,66 @@ function useCharacterHelper(JSON) {
       setIsRunning(true);
     }
 
+    //press space bar to go to the next word
+    if (
+      currentWordStatusRef.current === "correct" &&
+      " " === e.key.toLowerCase()
+    ) {
+      nextWord();
+      return;
+    } else if (
+      currentWordStatusRef.current === "correct" &&
+      " " !== e.key.toLowerCase()
+    )
+      return;
+
     // neglect non-alphabet
     if (!/^[a-zA-Z]$/.test(e.key)) {
       return;
     }
 
     const targetValue = getTargetValue(currentWordIndex);
-
     inputRef.current[inputIndexRef.current] = e.key.toLowerCase();
 
     // incorrect
     if (targetValue[inputIndexRef.current] !== e.key.toLowerCase()) {
       setWrongRadicals((prev) => prev.set(currentWordIndex, e.key));
-      setCurrentWordStatus(() => "wrong");
-      return;
-    }
-
-    //end case
-    if (
-      inputIndexRef.current + 1 === targetValue.length &&
-      currentWordIndex === amount - 1
-    ) {
-      setIsRunning(false);
-      setRecord({
-        speed: speed(amount, time),
-        accuracy: accuracy(amount, wrongRadicals.size),
-      });
-      reset(wordJSON);
+      currentWordStatusRef.current = "wrong";
       return;
     }
 
     // correct
     if (inputIndexRef.current + 1 === targetValue.length) {
-      setAnswer(getTargetValue(currentWordIndex + 1));
-      setCurrentWordIndex((prev) => prev + 1);
-      inputRef.current = []; // Reset the input
-      inputIndexRef.current = 0; // Reset the key index
-      setCurrentWordStatus(() => "default");
+      if (targetValue.length === 1) {
+        nextWord();
+        return;
+      }
+      currentWordStatusRef.current = "correct";
     } else {
-      setCurrentWordStatus(() => "default");
+      currentWordStatusRef.current = "default";
       inputIndexRef.current++; // Increment the key index
     }
+  };
+
+  const nextWord = () => {
+    if (currentWordIndex === amount - 1) {
+      endGame();
+      return;
+    }
+    inputRef.current = []; // Reset the input
+    inputIndexRef.current = 0; // Reset the key index
+    setAnswer(getTargetValue(currentWordIndex + 1));
+    setCurrentWordIndex((prev) => prev + 1);
+    currentWordStatusRef.current = "default";
+  };
+
+  const endGame = () => {
+    setIsRunning(false);
+    setRecord({
+      speed: speed(amount, time),
+      accuracy: accuracy(amount, wrongRadicals.size),
+    });
+    reset(wordJSON);
   };
 
   const getRandomRadicals = (radicals) => {
@@ -116,7 +135,7 @@ function useCharacterHelper(JSON) {
     reset,
     record,
     currentWordIndex,
-    currentWordStatus,
+    currentWordStatus: currentWordStatusRef.current,
     shouldTransition,
     amounts,
     amount,
