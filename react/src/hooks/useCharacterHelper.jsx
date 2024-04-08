@@ -18,9 +18,10 @@ function useCharacterHelper(JSON) {
   const { time, setTime, isRunning, setIsRunning } = useTimer();
   const { speed, accuracy } = useRecorder();
 
-  const currentKeyIndexRef = useRef(0);
+  const inputIndexRef = useRef(0);
 
   const reset = (newWordJSON) => {
+    // game reset based on new wordJSON
     setCurrentWordIndex(0);
     setTime(0);
     setWrongRadicals(new Map());
@@ -30,11 +31,12 @@ function useCharacterHelper(JSON) {
     setWordJSON(newWordJSON);
     setCurrentWordStatus("default");
     setIsRunning(false);
-    currentKeyIndexRef.current = 0; // Reset the key index
+    inputIndexRef.current = 0; // Reset the key index
     inputRef.current = []; // Reset the input
   };
 
   const getTargetValue = (index) => {
+    // get target value (the answer of the current word based on the index)
     // prettier-ignore
     const targetValueParts = wordJSON[randomWords[index]].split(" ");
     const targetValue = targetValueParts[targetPart];
@@ -42,7 +44,9 @@ function useCharacterHelper(JSON) {
   };
 
   const handleKeyDown = (e) => {
-    // start case
+    // handle keydown event
+
+    // start case, initialize the timer
     if (currentWordIndex === 0) {
       setIsRunning(true);
     }
@@ -54,12 +58,10 @@ function useCharacterHelper(JSON) {
 
     const targetValue = getTargetValue(currentWordIndex);
 
-    inputRef.current[currentKeyIndexRef.current] = e.key.toLowerCase();
-    // Force update to re-render with new input
-    inputRef.current = [...inputRef.current];
+    inputRef.current[inputIndexRef.current] = e.key.toLowerCase();
 
     // incorrect
-    if (targetValue[currentKeyIndexRef.current] !== e.key.toLowerCase()) {
+    if (targetValue[inputIndexRef.current] !== e.key.toLowerCase()) {
       setWrongRadicals((prev) => prev.set(currentWordIndex, e.key));
       setCurrentWordStatus(() => "wrong");
       return;
@@ -81,17 +83,15 @@ function useCharacterHelper(JSON) {
     }
 
     // correct
-    if (currentKeyIndexRef.current === targetValue.length - 1) {
-      // Wait 60ms
-      // await new Promise((resolve) => setTimeout(resolve, 60));
+    if (inputIndexRef.current + 1 === targetValue.length) {
       setAnswer(getTargetValue(currentWordIndex + 1));
       setCurrentWordIndex((prev) => prev + 1);
       inputRef.current = []; // Reset the input
+      inputIndexRef.current = 0; // Reset the key index
       setCurrentWordStatus(() => "default");
-      currentKeyIndexRef.current = 0; // Reset the key index
     } else {
       setCurrentWordStatus(() => "default");
-      currentKeyIndexRef.current++; // Increment the key index
+      inputIndexRef.current++; // Increment the key index
     }
   };
 
@@ -111,10 +111,6 @@ function useCharacterHelper(JSON) {
     const targetValueParts = JSON[initialRandomRadicals[0]].split(" ");
     setAnswer(targetValueParts[targetPart]);
   }, [amount]);
-
-  // useEffect(() => {
-  //   setShouldTransition(false);
-  // }, [currentWordIndex]);
 
   return {
     handleKeyDown,
