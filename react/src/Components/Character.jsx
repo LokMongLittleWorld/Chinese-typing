@@ -12,7 +12,7 @@ export default function Character({
           ${font ? font : ""}
           ${
             currentWordStatus === "correct"
-              ? "text-black"
+              ? "text-gray-700"
               : currentWordStatus === "wrong" && shouldTransition
               ? "text-rose-400"
               : "text-gray-500"
