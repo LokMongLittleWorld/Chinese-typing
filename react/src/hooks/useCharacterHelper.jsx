@@ -52,15 +52,12 @@ function useCharacterHelper(JSON) {
     }
 
     //press space bar to go to the next word
-    if (
-      currentWordStatusRef.current === "correct" &&
-      " " === e.key.toLowerCase()
+    // prettier-ignore
+    if (currentWordStatusRef.current === "correct" && " " === e.key.toLowerCase()
     ) {
       nextWord();
       return;
-    } else if (
-      currentWordStatusRef.current === "correct" &&
-      " " !== e.key.toLowerCase()
+    } else if (currentWordStatusRef.current === "correct" && " " !== e.key.toLowerCase()
     )
       return;
 
@@ -81,6 +78,7 @@ function useCharacterHelper(JSON) {
 
     // correct
     if (inputIndexRef.current + 1 === targetValue.length) {
+      // single input
       if (targetValue.length === 1) {
         nextWord();
         return;
