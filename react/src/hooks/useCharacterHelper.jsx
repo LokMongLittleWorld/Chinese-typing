@@ -67,18 +67,17 @@ function useCharacterHelper(JSON) {
       return;
     }
 
-    // end case
-    if (currentWordIndex === amount - 1) {
+    //end case
+    if (
+      inputIndexRef.current + 1 === targetValue.length &&
+      currentWordIndex === amount - 1
+    ) {
       setIsRunning(false);
       setRecord({
         speed: speed(amount, time),
         accuracy: accuracy(amount, wrongRadicals.size),
       });
-      setCurrentWordIndex(0);
-      setTime(0);
-      setWrongRadicals(new Map());
-      setCurrentWordStatus("default");
-      setRandomWords(getRandomRadicals(wordJSON));
+      reset(wordJSON);
       return;
     }
 
