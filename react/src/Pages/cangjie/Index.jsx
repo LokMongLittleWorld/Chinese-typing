@@ -26,6 +26,7 @@ export default function Index() {
     handleKeyDown,
     setAmount,
     reset,
+    targetPartRef,
     isRunning,
     answer,
     input,

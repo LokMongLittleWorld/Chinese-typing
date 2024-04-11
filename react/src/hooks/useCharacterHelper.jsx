@@ -11,9 +11,12 @@ function useCharacterHelper(JSON) {
   const [amounts, setAmounts] = useState([5, 50, 100]);
   const [amount, setAmount] = useState(amounts[0]);
   const [randomWords, setRandomWords] = useState([]);
+  const [wordLength, setWordLength] = useState([]);
+  const [sumOfWordLength, setSumOfWordLength] = useState(0);
   const [wrongRadicals, setWrongRadicals] = useState(new Map());
-  const [targetPart, setTargetPart] = useState(0);
+  const targetPartRef = useRef(0);
   const [answer, setAnswer] = useState("");
+  const [answerMap, setAnswerMap] = useState(new Map());
   const inputRef = useRef([]);
   const inputIndexRef = useRef(0);
 
@@ -25,9 +28,7 @@ function useCharacterHelper(JSON) {
     setCurrentWordIndex(0);
     setTime(0);
     setWrongRadicals(new Map());
-    const newRandomWords = getRandomRadicals(newWordJSON);
-    setRandomWords(newRandomWords);
-    setAnswer(newWordJSON[newRandomWords[0]].split(" ")[0]);
+    handleRandomWords(newWordJSON);
     setWordJSON(newWordJSON);
     currentWordStatusRef.current = "default";
     setIsRunning(false);
@@ -35,18 +36,10 @@ function useCharacterHelper(JSON) {
     inputRef.current = []; // Reset the input
   };
 
-  const getTargetValue = (index) => {
-    // get target value (the answer of the current word based on the index)
-    // prettier-ignore
-    const targetValueParts = wordJSON[randomWords[index]].split(" ");
-    const targetValue = targetValueParts[targetPart];
-    return targetValue;
-  };
-
   const handleKeyDown = (e) => {
     // handle keydown event
 
-    // start case, initialize the timer
+    // start, initialize the timer
     if (currentWordIndex === 0) {
       setIsRunning(true);
     }
@@ -66,7 +59,7 @@ function useCharacterHelper(JSON) {
       return;
     }
 
-    const targetValue = getTargetValue(currentWordIndex);
+    const targetValue = answerMap.get(randomWords[currentWordIndex]);
     inputRef.current[inputIndexRef.current] = e.key.toLowerCase();
 
     // incorrect
@@ -91,13 +84,13 @@ function useCharacterHelper(JSON) {
   };
 
   const nextWord = () => {
-    if (currentWordIndex === amount - 1) {
+    if (currentWordIndex === sumOfWordLength - 1) {
       endGame();
       return;
     }
     inputRef.current = []; // Reset the input
     inputIndexRef.current = 0; // Reset the key index
-    setAnswer(getTargetValue(currentWordIndex + 1));
+    setAnswer(answerMap.get(randomWords[currentWordIndex + 1]));
     setCurrentWordIndex((prev) => prev + 1);
     currentWordStatusRef.current = "default";
   };
@@ -105,27 +98,51 @@ function useCharacterHelper(JSON) {
   const endGame = () => {
     setIsRunning(false);
     setRecord({
-      speed: speed(amount, time),
-      accuracy: accuracy(amount, wrongRadicals.size),
+      speed: speed(sumOfWordLength, time),
+      accuracy: accuracy(sumOfWordLength, wrongRadicals.size),
     });
     reset(wordJSON);
   };
 
-  const getRandomRadicals = (radicals) => {
-    const radicalKeys = Object.keys(radicals);
-    const selectedRadicals = [];
+  //1. generate RandomWordsArr
+  //2. generate answer map
+  //3. generate wordLengthArr
+  const handleRandomWords = (newWordJSON) => {
+    // wordEntries represents the key-value pair array of the newWordJSON
+    const wordEntries = Object.entries(newWordJSON);
+    const selectedWords = [];
+    const wordLengthTmp = [];
+    const answerMapTmp = new Map();
+
     for (let i = 0; i < amount; i++) {
-      const randomIndex = Math.floor(Math.random() * radicalKeys.length);
-      selectedRadicals.push(radicalKeys[randomIndex]);
+      const randomIndex = Math.floor(Math.random() * wordEntries.length);
+      const randomWordEntry = wordEntries[randomIndex];
+
+      // randomWordEntry[0] is the key, randomWordEntry[1] is the value
+      if (randomWordEntry[0].length === 1) {
+        selectedWords.push(randomWordEntry[0]);
+        wordLengthTmp.push(randomWordEntry[0].length);
+        answerMapTmp.set(randomWordEntry[0], randomWordEntry[1]);
+      } else {
+        const words = Array.from(randomWordEntry[0]);
+        const values = randomWordEntry[1].split(" ");
+        wordLengthTmp.push(words.length);
+        for (let j = 0; j < words.length; j++) {
+          selectedWords.push(words[j]);
+          answerMapTmp.set(words[j], values[j]);
+        }
+      }
+
+      setRandomWords(selectedWords);
+      setWordLength(wordLengthTmp);
+      setAnswerMap(answerMapTmp);
+      setSumOfWordLength(wordLengthTmp.reduce((a, b) => a + b, 0));
+      setAnswer(answerMapTmp.get(selectedWords[0]));
     }
-    return selectedRadicals;
   };
 
   useEffect(() => {
-    const initialRandomRadicals = getRandomRadicals(JSON);
-    setRandomWords(initialRandomRadicals);
-    const targetValueParts = JSON[initialRandomRadicals[0]].split(" ");
-    setAnswer(targetValueParts[targetPart]);
+    handleRandomWords(wordJSON);
   }, [amount]);
 
   return {
@@ -142,6 +159,7 @@ function useCharacterHelper(JSON) {
     time,
     setAmount,
     setTime,
+    targetPartRef,
     isRunning,
     answer,
     input: inputRef.current, // Return the input as a ref
