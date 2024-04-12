@@ -13,7 +13,7 @@ function useCharacterHelper(JSON) {
   const [randomWords, setRandomWords] = useState([]);
   const [wordLength, setWordLength] = useState([]);
   const [sumOfWordLength, setSumOfWordLength] = useState(0);
-  const [wrongRadicals, setWrongRadicals] = useState(new Map());
+  const [wrongWords, setWrongWords] = useState(new Map());
   const targetPartRef = useRef(0);
   const [answerMap, setAnswerMap] = useState(new Map());
   const inputRef = useRef([]);
@@ -26,7 +26,7 @@ function useCharacterHelper(JSON) {
     // game reset based on new wordJSON
     setCurrentWordIndex(0);
     setTime(0);
-    setWrongRadicals(new Map());
+    setWrongWords(new Map());
     handleRandomWords(newWordJSON);
     setWordJSON(newWordJSON);
     currentWordStatusRef.current = "default";
@@ -63,7 +63,7 @@ function useCharacterHelper(JSON) {
 
     // incorrect
     if (targetValue[inputIndexRef.current] !== e.key.toLowerCase()) {
-      setWrongRadicals((prev) => prev.set(currentWordIndex, e.key));
+      setWrongWords((prev) => prev.set(currentWordIndex, e.key));
       currentWordStatusRef.current = "wrong";
       return;
     }
@@ -97,7 +97,7 @@ function useCharacterHelper(JSON) {
     setIsRunning(false);
     setRecord({
       speed: speed(sumOfWordLength, time),
-      accuracy: accuracy(sumOfWordLength, wrongRadicals.size),
+      accuracy: accuracy(sumOfWordLength, wrongWords.size),
     });
     reset(wordJSON);
   };
@@ -152,7 +152,7 @@ function useCharacterHelper(JSON) {
     amounts,
     amount,
     randomWords,
-    wrongRadicals,
+    wrongWords,
     time,
     setAmount,
     setTime,
