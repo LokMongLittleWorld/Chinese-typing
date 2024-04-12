@@ -8,7 +8,9 @@ export default function Record({ speed, accuracy }) {
       </div>
       <div className="flex flex-row">
         <div className="text-2xl">準繩度：</div>
-        <div className="text-2xl text-emerald-500">{accuracy * 100}%</div>
+        <div className="text-2xl text-emerald-500">
+          {(accuracy * 100).toPrecision(3)}%
+        </div>
       </div>
     </div>
   );
