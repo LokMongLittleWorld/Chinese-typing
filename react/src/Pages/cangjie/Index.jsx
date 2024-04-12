@@ -26,9 +26,9 @@ export default function Index() {
     handleKeyDown,
     setAmount,
     reset,
+    answerMap,
     targetPartRef,
     isRunning,
-    answer,
     input,
   } = useCharacterHelper(wordJSON[currentCategoryIndex]);
 
@@ -65,14 +65,17 @@ export default function Index() {
           })}
         </div>
         <Character
-          shouldTransition={answer.length === 1}
+          shouldTransition={
+            (answerMap.get(randomWords[currentWordIndex]) || "").length === 1
+          }
+          tmp={answerMap.get(randomWords[currentWordIndex])}
           currentWordStatus={currentWordStatus}
           character={randomWords[currentWordIndex]}
         />
       </main>
       <div className="flex flex-col items-center absolute bottom-[10vh] left-1/2 -translate-x-1/2 gap-6">
         <InputDisplay
-          answer={answer}
+          answer={answerMap.get(randomWords[currentWordIndex]) || ""}
           input={input}
           currentWordIndex={currentWordIndex}
           currentWordStatus={currentWordStatus}

@@ -15,7 +15,6 @@ function useCharacterHelper(JSON) {
   const [sumOfWordLength, setSumOfWordLength] = useState(0);
   const [wrongRadicals, setWrongRadicals] = useState(new Map());
   const targetPartRef = useRef(0);
-  const [answer, setAnswer] = useState("");
   const [answerMap, setAnswerMap] = useState(new Map());
   const inputRef = useRef([]);
   const inputIndexRef = useRef(0);
@@ -90,7 +89,6 @@ function useCharacterHelper(JSON) {
     }
     inputRef.current = []; // Reset the input
     inputIndexRef.current = 0; // Reset the key index
-    setAnswer(answerMap.get(randomWords[currentWordIndex + 1]));
     setCurrentWordIndex((prev) => prev + 1);
     currentWordStatusRef.current = "default";
   };
@@ -137,7 +135,6 @@ function useCharacterHelper(JSON) {
       setWordLength(wordLengthTmp);
       setAnswerMap(answerMapTmp);
       setSumOfWordLength(wordLengthTmp.reduce((a, b) => a + b, 0));
-      setAnswer(answerMapTmp.get(selectedWords[0]));
     }
   };
 
@@ -159,9 +156,9 @@ function useCharacterHelper(JSON) {
     time,
     setAmount,
     setTime,
+    answerMap,
     targetPartRef,
     isRunning,
-    answer,
     input: inputRef.current, // Return the input as a ref
   };
 }
