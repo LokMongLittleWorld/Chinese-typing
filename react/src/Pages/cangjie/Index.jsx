@@ -6,9 +6,9 @@ import Initials from "../../../static/jyutping/initial_practice.json";
 import Words from "../../../static/cangjie/words.json";
 import useKeyDownHandler from "../../hooks/useKeyDownHandler.jsx";
 import useCharacterHelper from "../../hooks/useCharacterHelper.jsx";
-import Character from "../../Components/Character.jsx";
 import AmountSelector from "../../Components/AmountSelector.jsx";
 import InputDisplay from "../../Components/InputDisplay.jsx";
+import Character from "../../Components/Character.jsx";
 
 export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
@@ -23,7 +23,7 @@ export default function Index() {
     amounts,
     amount,
     randomWords,
-    wordLength,
+    AccWordLength,
     handleKeyDown,
     setAmount,
     reset,
@@ -68,7 +68,7 @@ export default function Index() {
           shouldTransition={
             (answerMap.get(randomWords[currentWordIndex]) || "").length === 1
           }
-          wordLength={wordLength}
+          AccWordLength={AccWordLength}
           currentWordIndex={currentWordIndex}
           currentWordStatus={currentWordStatus}
           randomWords={randomWords}
