@@ -157,7 +157,7 @@ function useCharacterHelper(JSON) {
     setAmount,
     setTime,
     answerMap,
-    targetPartRef,
+    wordLength,
     isRunning,
     input: inputRef.current, // Return the input as a ref
   };
