@@ -3,6 +3,7 @@ import React from "react";
 export default function Character({
   shouldTransition,
   AccWordLength,
+  CurrentCategory,
   currentWordIndex,
   currentWordStatus,
   randomWords,
@@ -39,6 +40,10 @@ export default function Character({
       {getCurrentWordLength(currentWordIndex) === 1 ? (
         <div
           className={`${currentWordIndex} absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[200px] md:text-[300px] xl:text-[400px] 2xl:text-[500px] cursor-default select-none -z-10
+          ${
+            CurrentCategory === "字形訓練" &&
+            "font-glyph text-[400px] md:text-[600px] xl:text-[800px] 2xl:text-[1000px]"
+          }
           ${
             currentWordStatus === "correct"
               ? "text-gray-700"

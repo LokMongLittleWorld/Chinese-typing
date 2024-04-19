@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import Record from "../../Components/Record.jsx";
 import PracticeCategory from "../../Components/PracticeCategory.jsx";
 import Radicals from "../../../static/cangjie/radicals.json";
-import Initials from "../../../static/jyutping/initial_practice.json";
+import Glyphs from "../../../static/cangjie/glyphs.json";
 import Words from "../../../static/cangjie/words.json";
-import useKeyDownHandler from "../../hooks/useKeyDownHandler.jsx";
 import useCharacterHelper from "../../hooks/useCharacterHelper.jsx";
 import AmountSelector from "../../Components/AmountSelector.jsx";
 import InputDisplay from "../../Components/InputDisplay.jsx";
 import Character from "../../Components/Character.jsx";
+import useKeyDownHandler from "../../hooks/useKeyDownHandler.jsx";
 
 export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(
     localStorage.getItem("currentCategoryIndex") || 0
   );
-  const wordJSON = [Radicals, Initials, Words];
+  const wordJSON = [Radicals, Glyphs, Words];
   const {
     record,
     currentWordIndex,
@@ -39,7 +39,7 @@ export default function Index() {
     setCurrentCategoryIndex(index);
     localStorage.setItem("currentCategoryIndex", index);
     if (category === "字根訓練") reset(Radicals);
-    if (category === "字形訓練") reset(Initials);
+    if (category === "字形訓練") reset(Glyphs);
     if (category === "單字訓練") reset(Words);
   };
 
@@ -69,6 +69,7 @@ export default function Index() {
             (answerMap.get(randomWords[currentWordIndex]) || "").length === 1
           }
           AccWordLength={AccWordLength}
+          CurrentCategory={category[currentCategoryIndex]}
           currentWordIndex={currentWordIndex}
           currentWordStatus={currentWordStatus}
           randomWords={randomWords}

@@ -15,9 +15,10 @@
         src: url("../public/fonts/HanyiSentySeaSpray.woff2") format("woff2")
     }
     @font-face {
-        font-family: "Test";
-        src: url("../public/fonts/test.woff2") format("woff2")
+        font-family: "Glyph";
+        src: url("../public/fonts/glyph.ttf") format("truetype")
     }
+
     @font-face {
         font-family: 'Nunito', sans-serif;
     }

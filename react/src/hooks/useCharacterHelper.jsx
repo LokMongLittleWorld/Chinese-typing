@@ -42,6 +42,11 @@ function useCharacterHelper(JSON) {
       setIsRunning(true);
     }
 
+    // console.log(
+    //   randomWords[currentWordIndex],
+    //   answerMap.get(randomWords[currentWordIndex])
+    // );
+
     //press space bar to go to the next word
     // prettier-ignore
     if (currentWordStatusRef.current === "correct" && " " === e.key.toLowerCase()

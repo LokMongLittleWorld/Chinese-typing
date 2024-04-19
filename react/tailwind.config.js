@@ -14,6 +14,7 @@ export default {
         seaSpray: "SeaSpray",
         test: "Test",
         nunito: "Nunito",
+        glyph: "Glyph",
       },
     },
   },
