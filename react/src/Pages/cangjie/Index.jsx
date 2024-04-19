@@ -23,7 +23,7 @@ export default function Index() {
     amounts,
     amount,
     randomWords,
-    AccWordLength,
+    accWordLength,
     handleKeyDown,
     setAmount,
     reset,
@@ -68,8 +68,8 @@ export default function Index() {
           shouldTransition={
             (answerMap.get(randomWords[currentWordIndex]) || "").length === 1
           }
-          AccWordLength={AccWordLength}
-          CurrentCategory={category[currentCategoryIndex]}
+          accWordLength={accWordLength}
+          currentCategory={category[currentCategoryIndex]}
           currentWordIndex={currentWordIndex}
           currentWordStatus={currentWordStatus}
           randomWords={randomWords}

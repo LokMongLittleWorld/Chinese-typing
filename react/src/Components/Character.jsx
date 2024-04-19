@@ -1,47 +1,29 @@
 import React from "react";
+import useHelper from "../hooks/useHelper.jsx";
 
 export default function Character({
   shouldTransition,
-  AccWordLength,
-  CurrentCategory,
+  accWordLength,
+  currentCategory,
   currentWordIndex,
   currentWordStatus,
   randomWords,
 }) {
-  let FirstWordIndex = 0;
-  const getCurrentWordLength = (currentWordIndex) => {
-    for (let i = 0; i < AccWordLength.length; i++) {
-      if (currentWordIndex < AccWordLength[i]) {
-        return i === 0
-          ? AccWordLength[i]
-          : AccWordLength[i] - AccWordLength[i - 1];
-      }
-    }
-  };
+  const { getCurrentWordLength, getCurrentWords } = useHelper();
 
-  const getCurrentWords = (currentWordIndex) => {
-    let words = [];
-    let lastWordIndex = 0;
-    for (let i = 0; i < AccWordLength.length; i++) {
-      if (currentWordIndex < AccWordLength[i]) {
-        FirstWordIndex = AccWordLength[i - 1] || 0;
-        lastWordIndex = AccWordLength[i];
-        break;
-      }
-    }
-    for (let i = FirstWordIndex; i < lastWordIndex; i++) {
-      words.push(randomWords[i]);
-    }
-    return words;
-  };
+  const { words, firstWordIndex } = getCurrentWords(
+    currentWordIndex,
+    accWordLength,
+    randomWords
+  );
 
   return (
     <section>
-      {getCurrentWordLength(currentWordIndex) === 1 ? (
+      {getCurrentWordLength(currentWordIndex, accWordLength) === 1 ? (
         <div
           className={`${currentWordIndex} absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[200px] md:text-[300px] xl:text-[400px] 2xl:text-[500px] cursor-default select-none -z-10
           ${
-            CurrentCategory === "字形訓練" &&
+            currentCategory === "字形訓練" &&
             "font-glyph text-[400px] md:text-[600px] xl:text-[800px] 2xl:text-[1000px]"
           }
           ${
@@ -56,8 +38,8 @@ export default function Character({
         </div>
       ) : (
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-9xl cursor-default select-none -z-10 flex flex-row">
-          {getCurrentWords(currentWordIndex).map((word, index) => {
-            return index + FirstWordIndex === currentWordIndex ? (
+          {words.map((word, index) => {
+            return index + firstWordIndex === currentWordIndex ? (
               <div
                 className={`${
                   currentWordStatus === "wrong"
@@ -65,10 +47,9 @@ export default function Character({
                     : "text-gray-500"
                 }`}
               >
-                {" "}
-                {word}{" "}
+                {word}
               </div>
-            ) : index + FirstWordIndex < currentWordIndex ? (
+            ) : index + firstWordIndex < currentWordIndex ? (
               <div className="text-gray-700"> {word}</div>
             ) : (
               <div className="text-gray-500"> {word}</div>

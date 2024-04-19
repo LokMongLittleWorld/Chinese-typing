@@ -11,7 +11,7 @@ function useCharacterHelper(JSON) {
   const [amounts, setAmounts] = useState([5, 50, 100]);
   const [amount, setAmount] = useState(amounts[0]);
   const [randomWords, setRandomWords] = useState([]);
-  const [AccWordLength, setAccWordLength] = useState([]);
+  const [accWordLength, setAccWordLength] = useState([]);
   const [wrongWords, setWrongWords] = useState(new Map());
   const targetPartRef = useRef(0);
   const [answerMap, setAnswerMap] = useState(new Map());
@@ -87,7 +87,7 @@ function useCharacterHelper(JSON) {
   };
 
   const nextWord = () => {
-    if (currentWordIndex === AccWordLength[AccWordLength.length - 1] - 1) {
+    if (currentWordIndex === accWordLength[accWordLength.length - 1] - 1) {
       endGame();
       return;
     }
@@ -101,8 +101,8 @@ function useCharacterHelper(JSON) {
     setIsRunning(false);
     // prettier-ignore
     setRecord({
-      speed: speed(AccWordLength[AccWordLength.length - 1], time),
-      accuracy: accuracy(AccWordLength[AccWordLength.length - 1], wrongWords.size),
+      speed: speed(accWordLength[accWordLength.length - 1], time),
+      accuracy: accuracy(accWordLength[accWordLength.length - 1], wrongWords.size),
     });
     reset(wordJSON);
   };
@@ -114,31 +114,31 @@ function useCharacterHelper(JSON) {
     // wordEntries represents the key-value pair array of the newWordJSON
     const wordEntries = Object.entries(newWordJSON);
     const selectedWords = [];
-    const AccWordLengthTmp = [];
+    const accWordLengthTmp = [];
     const answerMapTmp = new Map();
 
     for (let i = 0; i < amount; i++) {
       const randomIndex = Math.floor(Math.random() * wordEntries.length);
       const randomWordEntry = wordEntries[randomIndex];
       const currentWordLength =
-        AccWordLengthTmp[AccWordLengthTmp.length - 1] || 0;
+        accWordLengthTmp[accWordLengthTmp.length - 1] || 0;
 
       // randomWordEntry[0] is the key, randomWordEntry[1] is the value
       if (randomWordEntry[0].length === 1) {
         selectedWords.push(randomWordEntry[0]);
-        AccWordLengthTmp.push(currentWordLength + randomWordEntry[0].length);
+        accWordLengthTmp.push(currentWordLength + randomWordEntry[0].length);
         answerMapTmp.set(randomWordEntry[0], randomWordEntry[1]);
       } else {
         const words = Array.from(randomWordEntry[0]);
         const values = randomWordEntry[1].split(" ");
-        AccWordLengthTmp.push(currentWordLength + words.length);
+        accWordLengthTmp.push(currentWordLength + words.length);
         for (let j = 0; j < words.length; j++) {
           selectedWords.push(words[j]);
           answerMapTmp.set(words[j], values[j]);
         }
       }
       setRandomWords(selectedWords);
-      setAccWordLength(AccWordLengthTmp);
+      setAccWordLength(accWordLengthTmp);
       setAnswerMap(answerMapTmp);
     }
   };
@@ -162,7 +162,7 @@ function useCharacterHelper(JSON) {
     setAmount,
     setTime,
     answerMap,
-    AccWordLength,
+    accWordLength,
     isRunning,
     input: inputRef.current, // Return the input as a ref
   };
