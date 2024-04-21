@@ -8,6 +8,7 @@ function useCharacterHelper(JSON) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const currentWordStatusRef = useRef("default");
   const [shouldTransition, setShouldTransition] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [amounts, setAmounts] = useState([5, 50, 100]);
   const [amount, setAmount] = useState(amounts[0]);
   const [randomWords, setRandomWords] = useState([]);
@@ -42,10 +43,11 @@ function useCharacterHelper(JSON) {
       setIsRunning(true);
     }
 
-    // console.log(
-    //   randomWords[currentWordIndex],
-    //   answerMap.get(randomWords[currentWordIndex])
-    // );
+    if (e.key === "Tab") {
+      e.preventDefault();
+      setShowModal((prevState) => !prevState);
+      return;
+    }
 
     //press space bar to go to the next word
     // prettier-ignore
@@ -143,12 +145,18 @@ function useCharacterHelper(JSON) {
     }
   };
 
+  const handleAmountChange = (item) => {
+    setAmount(item);
+    handleRandomWords(wordJSON);
+  };
+
   useEffect(() => {
     handleRandomWords(wordJSON);
-  }, [amount]);
+  }, []);
 
   return {
     handleKeyDown,
+    handleAmountChange,
     reset,
     record,
     currentWordIndex,
@@ -160,6 +168,8 @@ function useCharacterHelper(JSON) {
     wrongWords,
     time,
     setAmount,
+    showModal,
+    setShowModal,
     setTime,
     answerMap,
     accWordLength,

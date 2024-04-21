@@ -9,6 +9,7 @@ import AmountSelector from "../../Components/AmountSelector.jsx";
 import InputDisplay from "../../Components/InputDisplay.jsx";
 import Character from "../../Components/Character.jsx";
 import useKeyDownHandler from "../../hooks/useKeyDownHandler.jsx";
+import CheatSheetModel from "../../Components/CheatSheetModel.jsx";
 
 export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
@@ -25,7 +26,10 @@ export default function Index() {
     randomWords,
     accWordLength,
     handleKeyDown,
+    handleAmountChange,
     setAmount,
+    showModal,
+    setShowModal,
     reset,
     answerMap,
     isRunning,
@@ -43,6 +47,9 @@ export default function Index() {
     if (category === "單字訓練") reset(Words);
   };
 
+  const handleOnClick = () => {
+    setShowModal(false);
+  };
   return (
     <>
       <section className="mt-4 flex flex-row items-center justify-center gap-4">
@@ -64,6 +71,7 @@ export default function Index() {
             );
           })}
         </div>
+        <CheatSheetModel showModal={showModal} handleOnClick={handleOnClick} />
         <Character
           shouldTransition={
             (answerMap.get(randomWords[currentWordIndex]) || "").length === 1
@@ -88,6 +96,7 @@ export default function Index() {
           amount={amount}
           setAmount={setAmount}
           isRunning={isRunning}
+          handleAmountChange={handleAmountChange}
         />
       </div>
     </>

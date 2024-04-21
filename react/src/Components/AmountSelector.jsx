@@ -5,6 +5,7 @@ export default function AmountSelector({
   amount,
   setAmount,
   isRunning,
+  handleAmountChange,
 }) {
   return (
     <>
@@ -13,7 +14,7 @@ export default function AmountSelector({
           {amounts.map((item) => {
             return (
               <div
-                onClick={() => setAmount(item)}
+                onClick={() => handleAmountChange(item)}
                 className={`text-2xl cursor-pointer select-none ${
                   amount === item ? "text-blue-500" : "text-gray-700"
                 }`}
