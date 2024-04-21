@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Record from "../../Components/Record.jsx";
 import PracticeCategory from "../../Components/PracticeCategory.jsx";
 import Radicals from "../../../static/cangjie/radicals.json";
@@ -8,7 +8,6 @@ import useCharacterHelper from "../../hooks/useCharacterHelper.jsx";
 import AmountSelector from "../../Components/AmountSelector.jsx";
 import InputDisplay from "../../Components/InputDisplay.jsx";
 import Character from "../../Components/Character.jsx";
-import useKeyDownHandler from "../../hooks/useKeyDownHandler.jsx";
 import CheatSheetModel from "../../Components/CheatSheetModel.jsx";
 
 export default function Index() {
@@ -36,7 +35,8 @@ export default function Index() {
     input,
   } = useCharacterHelper(wordJSON[currentCategoryIndex]);
 
-  useKeyDownHandler(handleKeyDown, [currentWordIndex, randomWords]);
+  // useKeyDownHandler(handleKeyDown, [currentWordIndex, randomWords]);
+  const inputRef = useRef(null);
 
   const handleCategoryChange = (category, index) => {
     // TODO: dynamic import
@@ -50,8 +50,20 @@ export default function Index() {
   const handleOnClick = () => {
     setShowModal(false);
   };
+
+  useEffect(() => {
+    // Focus on the input element after it renders
+    inputRef.current.focus();
+  }, []); // Empty dependency array ensures this effect runs only once after the component mounts
+
   return (
     <>
+      <input
+        ref={inputRef}
+        onKeyDown={handleKeyDown}
+        className="opacity-0 cursor-default"
+        onBlur={(e) => e.target.focus()}
+      />
       <section className="mt-4 flex flex-row items-center justify-center gap-4">
         <Record speed={record.speed} accuracy={record.accuracy} />
         <PracticeCategory
