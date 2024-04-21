@@ -16,7 +16,7 @@ function useCharacterHelper(JSON) {
   const [wrongWords, setWrongWords] = useState(new Map());
   const targetPartRef = useRef(0);
   const [answerMap, setAnswerMap] = useState(new Map());
-  const inputRef = useRef([]);
+  const inputRef = useRef(null);
   const inputIndexRef = useRef(0);
 
   const { time, setTime, isRunning, setIsRunning } = useTimer();
@@ -174,6 +174,7 @@ function useCharacterHelper(JSON) {
     answerMap,
     accWordLength,
     isRunning,
+    inputRef,
     input: inputRef.current, // Return the input as a ref
   };
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Record from "../../Components/Record.jsx";
 import PracticeCategory from "../../Components/PracticeCategory.jsx";
 import Radicals from "../../../static/cangjie/radicals.json";
@@ -32,11 +32,11 @@ export default function Index() {
     reset,
     answerMap,
     isRunning,
+    inputRef,
     input,
   } = useCharacterHelper(wordJSON[currentCategoryIndex]);
 
   // useKeyDownHandler(handleKeyDown, [currentWordIndex, randomWords]);
-  const inputRef = useRef(null);
 
   const handleCategoryChange = (category, index) => {
     // TODO: dynamic import
