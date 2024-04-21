@@ -39,20 +39,24 @@ export default function Character({
       ) : (
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-9xl cursor-default select-none -z-10 flex flex-row">
           {words.map((word, index) => {
-            return index + firstWordIndex === currentWordIndex ? (
-              <div
-                className={`${
-                  currentWordStatus === "wrong"
-                    ? "text-rose-400"
-                    : "text-gray-500"
-                }`}
-              >
-                {word}
+            return (
+              <div key={index}>
+                {index + firstWordIndex === currentWordIndex ? (
+                  <div
+                    className={`${
+                      currentWordStatus === "wrong"
+                        ? "text-rose-400"
+                        : "text-gray-500"
+                    }`}
+                  >
+                    {word}
+                  </div>
+                ) : index + firstWordIndex < currentWordIndex ? (
+                  <div className="text-gray-700"> {word}</div>
+                ) : (
+                  <div className="text-gray-500"> {word}</div>
+                )}
               </div>
-            ) : index + firstWordIndex < currentWordIndex ? (
-              <div className="text-gray-700"> {word}</div>
-            ) : (
-              <div className="text-gray-500"> {word}</div>
             );
           })}
         </div>
