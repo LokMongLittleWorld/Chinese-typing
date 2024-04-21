@@ -1,7 +1,6 @@
 import React from "react";
 
 const useHelper = () => {
-  let FirstWordIndex = 0;
   const getCurrentWordLength = (currentWordIndex, accWordLength) => {
     for (let i = 0; i < accWordLength.length; i++) {
       if (currentWordIndex < accWordLength[i]) {
