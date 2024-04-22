@@ -9,6 +9,7 @@ import AmountSelector from "../../Components/AmountSelector.jsx";
 import InputDisplay from "../../Components/InputDisplay.jsx";
 import Character from "../../Components/Character.jsx";
 import CheatSheetModel from "../../Components/CheatSheetModel.jsx";
+import RadicalsDisplay from "../../Components/RaicalsDisplay.jsx";
 
 export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
@@ -66,15 +67,16 @@ export default function Index() {
       </section>
       <main className="mt-2">
         {/* TODO: hover to display speed and accuracy, color to indicate proficiency */}
-        <div className="flex flex-row gap-4 justify-center text-2xl">
-          {Object.keys(Radicals).map((radical) => {
-            return (
-              <div key={radical} className="select-none">
-                {radical}
-              </div>
-            );
-          })}
-        </div>
+        <RadicalsDisplay />
+        {/*<div className="flex flex-row gap-4 justify-center text-2xl">*/}
+        {/*  {Object.keys(Radicals).map((radical) => {*/}
+        {/*    return (*/}
+        {/*      <div key={radical} className="select-none">*/}
+        {/*        {radical}*/}
+        {/*      </div>*/}
+        {/*    );*/}
+        {/*  })}*/}
+        {/*</div>*/}
         <CheatSheetModel showModal={showModal} handleOnClick={handleOnClick} />
         <Character
           shouldTransition={
