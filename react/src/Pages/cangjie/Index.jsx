@@ -36,8 +36,6 @@ export default function Index() {
     input,
   } = useCharacterHelper(wordJSON[currentCategoryIndex]);
 
-  // useKeyDownHandler(handleKeyDown, [currentWordIndex, randomWords]);
-
   const handleCategoryChange = (category, index) => {
     // TODO: dynamic import
     setCurrentCategoryIndex(index);
@@ -58,12 +56,6 @@ export default function Index() {
 
   return (
     <>
-      <input
-        ref={inputRef}
-        onKeyDown={handleKeyDown}
-        className="opacity-0 cursor-default"
-        onBlur={(e) => e.target.focus()}
-      />
       <section className="mt-4 flex flex-row items-center justify-center gap-4">
         <Record speed={record.speed} accuracy={record.accuracy} />
         <PracticeCategory
@@ -111,6 +103,12 @@ export default function Index() {
           handleAmountChange={handleAmountChange}
         />
       </div>
+      <input
+        ref={inputRef}
+        onKeyDown={handleKeyDown}
+        className="opacity-0 cursor-default"
+        onBlur={(e) => e.target.focus()}
+      />
     </>
   );
 }
