@@ -18,21 +18,22 @@ function useCharacterHelper(JSON) {
   const [answerMap, setAnswerMap] = useState(new Map());
   const inputRef = useRef(null);
   const inputIndexRef = useRef(0);
+  const [inputDisplay, setInputDisplay] = useState([]);
 
-  const { time, setTime, isRunning, setIsRunning } = useTimer();
+  const { time, isRunning, setIsRunning } = useTimer();
   const { speed, accuracy } = useRecorder();
 
   const reset = (newWordJSON) => {
     // game reset based on new wordJSON
     setCurrentWordIndex(0);
-    setTime(0);
     setWrongWords(new Map());
     handleRandomWords(newWordJSON);
     setWordJSON(newWordJSON);
     currentWordStatusRef.current = "default";
     setIsRunning(false);
     inputIndexRef.current = 0; // Reset the key index
-    inputRef.current = []; // Reset the input
+    inputRef.current = null; // Reset the input
+    setInputDisplay([]);
   };
 
   const handleKeyDown = (e) => {
@@ -51,21 +52,19 @@ function useCharacterHelper(JSON) {
 
     //press space bar to go to the next word
     // prettier-ignore
-    if (currentWordStatusRef.current === "correct" && " " === e.key.toLowerCase()
-    ) {
-      nextWord();
-      return;
-    } else if (currentWordStatusRef.current === "correct" && " " !== e.key.toLowerCase()
-    )
-      return;
+    if(handleSpaceBarPress(e)) return;
 
     // neglect non-alphabet
     if (!/^[a-zA-Z]$/.test(e.key)) {
       return;
     }
-
     const targetValue = answerMap.get(randomWords[currentWordIndex]);
-    inputRef.current[inputIndexRef.current] = e.key.toLowerCase();
+    const currentInputIndex = inputIndexRef.current;
+    setInputDisplay((prev) => {
+      const updatedDisplay = [...prev];
+      updatedDisplay[currentInputIndex] = e.key;
+      return updatedDisplay;
+    });
 
     // incorrect
     if (targetValue[inputIndexRef.current] !== e.key.toLowerCase()) {
@@ -94,6 +93,7 @@ function useCharacterHelper(JSON) {
       return;
     }
     inputRef.current = []; // Reset the input
+    setInputDisplay([]);
     inputIndexRef.current = 0; // Reset the key index
     setCurrentWordIndex((prev) => prev + 1);
     currentWordStatusRef.current = "default";
@@ -107,6 +107,17 @@ function useCharacterHelper(JSON) {
       accuracy: accuracy(accWordLength[accWordLength.length - 1], wrongWords.size),
     });
     reset(wordJSON);
+  };
+
+  const handleSpaceBarPress = (e) => {
+    if (currentWordStatusRef.current !== "correct") return false;
+
+    if (" " === e.key.toLowerCase()) {
+      nextWord();
+      return true;
+    }
+
+    return true;
   };
 
   //1. generate RandomWordsArr
@@ -166,16 +177,14 @@ function useCharacterHelper(JSON) {
     amount,
     randomWords,
     wrongWords,
-    time,
     setAmount,
     showModal,
     setShowModal,
-    setTime,
     answerMap,
     accWordLength,
     isRunning,
     inputRef,
-    input: inputRef.current, // Return the input as a ref
+    inputDisplay,
   };
 }
 

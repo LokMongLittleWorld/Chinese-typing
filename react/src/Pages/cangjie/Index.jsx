@@ -34,7 +34,7 @@ export default function Index() {
     answerMap,
     isRunning,
     inputRef,
-    input,
+    inputDisplay,
   } = useCharacterHelper(wordJSON[currentCategoryIndex]);
 
   const handleCategoryChange = (category, index) => {
@@ -92,7 +92,7 @@ export default function Index() {
       <div className="flex flex-col items-center absolute bottom-[10vh] left-1/2 -translate-x-1/2 gap-6">
         <InputDisplay
           answer={answerMap.get(randomWords[currentWordIndex]) || ""}
-          input={input}
+          input={inputDisplay}
           currentWordIndex={currentWordIndex}
           currentWordStatus={currentWordStatus}
           Radicals={Radicals}
