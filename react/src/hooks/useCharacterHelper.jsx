@@ -2,9 +2,44 @@ import { useEffect, useRef, useState } from "react";
 import useTimer from "./useTimer.jsx";
 import useRecorder from "./useRecorder.jsx";
 
+const RadicalRecordTemplate = {
+  NumberOfPlay: 0,
+  Record: {
+    a: {
+      speed: 0,
+      numberOfPress: 0,
+    },
+    b: {
+      speed: 0,
+      numberOfPress: 0,
+    },
+    c: {
+      speed: 0,
+      numberOfPress: 0,
+    },
+    d: {
+      speed: 0,
+      numberOfPress: 0,
+    },
+    e: {
+      speed: 0,
+      numberOfPress: 0,
+    },
+    f: {
+      speed: 0,
+      numberOfPress: 0,
+    },
+    g: {
+      speed: 0,
+      numberOfPress: 0,
+    },
+  },
+};
+
 function useCharacterHelper(JSON) {
   const [wordJSON, setWordJSON] = useState(JSON);
   const [record, setRecord] = useState({ speed: null, accuracy: null });
+  const [radicalRecord, setRadicalRecord] = useState(RadicalRecordTemplate);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const currentWordStatusRef = useRef("default");
   const [shouldTransition, setShouldTransition] = useState(false);
@@ -20,7 +55,7 @@ function useCharacterHelper(JSON) {
   const inputIndexRef = useRef(0);
   const [inputDisplay, setInputDisplay] = useState([]);
 
-  const { time, isRunning, setIsRunning } = useTimer();
+  const { time, isRunning, setIsRunning, getTimeInterval } = useTimer();
   const { speed, accuracy } = useRecorder();
 
   const reset = (newWordJSON) => {
@@ -74,27 +109,44 @@ function useCharacterHelper(JSON) {
     }
 
     // correct
-    if (inputIndexRef.current + 1 === targetValue.length) {
-      // single input
-      if (targetValue.length === 1) {
-        nextWord();
-        return;
-      }
-      currentWordStatusRef.current = "correct";
-    } else {
+    // case 1: multiple inputs, not the last character
+    if (inputIndexRef.current + 1 < targetValue.length) {
       currentWordStatusRef.current = "default";
-      inputIndexRef.current++; // Increment the key index
+      inputIndexRef.current++;
+      return;
     }
+    // case 2: single inputa
+    if (targetValue.length === 1) {
+      handleRadicalRecord(targetValue);
+      nextWord();
+      return;
+    }
+    // case 3: multiple inputs, the last character
+    currentWordStatusRef.current = "correct";
+  };
+
+  const handleRadicalRecord = (targetValue) => {
+    const currentRadicalRecord = radicalRecord?.Record[targetValue];
+    if (getTimeInterval() === 0) return;
+    setRadicalRecord((prev) => {
+      const updatedRecord = { ...prev };
+      updatedRecord.Record[targetValue] = {
+        speed: speed(1, getTimeInterval()),
+        numberOfPress: currentRadicalRecord.numberOfPress + 1,
+      };
+      return updatedRecord;
+    });
   };
 
   const nextWord = () => {
     if (currentWordIndex === accWordLength[accWordLength.length - 1] - 1) {
+      console.log(radicalRecord);
       endGame();
       return;
     }
-    inputRef.current = []; // Reset the input
+    inputRef.current = [];
     setInputDisplay([]);
-    inputIndexRef.current = 0; // Reset the key index
+    inputIndexRef.current = 0;
     setCurrentWordIndex((prev) => prev + 1);
     currentWordStatusRef.current = "default";
   };
