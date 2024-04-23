@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Record from "../../Components/Record.jsx";
 import PracticeCategory from "../../Components/PracticeCategory.jsx";
 import Radicals from "../../../static/cangjie/radicals.json";
@@ -10,6 +10,7 @@ import InputDisplay from "../../Components/InputDisplay.jsx";
 import Character from "../../Components/Character.jsx";
 import CheatSheetModel from "../../Components/CheatSheetModel.jsx";
 import RadicalsDisplay from "../../Components/RaicalsDisplay.jsx";
+import InvisibleInput from "../../Components/InvisibleInput.jsx";
 
 export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
@@ -33,7 +34,6 @@ export default function Index() {
     reset,
     answerMap,
     isRunning,
-    inputRef,
     inputDisplay,
   } = useCharacterHelper(wordJSON[currentCategoryIndex]);
 
@@ -50,11 +50,6 @@ export default function Index() {
     setShowModal(false);
   };
 
-  useEffect(() => {
-    // Focus on the input element after it renders
-    inputRef.current.focus();
-  }, []); // Empty dependency array ensures this effect runs only once after the component mounts
-
   return (
     <>
       <section className="mt-4 flex flex-row items-center justify-center gap-4">
@@ -68,15 +63,6 @@ export default function Index() {
       <main className="mt-2">
         {/* TODO: hover to display speed and accuracy, color to indicate proficiency */}
         <RadicalsDisplay />
-        {/*<div className="flex flex-row gap-4 justify-center text-2xl">*/}
-        {/*  {Object.keys(Radicals).map((radical) => {*/}
-        {/*    return (*/}
-        {/*      <div key={radical} className="select-none">*/}
-        {/*        {radical}*/}
-        {/*      </div>*/}
-        {/*    );*/}
-        {/*  })}*/}
-        {/*</div>*/}
         <CheatSheetModel showModal={showModal} handleOnClick={handleOnClick} />
         <Character
           shouldTransition={
@@ -105,12 +91,7 @@ export default function Index() {
           handleAmountChange={handleAmountChange}
         />
       </div>
-      <input
-        ref={inputRef}
-        onKeyDown={handleKeyDown}
-        className="opacity-0 cursor-default"
-        onBlur={(e) => e.target.focus()}
-      />
+      <InvisibleInput handleKeyDown={handleKeyDown} />
     </>
   );
 }

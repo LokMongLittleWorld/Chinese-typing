@@ -51,7 +51,6 @@ function useCharacterHelper(JSON) {
   const [wrongWords, setWrongWords] = useState(new Map());
   const targetPartRef = useRef(0);
   const [answerMap, setAnswerMap] = useState(new Map());
-  const inputRef = useRef(null);
   const inputIndexRef = useRef(0);
   const [inputDisplay, setInputDisplay] = useState([]);
 
@@ -67,7 +66,6 @@ function useCharacterHelper(JSON) {
     currentWordStatusRef.current = "default";
     setIsRunning(false);
     inputIndexRef.current = 0; // Reset the key index
-    inputRef.current = null; // Reset the input
     setInputDisplay([]);
   };
 
@@ -144,7 +142,6 @@ function useCharacterHelper(JSON) {
       endGame();
       return;
     }
-    inputRef.current = [];
     setInputDisplay([]);
     inputIndexRef.current = 0;
     setCurrentWordIndex((prev) => prev + 1);
@@ -235,7 +232,6 @@ function useCharacterHelper(JSON) {
     answerMap,
     accWordLength,
     isRunning,
-    inputRef,
     inputDisplay,
   };
 }
