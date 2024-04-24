@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import useTimer from "./useTimer.jsx";
+import RadicalSWithCategory from "../../static/cangjie/radicalsWithCategory.json";
 import useRecorder from "./useRecorder.jsx";
 
 const RadicalRecordTemplate = {
@@ -37,18 +38,18 @@ const RadicalRecordTemplate = {
   },
 };
 
-function useCharacterHelper(JSON) {
-  // Cangjie practice
+function useCharacterHelper(JSON, method) {
+  // Cangjie
   const [radicalRecord, setRadicalRecord] = useState(RadicalRecordTemplate);
-  const [currentRadicalCategory, setCurrentRadicalCategory] = useState(
-    RadicalRecordTemplate?.CurrentCategory
-  );
+  const currentCategory = useRef(RadicalRecordTemplate.CurrentCategory);
+  const radicalSWithCategory = Object.entries(RadicalSWithCategory);
 
   // game play logic
   const [wordJSON, setWordJSON] = useState(JSON);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(
     localStorage.getItem("currentCategoryIndex") || 0
   );
+  const [inputMethod, setInputMethod] = useState(method);
   const inputIndexRef = useRef(0);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [randomWords, setRandomWords] = useState([]);
@@ -119,7 +120,7 @@ function useCharacterHelper(JSON) {
     }
     // case 2: single input
     if (answer.length === 1) {
-      handleRadicalRecord(answer);
+      handleKeysRecord(answer, radicalRecord, setRadicalRecord);
       nextWord();
       return;
     }
@@ -127,10 +128,10 @@ function useCharacterHelper(JSON) {
     currentWordStatusRef.current = "correct";
   };
 
-  const handleRadicalRecord = (answer) => {
-    const currentRadicalRecord = radicalRecord?.Record[answer];
+  const handleKeysRecord = (answer, keysRecord, setKeysRecord) => {
     if (getTimeInterval() === 0) return;
-    setRadicalRecord((prev) => {
+    const currentRadicalRecord = keysRecord?.Record[answer];
+    setKeysRecord((prev) => {
       const updatedRecord = { ...prev };
       updatedRecord.Record[answer] = {
         speed: speed(1, getTimeInterval()),
@@ -141,8 +142,8 @@ function useCharacterHelper(JSON) {
   };
 
   const nextWord = () => {
+    //end game
     if (currentWordIndex === accWordLength[accWordLength.length - 1] - 1) {
-      console.log(radicalRecord);
       endGame();
       return;
     }
@@ -166,6 +167,34 @@ function useCharacterHelper(JSON) {
 
   const endGame = () => {
     setIsRunning(false);
+
+    const updatedRecord = { ...radicalRecord };
+    updatedRecord.NumberOfPlay++;
+
+    // case: not all categories are finished
+    if (updatedRecord.CurrentCategory < Object.keys(wordJSON).length) {
+      // get average speed of the current category
+      const currentCategoryKeys = Object.values(
+        radicalSWithCategory[radicalRecord.CurrentCategory][1]
+      );
+      let isNextCategory = true;
+      for (let i = 0; i < currentCategoryKeys.length; i++) {
+        // if (
+        //   radicalRecord.Record[currentCategoryKeys[i]].speed < 100
+        //   // || radicalRecord.Record[currentCategoryKeys[i]].numberOfPress < 5
+        // ) {
+        //   isNextCategory = false;
+        //   break;
+        // }
+      }
+      if (isNextCategory) {
+        updatedRecord.CurrentCategory++;
+        currentCategory.current++;
+      }
+    }
+    setRadicalRecord(updatedRecord);
+
+    // update record
     // prettier-ignore
     setRecord({
       speed: speed(accWordLength[accWordLength.length - 1], time),
@@ -185,15 +214,26 @@ function useCharacterHelper(JSON) {
   //2. generate answer map
   //3. generate wordLengthArr
   const handleRandomWords = (newWordJSON) => {
+    // if the newWordJSON is a nested object, calculate the mainWordEntries and subWordEntries based on the currentCategory
+    const { mainWordEntries, subWordEntries } =
+      handleWordJSONToWordEntries(newWordJSON);
+
     // wordEntries represents the key-value pair array of the newWordJSON
-    const wordEntries = Object.entries(newWordJSON);
+    // prettier-ignore
     const selectedWords = [];
     const accWordLengthTmp = [];
     const answerMapTmp = new Map();
 
     for (let i = 0; i < amount; i++) {
-      const randomIndex = Math.floor(Math.random() * wordEntries.length);
-      const randomWordEntry = wordEntries[randomIndex];
+      let randomWordEntry;
+      // 70% from the mainWordEntries, 30% from the subWordEntries
+      if (Math.random() < 0.3) {
+        const randomIndex = Math.floor(Math.random() * subWordEntries.length);
+        randomWordEntry = subWordEntries[randomIndex];
+      } else {
+        const randomIndex = Math.floor(Math.random() * mainWordEntries.length);
+        randomWordEntry = mainWordEntries[randomIndex];
+      }
       const currentWordLength =
         accWordLengthTmp[accWordLengthTmp.length - 1] || 0;
 
@@ -211,10 +251,47 @@ function useCharacterHelper(JSON) {
           answerMapTmp.set(words[j], values[j]);
         }
       }
-      setRandomWords(selectedWords);
-      setAccWordLength(accWordLengthTmp);
-      setAnswerMap(answerMapTmp);
     }
+    setRandomWords(selectedWords);
+    setAccWordLength(accWordLengthTmp);
+    setAnswerMap(answerMapTmp);
+  };
+
+  const isNestObject = (obj) => {
+    const firstKey = Object.keys(obj)[0];
+    return typeof obj[firstKey] === "object" && obj[firstKey] !== null;
+  };
+
+  const handleWordJSONToWordEntries = (wordJSON) => {
+    let mainWordEntries = [];
+    let subWordEntries = [];
+
+    if (!isNestObject(wordJSON)) {
+      mainWordEntries = Object.entries(wordJSON);
+      subWordEntries = Object.entries(wordJSON);
+      return { mainWordEntries, subWordEntries };
+    }
+
+    // is a nested object
+
+    // handle subWordEntries
+    for (let i = 0; i < currentCategory.current; i++) {
+      const key = Object.keys(wordJSON)[i];
+      subWordEntries = subWordEntries.concat(Object.entries(wordJSON[key]));
+    }
+    // if all categories are finished, open access to all words
+    if (currentCategory.current === Object.keys(wordJSON).length) {
+      mainWordEntries = subWordEntries;
+      return { mainWordEntries, subWordEntries };
+    }
+
+    const key = Object.keys(wordJSON)[currentCategory.current];
+    mainWordEntries = Object.entries(wordJSON[key]);
+    if (currentCategory.current === 0) {
+      subWordEntries = Object.entries(wordJSON[key]);
+    }
+
+    return { mainWordEntries, subWordEntries };
   };
 
   const handleAmountChange = (item) => {
