@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import useTimer from "./useTimer.jsx";
 import useRecorder from "./useRecorder.jsx";
 
 const RadicalRecordTemplate = {
   NumberOfPlay: 0,
+  CurrentCategory: 0,
   Record: {
     a: {
       speed: 0,
@@ -37,37 +38,34 @@ const RadicalRecordTemplate = {
 };
 
 function useCharacterHelper(JSON) {
-  const [wordJSON, setWordJSON] = useState(JSON);
-  const [record, setRecord] = useState({ speed: null, accuracy: null });
+  // Cangjie practice
   const [radicalRecord, setRadicalRecord] = useState(RadicalRecordTemplate);
+  const [currentRadicalCategory, setCurrentRadicalCategory] = useState(
+    RadicalRecordTemplate?.CurrentCategory
+  );
+
+  // game play logic
+  const [wordJSON, setWordJSON] = useState(JSON);
+  const inputIndexRef = useRef(0);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const currentWordStatusRef = useRef("default");
-  const [shouldTransition, setShouldTransition] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [randomWords, setRandomWords] = useState([]);
+  const [answerMap, setAnswerMap] = useState(new Map());
+
+  // word amount
   const [amounts, setAmounts] = useState([5, 50, 100]);
   const [amount, setAmount] = useState(amounts[0]);
-  const [randomWords, setRandomWords] = useState([]);
-  const [accWordLength, setAccWordLength] = useState([]);
-  const [wrongWords, setWrongWords] = useState(new Map());
-  const targetPartRef = useRef(0);
-  const [answerMap, setAnswerMap] = useState(new Map());
-  const inputIndexRef = useRef(0);
-  const [inputDisplay, setInputDisplay] = useState([]);
 
+  // display
+  const [showModal, setShowModal] = useState(false);
+  const [accWordLength, setAccWordLength] = useState([]);
+  const [inputDisplay, setInputDisplay] = useState([]);
+  const currentWordStatusRef = useRef("default");
+
+  // record
+  const [record, setRecord] = useState({ speed: null, accuracy: null });
   const { time, isRunning, setIsRunning, getTimeInterval } = useTimer();
   const { speed, accuracy } = useRecorder();
-
-  const reset = (newWordJSON) => {
-    // game reset based on new wordJSON
-    setCurrentWordIndex(0);
-    setWrongWords(new Map());
-    handleRandomWords(newWordJSON);
-    setWordJSON(newWordJSON);
-    currentWordStatusRef.current = "default";
-    setIsRunning(false);
-    inputIndexRef.current = 0; // Reset the key index
-    setInputDisplay([]);
-  };
+  const [wrongWords, setWrongWords] = useState(new Map());
 
   const handleKeyDown = (e) => {
     // handle keydown event
@@ -83,15 +81,15 @@ function useCharacterHelper(JSON) {
       return;
     }
 
-    //press space bar to go to the next word
-    // prettier-ignore
-    if(handleSpaceBarPress(e)) return;
+    // press space bar to go to the next word
+    if (handleSpaceBarPress(e)) return;
 
     // neglect non-alphabet
     if (!/^[a-zA-Z]$/.test(e.key)) {
       return;
     }
-    const targetValue = answerMap.get(randomWords[currentWordIndex]);
+
+    // display the input
     const currentInputIndex = inputIndexRef.current;
     setInputDisplay((prev) => {
       const updatedDisplay = [...prev];
@@ -99,8 +97,11 @@ function useCharacterHelper(JSON) {
       return updatedDisplay;
     });
 
+    // get answer
+    const answer = answerMap.get(randomWords[currentWordIndex]);
+
     // incorrect
-    if (targetValue[inputIndexRef.current] !== e.key.toLowerCase()) {
+    if (answer[inputIndexRef.current] !== e.key.toLowerCase()) {
       setWrongWords((prev) => prev.set(currentWordIndex, e.key));
       currentWordStatusRef.current = "wrong";
       return;
@@ -108,14 +109,14 @@ function useCharacterHelper(JSON) {
 
     // correct
     // case 1: multiple inputs, not the last character
-    if (inputIndexRef.current + 1 < targetValue.length) {
+    if (inputIndexRef.current + 1 < answer.length) {
       currentWordStatusRef.current = "default";
       inputIndexRef.current++;
       return;
     }
-    // case 2: single inputa
-    if (targetValue.length === 1) {
-      handleRadicalRecord(targetValue);
+    // case 2: single input
+    if (answer.length === 1) {
+      handleRadicalRecord(answer);
       nextWord();
       return;
     }
@@ -123,14 +124,14 @@ function useCharacterHelper(JSON) {
     currentWordStatusRef.current = "correct";
   };
 
-  const handleRadicalRecord = (targetValue) => {
-    const currentRadicalRecord = radicalRecord?.Record[targetValue];
+  const handleRadicalRecord = (answer) => {
+    const currentRadicalRecord = radicalRecord?.Record[answer];
     if (getTimeInterval() === 0) return;
     setRadicalRecord((prev) => {
       const updatedRecord = { ...prev };
-      updatedRecord.Record[targetValue] = {
+      updatedRecord.Record[answer] = {
         speed: speed(1, getTimeInterval()),
-        numberOfPress: currentRadicalRecord.numberOfPress + 1,
+        numberOfPress: (currentRadicalRecord?.numberOfPress || 0) + 1,
       };
       return updatedRecord;
     });
@@ -148,6 +149,18 @@ function useCharacterHelper(JSON) {
     currentWordStatusRef.current = "default";
   };
 
+  const reset = (newWordJSON) => {
+    // game reset based on new wordJSON
+    setCurrentWordIndex(0);
+    setWrongWords(new Map());
+    handleRandomWords(newWordJSON);
+    setWordJSON(newWordJSON);
+    currentWordStatusRef.current = "default";
+    setIsRunning(false);
+    inputIndexRef.current = 0;
+    setInputDisplay([]);
+  };
+
   const endGame = () => {
     setIsRunning(false);
     // prettier-ignore
@@ -161,11 +174,7 @@ function useCharacterHelper(JSON) {
   const handleSpaceBarPress = (e) => {
     if (currentWordStatusRef.current !== "correct") return false;
 
-    if (" " === e.key.toLowerCase()) {
-      nextWord();
-      return true;
-    }
-
+    " " === e.key.toLowerCase() && nextWord();
     return true;
   };
 
@@ -210,9 +219,10 @@ function useCharacterHelper(JSON) {
     handleRandomWords(wordJSON);
   };
 
-  useEffect(() => {
+  // initialize randomWords for first-time render
+  if (randomWords.length === 0) {
     handleRandomWords(wordJSON);
-  }, []);
+  }
 
   return {
     handleKeyDown,
@@ -221,11 +231,9 @@ function useCharacterHelper(JSON) {
     record,
     currentWordIndex,
     currentWordStatus: currentWordStatusRef.current,
-    shouldTransition,
     amounts,
     amount,
     randomWords,
-    wrongWords,
     setAmount,
     showModal,
     setShowModal,
