@@ -5,7 +5,7 @@ import useRecorder from "./useRecorder.jsx";
 
 const RadicalRecordTemplate = {
   NumberOfPlay: 0,
-  CurrentCategory: 0,
+  CurrentCategory: 2,
   Record: {
     a: {
       speed: 0,
@@ -323,6 +323,7 @@ function useCharacterHelper(JSON, method) {
     accWordLength,
     isRunning,
     inputDisplay,
+    radicalRecord,
   };
 }
 

@@ -37,6 +37,7 @@ export default function Index() {
     answerMap,
     isRunning,
     inputDisplay,
+    radicalRecord,
   } = useCharacterHelper(wordJSON[initialCategoryIndex], "cangjie");
 
   const handleCategoryChange = (index) => {
@@ -57,7 +58,7 @@ export default function Index() {
       </section>
       <main className="mt-2">
         {/* TODO: hover to display speed and accuracy, color to indicate proficiency */}
-        <RadicalsDisplay />
+        <RadicalsDisplay radicalRecord={radicalRecord} />
         <CheatSheetModel showModal={showModal} setShowModal={setShowModal} />
         <Character
           shouldTransition={
