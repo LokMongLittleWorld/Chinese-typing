@@ -19,19 +19,19 @@ export default function Index() {
   );
   const wordJSON = [Radicals, Glyphs, Words];
   const {
+    handleKeyDown,
+    handleAmountChange,
+    reset,
     record,
     currentWordIndex,
     currentWordStatus,
     amounts,
     amount,
     randomWords,
-    accWordLength,
-    handleKeyDown,
-    handleAmountChange,
     setAmount,
     showModal,
     setShowModal,
-    reset,
+    accWordLength,
     answerMap,
     isRunning,
     inputDisplay,
@@ -45,11 +45,6 @@ export default function Index() {
     if (category === "字形訓練") reset(Glyphs);
     if (category === "單字訓練") reset(Words);
   };
-
-  const handleOnClick = () => {
-    setShowModal(false);
-  };
-
   return (
     <>
       <section className="mt-4 flex flex-row items-center justify-center gap-4">
@@ -63,7 +58,7 @@ export default function Index() {
       <main className="mt-2">
         {/* TODO: hover to display speed and accuracy, color to indicate proficiency */}
         <RadicalsDisplay />
-        <CheatSheetModel showModal={showModal} handleOnClick={handleOnClick} />
+        <CheatSheetModel showModal={showModal} setShowModal={setShowModal} />
         <Character
           shouldTransition={
             (answerMap.get(randomWords[currentWordIndex]) || "").length === 1
