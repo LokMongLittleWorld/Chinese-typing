@@ -46,6 +46,9 @@ function useCharacterHelper(JSON) {
 
   // game play logic
   const [wordJSON, setWordJSON] = useState(JSON);
+  const [currentCategoryIndex, setCurrentCategoryIndex] = useState(
+    localStorage.getItem("currentCategoryIndex") || 0
+  );
   const inputIndexRef = useRef(0);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [randomWords, setRandomWords] = useState([]);
@@ -228,6 +231,8 @@ function useCharacterHelper(JSON) {
     handleKeyDown,
     handleAmountChange,
     reset,
+    currentCategoryIndex,
+    setCurrentCategoryIndex,
     record,
     currentWordIndex,
     currentWordStatus: currentWordStatusRef.current,

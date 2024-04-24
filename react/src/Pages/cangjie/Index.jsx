@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import Record from "../../Components/Record.jsx";
 import PracticeCategory from "../../Components/PracticeCategory.jsx";
 import Radicals from "../../../static/cangjie/radicals.json";
+import RadicalSWithCategory from "../../../static/cangjie/radicalsWithCategory.json";
 import Glyphs from "../../../static/cangjie/glyphs.json";
 import Words from "../../../static/cangjie/words.json";
 import useCharacterHelper from "../../hooks/useCharacterHelper.jsx";
@@ -14,14 +15,15 @@ import InvisibleInput from "../../Components/InvisibleInput.jsx";
 
 export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
-  const [currentCategoryIndex, setCurrentCategoryIndex] = useState(
-    localStorage.getItem("currentCategoryIndex") || 0
-  );
-  const wordJSON = [Radicals, Glyphs, Words];
+  const wordJSON = [RadicalSWithCategory, Glyphs, Words];
+  const initialCategoryIndex =
+    localStorage.getItem("currentCategoryIndex") || 0;
   const {
     handleKeyDown,
     handleAmountChange,
     reset,
+    currentCategoryIndex,
+    setCurrentCategoryIndex,
     record,
     currentWordIndex,
     currentWordStatus,
@@ -35,15 +37,13 @@ export default function Index() {
     answerMap,
     isRunning,
     inputDisplay,
-  } = useCharacterHelper(wordJSON[currentCategoryIndex]);
+  } = useCharacterHelper(wordJSON[initialCategoryIndex], "cangjie");
 
-  const handleCategoryChange = (category, index) => {
+  const handleCategoryChange = (index) => {
     // TODO: dynamic import
     setCurrentCategoryIndex(index);
     localStorage.setItem("currentCategoryIndex", index);
-    if (category === "字根訓練") reset(Radicals);
-    if (category === "字形訓練") reset(Glyphs);
-    if (category === "單字訓練") reset(Words);
+    reset(wordJSON[index]);
   };
   return (
     <>
@@ -70,7 +70,7 @@ export default function Index() {
           randomWords={randomWords}
         />
       </main>
-      <div className="flex flex-col items-center absolute bottom-[10vh] left-1/2 -translate-x-1/2 gap-6">
+      <section className="flex flex-col items-center absolute bottom-[10vh] left-1/2 -translate-x-1/2 gap-6">
         <InputDisplay
           answer={answerMap.get(randomWords[currentWordIndex]) || ""}
           input={inputDisplay}
@@ -85,7 +85,7 @@ export default function Index() {
           isRunning={isRunning}
           handleAmountChange={handleAmountChange}
         />
-      </div>
+      </section>
       <InvisibleInput handleKeyDown={handleKeyDown} />
     </>
   );

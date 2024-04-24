@@ -8,7 +8,7 @@ export default function PracticeCategory({
       {category.map((item, index) => {
         return (
           <div
-            onClick={() => handleCategoryChange(item, index)}
+            onClick={() => handleCategoryChange(index)}
             className={`text-2xl cursor-pointer ${
               category[currentCategoryIndex] === item
                 ? "text-blue-500"
