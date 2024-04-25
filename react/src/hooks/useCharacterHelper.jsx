@@ -143,7 +143,11 @@ function useCharacterHelper(JSON, method) {
     updatedRecord.NumberOfPlay++;
 
     // case: not all categories are finished
-    if (updatedRecord.CurrentCategory < Object.keys(wordJSON).length) {
+
+    if (
+      updatedRecord.CurrentCategory < Object.keys(wordJSON).length &&
+      isNestObject(wordJSON)
+    ) {
       // get average speed of the current category
       const currentCategoryKeys = Object.values(
         radicalSWithCategory[radicalRecord.CurrentCategory][1]
