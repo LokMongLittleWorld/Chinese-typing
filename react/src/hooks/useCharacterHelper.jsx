@@ -5,37 +5,8 @@ import useRecorder from "./useRecorder.jsx";
 
 const RadicalRecordTemplate = {
   NumberOfPlay: 0,
-  CurrentCategory: 2,
-  Record: {
-    a: {
-      speed: 0,
-      numberOfPress: 0,
-    },
-    b: {
-      speed: 0,
-      numberOfPress: 0,
-    },
-    c: {
-      speed: 0,
-      numberOfPress: 0,
-    },
-    d: {
-      speed: 0,
-      numberOfPress: 0,
-    },
-    e: {
-      speed: 0,
-      numberOfPress: 0,
-    },
-    f: {
-      speed: 0,
-      numberOfPress: 0,
-    },
-    g: {
-      speed: 0,
-      numberOfPress: 0,
-    },
-  },
+  CurrentCategory: 4,
+  Record: {},
 };
 
 function useCharacterHelper(JSON, method) {
@@ -236,6 +207,16 @@ function useCharacterHelper(JSON, method) {
       }
       const currentWordLength =
         accWordLengthTmp[accWordLengthTmp.length - 1] || 0;
+
+      // avoid continuously selecting the same word twice
+      if (
+        subWordEntries.length > 1 &&
+        mainWordEntries.length > 1 &&
+        selectedWords[selectedWords.length - 1] === randomWordEntry[0]
+      ) {
+        i--;
+        continue;
+      }
 
       // randomWordEntry[0] is the key, randomWordEntry[1] is the value
       if (randomWordEntry[0].length === 1) {
