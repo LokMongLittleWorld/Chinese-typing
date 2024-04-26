@@ -156,7 +156,7 @@ function useCharacterHelper(words) {
       let isNextCategory = true;
       for (let i = 0; i < currentCategoryKeys.length; i++) {
         // if (
-        //   keysRecord.Record[currentCategoryKeys[i]].speed < 100
+        //   (keysRecord?.Record[currentCategoryKeys[i]]?.speed || 0) < 80
         //   // || keysRecord.Record[currentCategoryKeys[i]].numberOfPress < 5
         // ) {
         //   isNextCategory = false;
