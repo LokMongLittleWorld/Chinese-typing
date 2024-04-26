@@ -37,7 +37,7 @@ function useCharacterHelper(JSON, method) {
   const currentWordStatusRef = useRef("default");
 
   // record
-  const [record, setRecord] = useState({ speed: null, accuracy: null });
+  const [record, setRecord] = useState({ speed: 0, accuracy: 0 });
   const { time, isRunning, setIsRunning, getTimeInterval } = useTimer();
   const { speed, accuracy } = useRecorder();
   const [wrongWords, setWrongWords] = useState(new Map());
