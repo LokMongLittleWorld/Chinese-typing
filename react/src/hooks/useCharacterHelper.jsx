@@ -5,18 +5,20 @@ import useRecorder from "./useRecorder.jsx";
 
 const RadicalRecordTemplate = {
   NumberOfPlay: 0,
-  CurrentCategory: 4,
+  CurrentCategory: 0,
   Record: {},
 };
 
-function useCharacterHelper(JSON, method) {
+function useCharacterHelper(words, method) {
   // Cangjie
-  const [radicalRecord, setRadicalRecord] = useState(RadicalRecordTemplate);
+  const [radicalRecord, setRadicalRecord] = useState(
+    JSON.parse(localStorage.getItem("radicalRecord")) || RadicalRecordTemplate
+  );
   const currentCategory = useRef(RadicalRecordTemplate.CurrentCategory);
   const radicalSWithCategory = Object.entries(RadicalSWithCategory);
 
   // game play logic
-  const [wordJSON, setWordJSON] = useState(JSON);
+  const [wordJSON, setWordJSON] = useState(words);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(
     localStorage.getItem("currentCategoryIndex") || 0
   );
@@ -168,6 +170,7 @@ function useCharacterHelper(JSON, method) {
       }
     }
     setRadicalRecord(updatedRecord);
+    localStorage.setItem("radicalRecord", JSON.stringify(updatedRecord));
 
     // update record
     // prettier-ignore
