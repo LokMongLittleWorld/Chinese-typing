@@ -10,7 +10,7 @@ import AmountSelector from "../../Components/AmountSelector.jsx";
 import InputDisplay from "../../Components/InputDisplay.jsx";
 import Character from "../../Components/Character.jsx";
 import CheatSheetModel from "../../Components/CheatSheetModel.jsx";
-import RadicalsDisplay from "../../Components/RaicalsDisplay.jsx";
+import RadicalsDisplay from "../../Components/RadicalsDisplay.jsx";
 import InvisibleInput from "../../Components/InvisibleInput.jsx";
 
 export default function Index() {
