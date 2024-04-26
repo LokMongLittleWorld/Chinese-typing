@@ -1,13 +1,13 @@
 import radicalsWithCategory from "../../static/cangjie/radicalsWithCategory.json";
 
-export default function RadicalsDisplay({ radicalRecord }) {
+export default function RadicalsDisplay({ keysRecord }) {
   return (
     <div className="flex flex-row justify-center mt-2 gap-4 select-none text-gray-500">
       {Object.entries(radicalsWithCategory).map(([key, value], index) => {
         return (
           <div
             className={`group flex flex-col relative text-2xl ${
-              radicalRecord.CurrentCategory < index + 1
+              keysRecord.CurrentCategory < index + 1
                 ? "text-gray-500"
                 : "text-gray-700"
             }`}

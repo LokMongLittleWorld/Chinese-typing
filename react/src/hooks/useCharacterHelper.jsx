@@ -3,18 +3,18 @@ import useTimer from "./useTimer.jsx";
 import RadicalSWithCategory from "../../static/cangjie/radicalsWithCategory.json";
 import useRecorder from "./useRecorder.jsx";
 
-const RadicalRecordTemplate = {
+const keysRecordTemplate = {
   NumberOfPlay: 0,
   CurrentCategory: 0,
   Record: {},
 };
 
-function useCharacterHelper(words, method) {
+function useCharacterHelper(words) {
   // Cangjie
-  const [radicalRecord, setRadicalRecord] = useState(
-    JSON.parse(localStorage.getItem("radicalRecord")) || RadicalRecordTemplate
+  const [keysRecord, setKeysRecord] = useState(
+    JSON.parse(localStorage.getItem("radicalRecord")) || keysRecordTemplate
   );
-  const currentCategory = useRef(RadicalRecordTemplate.CurrentCategory);
+  const currentCategory = useRef(keysRecord.CurrentCategory);
   const radicalSWithCategory = Object.entries(RadicalSWithCategory);
 
   // game play logic
@@ -22,7 +22,6 @@ function useCharacterHelper(words, method) {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(
     localStorage.getItem("currentCategoryIndex") || 0
   );
-  const [inputMethod, setInputMethod] = useState(method);
   const inputIndexRef = useRef(0);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [randomWords, setRandomWords] = useState([]);
@@ -93,7 +92,7 @@ function useCharacterHelper(words, method) {
     }
     // case 2: single input
     if (answer.length === 1) {
-      handleKeysRecord(answer, radicalRecord, setRadicalRecord);
+      handleKeysRecord(answer, keysRecord, setKeysRecord);
       nextWord();
       return;
     }
@@ -141,7 +140,7 @@ function useCharacterHelper(words, method) {
   const endGame = () => {
     setIsRunning(false);
 
-    const updatedRecord = { ...radicalRecord };
+    const updatedRecord = { ...keysRecord };
     updatedRecord.NumberOfPlay++;
 
     // case: not all categories are finished
@@ -152,13 +151,13 @@ function useCharacterHelper(words, method) {
     ) {
       // get average speed of the current category
       const currentCategoryKeys = Object.values(
-        radicalSWithCategory[radicalRecord.CurrentCategory][1]
+        radicalSWithCategory[keysRecord.CurrentCategory][1]
       );
       let isNextCategory = true;
       for (let i = 0; i < currentCategoryKeys.length; i++) {
         // if (
-        //   radicalRecord.Record[currentCategoryKeys[i]].speed < 100
-        //   // || radicalRecord.Record[currentCategoryKeys[i]].numberOfPress < 5
+        //   keysRecord.Record[currentCategoryKeys[i]].speed < 100
+        //   // || keysRecord.Record[currentCategoryKeys[i]].numberOfPress < 5
         // ) {
         //   isNextCategory = false;
         //   break;
@@ -169,7 +168,7 @@ function useCharacterHelper(words, method) {
         currentCategory.current++;
       }
     }
-    setRadicalRecord(updatedRecord);
+    setKeysRecord(updatedRecord);
     localStorage.setItem("radicalRecord", JSON.stringify(updatedRecord));
 
     // update record
@@ -311,7 +310,7 @@ function useCharacterHelper(words, method) {
     accWordLength,
     isRunning,
     inputDisplay,
-    radicalRecord,
+    keysRecord,
   };
 }
 
