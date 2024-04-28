@@ -16,6 +16,14 @@ import InvisibleInput from "../../Components/InvisibleInput.jsx";
 export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
   const wordJSON = [RadicalSWithCategory, Glyphs, Words];
+
+  // keysRecord config
+  const keysRecords = [
+    JSON.parse(localStorage.getItem("radicalRecord")) || keysRecordTemplate,
+    JSON.parse(localStorage.getItem("glyphRecord")) || keysRecordTemplate2,
+  ];
+  const keysRecordNames = ["radicalRecord", "glyphRecord"];
+
   const initialCategoryIndex =
     localStorage.getItem("currentCategoryIndex") || 0;
   const {
@@ -38,13 +46,18 @@ export default function Index() {
     isRunning,
     inputDisplay,
     keysRecord,
-  } = useCharacterHelper(wordJSON[initialCategoryIndex], "cangjie");
+    keysRecordName,
+  } = useCharacterHelper(
+    wordJSON[initialCategoryIndex],
+    keysRecords[initialCategoryIndex],
+    keysRecordNames[initialCategoryIndex]
+  );
 
   const handleCategoryChange = (index) => {
     // TODO: dynamic import
     setCurrentCategoryIndex(index);
     localStorage.setItem("currentCategoryIndex", index);
-    reset(wordJSON[index]);
+    reset(wordJSON[index], keysRecords[index], keysRecordNames[index]);
   };
   return (
     <>
@@ -91,3 +104,15 @@ export default function Index() {
     </>
   );
 }
+
+//TODO: bug fix, merge two templates into one
+const keysRecordTemplate = {
+  NumberOfPlay: 0,
+  CurrentCategory: 0,
+  Record: {},
+};
+const keysRecordTemplate2 = {
+  NumberOfPlay: 0,
+  CurrentCategory: 0,
+  Record: {},
+};

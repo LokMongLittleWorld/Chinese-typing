@@ -3,18 +3,11 @@ import useTimer from "./useTimer.jsx";
 import RadicalSWithCategory from "../../static/cangjie/radicalsWithCategory.json";
 import useRecorder from "./useRecorder.jsx";
 
-const keysRecordTemplate = {
-  NumberOfPlay: 0,
-  CurrentCategory: 0,
-  Record: {},
-};
-
-function useCharacterHelper(words) {
+function useCharacterHelper(words, _keysRecord, _keysRecordName) {
   // Cangjie
-  const [keysRecord, setKeysRecord] = useState(
-    JSON.parse(localStorage.getItem("radicalRecord")) || keysRecordTemplate
-  );
-  const currentCategory = useRef(keysRecord.CurrentCategory);
+  const [keysRecord, setKeysRecord] = useState(_keysRecord);
+  const [keysRecordName, setKeysRecordName] = useState(_keysRecordName);
+  const currentCategory = useRef(_keysRecord?.CurrentCategory || 0);
   const radicalSWithCategory = Object.entries(RadicalSWithCategory);
 
   // game play logic
@@ -92,7 +85,9 @@ function useCharacterHelper(words) {
     }
     // case 2: single input
     if (answer.length === 1) {
-      handleKeysRecord(answer, keysRecord, setKeysRecord);
+      if (keysRecord) {
+        handleKeysRecord(answer);
+      }
       nextWord();
       return;
     }
@@ -100,7 +95,7 @@ function useCharacterHelper(words) {
     currentWordStatusRef.current = "correct";
   };
 
-  const handleKeysRecord = (answer, keysRecord, setKeysRecord) => {
+  const handleKeysRecord = (answer) => {
     if (getTimeInterval() === 0) return;
     const currentRadicalRecord = keysRecord?.Record[answer];
     setKeysRecord((prev) => {
@@ -125,8 +120,17 @@ function useCharacterHelper(words) {
     currentWordStatusRef.current = "default";
   };
 
-  const reset = (newWordJSON) => {
+  const reset = (newWordJSON, newKeyRecord, newKeyRecordName) => {
     // game reset based on new wordJSON
+
+    //hand key record
+    if (newKeyRecord) {
+      setKeysRecord(newKeyRecord);
+      setKeysRecordName(newKeyRecordName);
+    } else {
+      setKeysRecord(null);
+      setKeysRecordName(null);
+    }
     setCurrentWordIndex(0);
     setWrongWords(new Map());
     handleRandomWords(newWordJSON);
@@ -139,37 +143,39 @@ function useCharacterHelper(words) {
 
   const endGame = () => {
     setIsRunning(false);
+    let updatedRecord = null;
 
-    const updatedRecord = { ...keysRecord };
-    updatedRecord.NumberOfPlay++;
+    if (keysRecord) {
+      updatedRecord = { ...keysRecord };
+      updatedRecord.NumberOfPlay++;
 
-    // case: not all categories are finished
-
-    if (
-      updatedRecord.CurrentCategory < Object.keys(wordJSON).length &&
-      isNestObject(wordJSON)
-    ) {
-      // get average speed of the current category
-      const currentCategoryKeys = Object.values(
-        radicalSWithCategory[keysRecord.CurrentCategory][1]
-      );
-      let isNextCategory = true;
-      for (let i = 0; i < currentCategoryKeys.length; i++) {
-        // if (
-        //   (keysRecord?.Record[currentCategoryKeys[i]]?.speed || 0) < 80
-        //   // || keysRecord.Record[currentCategoryKeys[i]].numberOfPress < 5
-        // ) {
-        //   isNextCategory = false;
-        //   break;
-        // }
+      // case: not all categories are finished
+      if (
+        updatedRecord.CurrentCategory < Object.keys(wordJSON).length &&
+        isNestObject(wordJSON)
+      ) {
+        // get average speed of the current category
+        const currentCategoryKeys = Object.values(
+          radicalSWithCategory[keysRecord.CurrentCategory][1]
+        );
+        let isNextCategory = true;
+        for (let i = 0; i < currentCategoryKeys.length; i++) {
+          // if (
+          //   (keysRecord?.Record[currentCategoryKeys[i]]?.speed || 0) < 80
+          //   // || keysRecord.Record[currentCategoryKeys[i]].numberOfPress < 5
+          // ) {
+          //   isNextCategory = false;
+          //   break;
+          // }
+        }
+        if (isNextCategory) {
+          updatedRecord.CurrentCategory++;
+          currentCategory.current++;
+        }
       }
-      if (isNextCategory) {
-        updatedRecord.CurrentCategory++;
-        currentCategory.current++;
-      }
+      setKeysRecord(updatedRecord);
+      localStorage.setItem(keysRecordName, JSON.stringify(updatedRecord));
     }
-    setKeysRecord(updatedRecord);
-    localStorage.setItem("radicalRecord", JSON.stringify(updatedRecord));
 
     // update record
     // prettier-ignore
@@ -177,7 +183,7 @@ function useCharacterHelper(words) {
       speed: speed(accWordLength[accWordLength.length - 1], time),
       accuracy: accuracy(accWordLength[accWordLength.length - 1], wrongWords.size),
     });
-    reset(wordJSON);
+    reset(wordJSON, updatedRecord, keysRecordName);
   };
 
   const handleSpaceBarPress = (e) => {
@@ -311,6 +317,7 @@ function useCharacterHelper(words) {
     isRunning,
     inputDisplay,
     keysRecord,
+    keysRecordName,
   };
 }
 
