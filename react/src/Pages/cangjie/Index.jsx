@@ -46,7 +46,6 @@ export default function Index() {
     isRunning,
     inputDisplay,
     keysRecord,
-    keysRecordName,
   } = useCharacterHelper(
     wordJSON[initialCategoryIndex],
     keysRecords[initialCategoryIndex],
