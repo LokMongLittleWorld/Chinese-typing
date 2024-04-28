@@ -29,8 +29,9 @@ export default function Character({
           ${
             currentWordStatus === "correct"
               ? "text-gray-700"
-              : currentWordStatus === "wrong" //&& shouldTransition
-              ? "text-rose-400"
+              : currentWordStatus === "wrong"
+              ? //TODO: add animation for wrong input
+                "text-rose-400"
               : "text-gray-500"
           }`}
         >
