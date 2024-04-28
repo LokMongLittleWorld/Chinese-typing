@@ -123,7 +123,15 @@ function useCharacterHelper(words, _keysRecord, _keysRecordName) {
   const reset = (newWordJSON, newKeyRecord, newKeyRecordName) => {
     // game reset based on new wordJSON
 
-    //hand key record
+    // handle record reset for the new category
+    if (
+      currentCategoryIndex !==
+      parseInt(localStorage.getItem("currentCategoryIndex"))
+    ) {
+      setRecord({ speed: 0, accuracy: 0 });
+    }
+
+    // handle key record
     if (newKeyRecord) {
       setKeysRecord(newKeyRecord);
       setKeysRecordName(newKeyRecordName);
