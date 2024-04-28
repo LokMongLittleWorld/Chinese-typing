@@ -12,7 +12,7 @@
     }
     @font-face {
         font-family: "Glyph";
-        src: url("../public/fonts/glyph.ttf") format("truetype")
+        src: url("../public/fonts/GlyphCanjie.woff2") format("woff2")
     }
 
     @font-face {

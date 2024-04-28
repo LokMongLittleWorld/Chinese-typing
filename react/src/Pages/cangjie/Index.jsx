@@ -3,7 +3,7 @@ import Record from "../../Components/Record.jsx";
 import PracticeCategory from "../../Components/PracticeCategory.jsx";
 import Radicals from "../../../static/cangjie/radicals.json";
 import RadicalSWithCategory from "../../../static/cangjie/radicalsWithCategory.json";
-import Glyphs from "../../../static/cangjie/glyphs.json";
+import GlyphsWithCategory from "../../../static/cangjie/glyphsWithCategory.json";
 import Words from "../../../static/cangjie/words.json";
 import useCharacterHelper from "../../hooks/useCharacterHelper.jsx";
 import AmountSelector from "../../Components/AmountSelector.jsx";
@@ -15,7 +15,7 @@ import InvisibleInput from "../../Components/InvisibleInput.jsx";
 
 export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
-  const wordJSON = [RadicalSWithCategory, Glyphs, Words];
+  const wordJSON = [RadicalSWithCategory, GlyphsWithCategory, Words];
 
   // keysRecord config
   const keysRecords = [
