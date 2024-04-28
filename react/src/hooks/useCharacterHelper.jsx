@@ -4,12 +4,6 @@ import RadicalSWithCategory from "../../static/cangjie/radicalsWithCategory.json
 import useRecorder from "./useRecorder.jsx";
 
 function useCharacterHelper(words, _keysRecord, _keysRecordName) {
-  // Cangjie
-  const [keysRecord, setKeysRecord] = useState(_keysRecord);
-  const [keysRecordName, setKeysRecordName] = useState(_keysRecordName);
-  const currentCategory = useRef(_keysRecord?.CurrentCategory || 0);
-  const radicalSWithCategory = Object.entries(RadicalSWithCategory);
-
   // game play logic
   const [wordJSON, setWordJSON] = useState(words);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(
@@ -35,6 +29,12 @@ function useCharacterHelper(words, _keysRecord, _keysRecordName) {
   const { time, isRunning, setIsRunning, getTimeInterval } = useTimer();
   const { speed, accuracy } = useRecorder();
   const [wrongWords, setWrongWords] = useState(new Map());
+
+  // Cangjie, keysRecord related
+  const [keysRecord, setKeysRecord] = useState(_keysRecord);
+  const [keysRecordName, setKeysRecordName] = useState(_keysRecordName);
+  const currentCategory = useRef(_keysRecord?.CurrentCategory || 0);
+  const radicalSWithCategory = Object.entries(RadicalSWithCategory);
 
   const handleKeyDown = (e) => {
     // handle keydown event
@@ -306,24 +306,35 @@ function useCharacterHelper(words, _keysRecord, _keysRecordName) {
   }
 
   return {
+    // functions
     handleKeyDown,
     handleAmountChange,
     reset,
+
+    //game play logic
     currentCategoryIndex,
     setCurrentCategoryIndex,
-    record,
     currentWordIndex,
-    currentWordStatus: currentWordStatusRef.current,
+    randomWords,
+    answerMap,
+
+    //word amount
     amounts,
     amount,
-    randomWords,
     setAmount,
+
+    //display
+    currentWordStatus: currentWordStatusRef.current,
     showModal,
     setShowModal,
-    answerMap,
     accWordLength,
-    isRunning,
     inputDisplay,
+
+    //record
+    record,
+    isRunning,
+
+    //Cangjie, keysRecord related
     keysRecord,
     keysRecordName,
   };
