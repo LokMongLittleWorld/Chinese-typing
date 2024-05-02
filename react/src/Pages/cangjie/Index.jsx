@@ -91,6 +91,7 @@ export default function Index() {
           currentWordStatus={currentWordStatus}
           Radicals={Radicals}
         />
+        <InvisibleInput handleKeyDown={handleKeyDown} />
         <AmountSelector
           amounts={amounts}
           amount={amount}
@@ -99,7 +100,6 @@ export default function Index() {
           handleAmountChange={handleAmountChange}
         />
       </section>
-      <InvisibleInput handleKeyDown={handleKeyDown} />
     </>
   );
 }
