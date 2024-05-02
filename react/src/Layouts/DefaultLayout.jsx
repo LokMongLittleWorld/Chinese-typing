@@ -7,12 +7,12 @@ import { useEffect, useState } from "react";
 export default function DefaultLayout() {
   const { user, token, setUser, setToken, notification } = useStateContext();
   const pages = {
-    speedTyping: "中文速打",
-    cangjie: "倉頡練習",
-    jyutping: "粵拼練習",
+    "speed-typing": "中文速打",
+    "cangjie": "倉頡練習",
+    "jyutping": "粵拼練習",
   };
   const [currentPage, setCurrentPage] = useState(
-    localStorage.getItem("currentPage") || "speedTyping"
+    localStorage.getItem("currentPage") || "speed-typing"
   );
 
   useEffect(() => {

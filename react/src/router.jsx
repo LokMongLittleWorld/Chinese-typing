@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <Index />,
       },
       {
-        path: "/home",
+        path: "/speed-typing",
         element: <Index />,
       },
       {
@@ -46,15 +46,6 @@ const router = createBrowserRouter([
           {
             path: "initial-practice",
             element: <JyutpingIndex />,
-          },
-        ],
-      },
-      {
-        path: "/japanese",
-        children: [
-          {
-            path: "",
-            element: <JapaneseIndex />,
           },
         ],
       },
