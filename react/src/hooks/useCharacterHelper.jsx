@@ -167,6 +167,7 @@ function useCharacterHelper(words, _keysRecord, _keysRecordName) {
           radicalSWithCategory[keysRecord.CurrentCategory][1]
         );
         let isNextCategory = true;
+        //TODO: test
         for (let i = 0; i < currentCategoryKeys.length; i++) {
           // if (
           //   (keysRecord?.Record[currentCategoryKeys[i]]?.speed || 0) < 80
