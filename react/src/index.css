@@ -8,11 +8,11 @@
     }
     @font-face {
         font-family: "SeaSpray";
-        src: url("../public/fonts/HanyiSentySeaSpray.woff2") format("woff2")
+        src: url("../fonts/HanyiSentySeaSpray.woff2") format("woff2")
     }
     @font-face {
         font-family: "Glyph";
-        src: url("../public/fonts/GlyphCanjie.woff2") format("woff2")
+        src: url("../fonts/GlyphCanjie.woff2") format("woff2")
     }
 
     @font-face {
