@@ -8,7 +8,7 @@ import GuestLayout from "./Layouts/GuestLayout.jsx";
 import Index from "./Pages/speed-typing/Index.jsx";
 import CangjieIndex from "./Pages/cangjie/index.jsx";
 import JyutpingIndex from "./Pages/jyutping/Index.jsx";
-import JapaneseIndex from "./Pages/japanese/Index.jsx";
+import Detail from "./Pages/speed-typing/Detail.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +26,14 @@ const router = createBrowserRouter([
       {
         path: "/speed-typing",
         element: <Index />,
+      },
+      {
+        path: "/speed-typing/:id",
+        element: <Detail />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
       {
         path: "/cangjie",
