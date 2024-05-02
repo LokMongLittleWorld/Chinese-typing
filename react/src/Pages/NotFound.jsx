@@ -2,7 +2,7 @@ import error404 from "../../../public/images/error404.jpeg";
 
 export default function NotFound() {
   return (
-    <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center flex-col gap-4">
+    <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center flex-col gap-4 z-[-1]">
       <img
         src={error404}
         alt="error 404"
