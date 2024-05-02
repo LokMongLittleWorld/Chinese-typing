@@ -11,7 +11,7 @@ export default function cheatSheetModel({ showModal = false, setShowModal }) {
     <Model showModal={showModal}>
       <Model.Header handleOnClick={handleOnClick} title="倉頡輔助字形表" />
       <Model.Content>
-        <div className="flex flex-row text-3xl text-gray-700 gap-4 p-4">
+        <div className="flex flex-row line-clamp-3 text-gray-700 gap-4 p-4">
           {Object.entries(CheatSheet)
             .slice(0, -1)
             .map(([key, value], index) => {
@@ -19,7 +19,7 @@ export default function cheatSheetModel({ showModal = false, setShowModal }) {
             })}
         </div>
         {/*  last the object in CheatSheet*/}
-        <div className="text-3xl text-gray-700 p-4 pt-0">
+        <div className="line-clamp-3 text-gray-700 p-4 pt-0">
           <CheatSheetGrid
             title={Object.entries(CheatSheet).pop()[0]}
             value={Object.entries(CheatSheet).pop()[1]}
