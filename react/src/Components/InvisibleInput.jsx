@@ -1,18 +1,23 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
+import Input from "./Input.jsx";
 
-export default function InvisibleInput({ handleKeyDown, stayFocus = true }) {
-  const inputRef = useRef(null);
-
+export default function InvisibleInput({
+  handleKeyDown,
+  handleChange,
+  stayFocus = true,
+  inputRef,
+}) {
   useEffect(() => {
     // Focus on the input element after it renders
     inputRef.current.focus();
   }, []);
   return (
-    <input
-      ref={inputRef}
+    <Input
       onKeyDown={handleKeyDown}
+      onChange={handleChange}
       className="opacity-0 cursor-default"
       onBlur={(e) => e.target.focus()}
+      ref={inputRef}
     />
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Record from "../../Components/Record.jsx";
 import PracticeCategory from "../../Components/PracticeCategory.jsx";
 import Radicals from "../../../static/cangjie/radicals.json";
@@ -16,6 +16,9 @@ import InvisibleInput from "../../Components/InvisibleInput.jsx";
 export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
   const wordJSON = [RadicalSWithCategory, GlyphsWithCategory, Words];
+
+  //input ref
+  const inputRef = useRef(null);
 
   // keysRecord config
   const keysRecords = [
@@ -91,7 +94,7 @@ export default function Index() {
           currentWordStatus={currentWordStatus}
           Radicals={Radicals}
         />
-        <InvisibleInput handleKeyDown={handleKeyDown} />
+        <InvisibleInput handleKeyDown={handleKeyDown} inputRef={inputRef} />
         <AmountSelector
           amounts={amounts}
           amount={amount}
