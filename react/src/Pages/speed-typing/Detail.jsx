@@ -35,20 +35,46 @@ export default function Detail() {
       </div>
       <div className="fixed top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center z-[-1]">
         <div className="text-4xl">《{article?.title}》</div>
-        <div className="max-w-4xl p-4 text-4xl leading-[60px] text-gray-700">
+        {/*TODO: only display current 5 lines*/}
+        <div className="max-w-4xl p-4 text-4xl leading-[60px] text-gray-700 flex flex-row gap-1">
           {article?.content.split("").map((character, index) => {
             return (
-              <span key={index} className={`${handleTextColor(index)}`}>
-                {character}
-              </span>
+              <>
+                {character === "\n" ? (
+                  <br />
+                ) : (
+                  <div
+                    key={index}
+                    className={`relative ${handleTextColor(index)}`}
+                  >
+                    {/*{index === currentWordIndex && (*/}
+                    {/*  // TODO: text cursor animation, typewriter*/}
+                    {/*  <div className="absolute text-gray-700 font-bold left-[-5px]">*/}
+                    {/*    ｜*/}
+                    {/*  </div>*/}
+                    {/*)}*/}
+                    {index === currentWordIndex && (
+                      <InvisibleInput
+                        handleKeyDown={handleKeyDown}
+                        handleChange={handleChange}
+                        inputRef={inputRef}
+                      />
+                    )}
+                    <div
+                      className={`${
+                        index === currentWordIndex
+                          ? "underline underline-offset-[10px] decoration-3"
+                          : ""
+                      }`}
+                    >
+                      {character}
+                    </div>
+                  </div>
+                )}
+              </>
             );
           })}
         </div>
-        <InvisibleInput
-          handleKeyDown={handleKeyDown}
-          handleChange={handleChange}
-          inputRef={inputRef}
-        />
       </div>
     </>
   );
