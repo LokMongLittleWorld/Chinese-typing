@@ -20,14 +20,29 @@ function useArticleHelper(text) {
     e.preventDefault();
     const character = inputRef.current.value.at(-1);
 
-    if (
-      character !== text[currentWordIndex] &&
-      !wrongWordIndex.includes(currentWordIndex)
-    ) {
+    if (currentWordIndex === 0) {
+      setIsRunning(true);
+    }
+
+    // incorrect input
+    //prettier-ignore
+    if (character !== text[currentWordIndex] && !wrongWordIndex.includes(currentWordIndex)) {
       setWrongWordIndex([...wrongWordIndex, currentWordIndex]);
     }
 
+    // correct input
     if (character === text[currentWordIndex]) {
+      if (currentWordIndex === text.length - 1) {
+        setIsRunning(false);
+        setCurrentWordIndex(0);
+        setWrongWordIndex([]);
+        inputRef.current.value = "";
+        setRecord({
+          speed: speed(text.length, time),
+          accuracy: accuracy(text.length, wrongWordIndex.length),
+        });
+        return;
+      }
       setCurrentWordIndex(currentWordIndex + 1);
     }
   };
