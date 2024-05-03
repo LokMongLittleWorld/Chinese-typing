@@ -13,11 +13,11 @@ export default function InvisibleInput({
   }, []);
   return (
     <Input
-      onKeyDown={handleKeyDown}
-      onChange={handleChange}
+      handleKeyDown={handleKeyDown}
+      handleChange={handleChange}
       className="opacity-0 cursor-default"
       onBlur={(e) => e.target.focus()}
-      ref={inputRef}
+      inputRef={inputRef}
     />
   );
 }

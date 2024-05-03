@@ -1,6 +1,12 @@
 import { useRef } from "react";
 
-const Input = ({ inputRef, handleChange, className, onBlur }) => {
+const Input = ({
+  inputRef,
+  handleChange,
+  className,
+  onBlur,
+  handleKeyDown,
+}) => {
   // Add a state to track Chinese input state
   const compositionRef = useRef(false);
 
@@ -22,6 +28,7 @@ const Input = ({ inputRef, handleChange, className, onBlur }) => {
   return (
     <input
       ref={inputRef}
+      onKeyDown={handleKeyDown}
       onBlur={onBlur}
       className={className}
       onChange={preHandleChange}
