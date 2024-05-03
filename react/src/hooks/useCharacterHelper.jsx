@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import useTimer from "./useTimer.jsx";
-import RadicalSWithCategory from "../../static/cangjie/radicalsWithCategory.json";
+import RadicalSWithCategory from "../../static/cangjie/radicals_with_category.json";
 import useRecorder from "./useRecorder.jsx";
 
 function useCharacterHelper(words, _keysRecord, _keysRecordName) {
