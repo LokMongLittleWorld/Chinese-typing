@@ -15,7 +15,7 @@ export default function InvisibleInput({
     <Input
       handleKeyDown={handleKeyDown}
       handleChange={handleChange}
-      className="opacity-0 cursor-default"
+      className="cursor-default opacity-0 absolute bottom-0"
       onBlur={(e) => e.target.focus()}
       inputRef={inputRef}
     />
