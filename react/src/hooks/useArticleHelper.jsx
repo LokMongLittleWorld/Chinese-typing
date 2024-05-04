@@ -10,7 +10,6 @@ function useArticleHelper(text) {
   const { time, isRunning, setIsRunning, getTimeInterval } = useTimer();
   const { speed, accuracy } = useRecorder();
   const [wrongWordIndex, setWrongWordIndex] = useState([]);
-  const [awaiting, setAwaiting] = useState(false);
 
   const handleKeyDown = (e) => {
     //   TODO: add hot key function
