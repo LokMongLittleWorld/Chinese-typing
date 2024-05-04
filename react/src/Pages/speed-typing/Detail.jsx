@@ -47,12 +47,14 @@ export default function Detail() {
                     key={index}
                     className={`relative ${handleTextColor(index)}`}
                   >
-                    {/*{index === currentWordIndex && (*/}
-                    {/*  // TODO: text cursor animation, typewriter*/}
-                    {/*  <div className="absolute text-gray-700 font-bold left-[-5px]">*/}
-                    {/*    ｜*/}
-                    {/*  </div>*/}
-                    {/*)}*/}
+                    {index === currentWordIndex && (
+                      // text writer type 1
+                      // <div className="absolute text-gray-700 font-bold left-[-5px] animate-typing bg-gray-700">
+                      //   ｜
+                      // </div>
+                      // text writer type 2
+                      <div className="absolute top-1/2 transform -translate-y-1/2 left-[-2px] w-[3px] h-8 rounded-lg animate-typing bg-gray-500" />
+                    )}
                     {index === currentWordIndex && (
                       <InvisibleInput
                         handleKeyDown={handleKeyDown}
@@ -60,15 +62,7 @@ export default function Detail() {
                         inputRef={inputRef}
                       />
                     )}
-                    <div
-                      className={`${
-                        index === currentWordIndex
-                          ? "underline underline-offset-[10px] decoration-3"
-                          : ""
-                      }`}
-                    >
-                      {character}
-                    </div>
+                    <div>{character}</div>
                   </div>
                 )}
               </>
