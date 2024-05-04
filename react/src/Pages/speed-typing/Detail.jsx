@@ -36,14 +36,14 @@ export default function Detail() {
       <div className="fixed top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center z-[-1]">
         <div className="text-4xl">《{article?.title}》</div>
         {/*TODO: only display current 5 lines*/}
-        <div className="max-w-4xl p-4 text-4xl leading-[60px] text-gray-700 flex flex-row gap-1">
+        <div className="max-w-4xl p-4 text-4xl leading-[60px] text-gray-700">
           {article?.content.split("").map((character, index) => {
             return (
               <>
                 {character === "\n" ? (
                   <br />
                 ) : (
-                  <div
+                  <span
                     key={index}
                     className={`relative ${handleTextColor(index)}`}
                   >
@@ -55,6 +55,7 @@ export default function Detail() {
                       // text writer type 2
                       <div className="absolute top-1/2 transform -translate-y-1/2 left-[-2px] w-[3px] h-8 rounded-lg animate-typing bg-gray-500" />
                     )}
+                    {character}
                     {index === currentWordIndex && (
                       <InvisibleInput
                         handleKeyDown={handleKeyDown}
@@ -62,8 +63,7 @@ export default function Detail() {
                         inputRef={inputRef}
                       />
                     )}
-                    <div>{character}</div>
-                  </div>
+                  </span>
                 )}
               </>
             );
