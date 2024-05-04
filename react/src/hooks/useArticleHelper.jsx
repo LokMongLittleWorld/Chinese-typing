@@ -11,6 +11,9 @@ function useArticleHelper(text) {
   const { speed, accuracy } = useRecorder();
   const [wrongWordIndex, setWrongWordIndex] = useState([]);
 
+  //display
+  const [currentLineIndex, setCurrentLineIndex] = useState(0);
+
   const handleKeyDown = (e) => {
     //   TODO: add hot key function
   };
@@ -31,6 +34,7 @@ function useArticleHelper(text) {
 
     // correct input
     if (character === text[currentWordIndex]) {
+      // endGame
       if (currentWordIndex === text.length - 1) {
         setIsRunning(false);
         setCurrentWordIndex(0);
@@ -42,6 +46,13 @@ function useArticleHelper(text) {
         });
         return;
       }
+      // next word
+      const nextCharacter = text[currentWordIndex + 1];
+      if (nextCharacter === "\n") {
+        setCurrentLineIndex(currentLineIndex + 1);
+        setCurrentWordIndex(currentWordIndex + 2);
+        return;
+      }
       setCurrentWordIndex(currentWordIndex + 1);
     }
   };
@@ -51,6 +62,7 @@ function useArticleHelper(text) {
     handleChange,
     handleKeyDown,
     currentWordIndex,
+    currentLineIndex,
     inputRef,
     record,
     wrongWordIndex,

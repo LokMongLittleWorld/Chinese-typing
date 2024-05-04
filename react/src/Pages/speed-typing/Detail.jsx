@@ -14,6 +14,7 @@ export default function Detail() {
     handleChange,
     handleKeyDown,
     currentWordIndex,
+    currentLineIndex,
     inputRef,
     record,
     wrongWordIndex,
@@ -32,10 +33,10 @@ export default function Detail() {
   useEffect(() => {
     // Scroll to a specific position when currentWordIndex changes
     if (containerRef.current) {
-      const lineHeight = 65; // Adjust this based on your line height
-      containerRef.current.scrollTop = currentWordIndex * lineHeight;
+      const lineHeight = 50; // Adjust this based on your line height
+      containerRef.current.scrollTop = currentLineIndex * lineHeight;
     }
-  }, [currentWordIndex]);
+  }, [currentLineIndex]);
 
   return (
     <div key={articleId}>
@@ -43,11 +44,11 @@ export default function Detail() {
         <Record speed={record.speed} accuracy={record.accuracy} />
       </div>
       <div className="fixed top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center z-[-1]">
-        <div className="text-4xl">《{article?.title}》</div>
+        <div className="text-4xl mb-4">《{article?.title}》</div>
         {/*TODO: only display current 5 lines*/}
         <div
           ref={containerRef}
-          className="max-w-4xl max-h-[385px] p-4 text-4xl leading-[60px] text-gray-700 overflow-y-hidden scrollbar-hide"
+          className="max-w-4xl max-h-[300px] px-2 text-4xl leading-[50px] text-gray-700 overflow-y-hidden scrollbar-hide"
         >
           {article?.content.split("").map((character, index) => {
             return (
@@ -77,9 +78,15 @@ export default function Detail() {
                     )}
                   </span>
                 )}
+                {/*<InvisibleInput*/}
+                {/*  handleKeyDown={handleKeyDown}*/}
+                {/*  handleChange={handleChange}*/}
+                {/*  inputRef={inputRef}*/}
+                {/*/>*/}
               </>
             );
           })}
+          <div className=" pb-[300px] " />
         </div>
       </div>
     </div>
