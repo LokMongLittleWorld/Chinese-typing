@@ -47,7 +47,7 @@ class AuthController extends Controller
         if (!Auth::attempt($credentials)) {
             return response()->json([
                 'message' => 'Invalid credentials',
-            ], 401);
+            ], 422);
         }
         $user = Auth::user();
         $token = $user->createToken('main')->plainTextToken;
@@ -64,6 +64,5 @@ class AuthController extends Controller
         $user = $request->user();
         $user->currentAccessToken()->delete();
         return response('', 204);
-
     }
 }
