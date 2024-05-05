@@ -15,6 +15,16 @@ class AuthController extends Controller
             'message' => 'test',
         ], 200);
     }
+
+    public function authenticatedTest(Request $request)
+    {
+        $user = $request->user();
+        return response()->json([
+            'message' => 'authenticated test',
+            'user'    => $user,
+            'current_access_token' => $user->currentAccessToken(),
+        ], 200);
+    }
     public function register(Request $request)
     {
         $data = $request->validate([

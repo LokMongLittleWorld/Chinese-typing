@@ -2,6 +2,7 @@ import { Link, Navigate, Outlet } from "react-router-dom";
 import { useStateContext } from "../Contexts/ContextProvider.jsx";
 import axiosClient from "../axios-client.js";
 import { useEffect, useState } from "react";
+import LogoutButton from "../Components/LogoutButton.jsx";
 
 //"中文速打", "倉頡練習", "粵拼練習"
 export default function DefaultLayout() {
@@ -24,15 +25,6 @@ export default function DefaultLayout() {
   if (!token) {
     return <Navigate to="/login" />;
   }
-
-  const onLogout = (ev) => {
-    ev.preventDefault();
-
-    axiosClient.post("/logout").then(() => {
-      setUser({});
-      setToken(null);
-    });
-  };
 
   return (
     <div id="defaultLayout">
@@ -62,6 +54,9 @@ export default function DefaultLayout() {
             })}
           </div>
         </header>
+        <div className="fixed top-2 right-2">
+          <LogoutButton />
+        </div>
         <Outlet />
       </div>
     </div>
