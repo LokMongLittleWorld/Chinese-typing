@@ -1,25 +1,32 @@
-import { useState } from "react";
+import { createRef, useState } from "react";
 import axiosClient from "../axios-client.js";
 import { useStateContext } from "../Contexts/ContextProvider.jsx";
 
 export default function Register() {
-  const [values, setValues] = useState({
-    username: "123",
-    email: "123123123@gmail.com",
-    password: "123123123",
-    password_confirmation: "123123123",
-  });
+  const nameRef = createRef();
+  const emailRef = createRef();
+  const passwordRef = createRef();
+  const passwordConfirmationRef = createRef();
+  const [errors, setErrors] = useState({});
 
   const { setUser, setToken } = useStateContext();
 
   const handleSubmit = () => {
-      // axiosClient.get("/test").then(({ data }) => {
-      //   console.log(data);
-      // });
+    console.log(errors);
+    if (passwordRef.current.value !== passwordConfirmationRef.current.value) {
+      setErrors({ password: "Passwords do not match" });
+      return;
+    }
+
+    const values = {
+      username: nameRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    };
+
     axiosClient
       .post("/register", values)
       .then(({ data }) => {
-        console.log(data);
         setUser(data.user);
         setToken(data.token);
         //auto redirect to home
@@ -29,15 +36,25 @@ export default function Register() {
           const response = error.response;
           if (response && response.status === 422) {
             console.log("register error", response.data.errors);
+            setErrors(response.data.errors);
           }
         } catch (error) {
           console.log("register error", error);
+          setErrors(error);
         }
       });
   };
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center gap-4 rounded-lg">
       <div>Register</div>
+      <input ref={nameRef} type="text" placeholder="Full Name" />
+      <input ref={emailRef} type="email" placeholder="Email Address" />
+      <input ref={passwordRef} type="password" placeholder="Password" />
+      <input
+        ref={passwordConfirmationRef}
+        type="password"
+        placeholder="Repeat Password"
+      />
       <button
         onClick={handleSubmit}
         type="button"
@@ -45,6 +62,12 @@ export default function Register() {
       >
         Submit
       </button>
+      {errors &&
+        Object.entries(errors).map(([key, value]) => (
+          <div key={key} className="text-red-500">
+            {key} {value}
+          </div>
+        ))}
     </div>
   );
 }
