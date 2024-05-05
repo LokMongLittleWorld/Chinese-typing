@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+        font-family: 'Noto Serif TC', serif;
+    }
+    @font-face {
+        font-family: "SeaSpray";
+        src: url("../fonts/HanyiSentySeaSpray.woff2") format("woff2")
+    }
+    @font-face {
+        font-family: "Glyph";
+        src: url("../fonts/GlyphCanjie.woff2") format("woff2")
+    }
+
+    @font-face {
+        font-family: 'Nunito', sans-serif;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* For IE, Edge and Firefox */
+    .scrollbar-hide {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+}
+

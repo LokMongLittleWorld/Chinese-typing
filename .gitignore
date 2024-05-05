@@ -17,3 +17,9 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+.pnpm-store/
+
+.DS_Store
+
+pnpm-lock.yaml

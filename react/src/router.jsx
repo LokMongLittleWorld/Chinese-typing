@@ -1,51 +1,84 @@
-import {createBrowserRouter} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Login from "./Pages/Login.jsx";
 import Register from "./Pages/Register.jsx";
 import Users from "./Pages/Users.jsx";
 import NotFound from "./Pages/NotFound.jsx";
 import DefaultLayout from "./Layouts/DefaultLayout.jsx";
 import GuestLayout from "./Layouts/GuestLayout.jsx";
-import Home from "./Pages/Home.jsx";
+import Index from "./Pages/speed-typing/Index.jsx";
+import CangjieIndex from "./Pages/cangjie/index.jsx";
+import JyutpingIndex from "./Pages/jyutping/Index.jsx";
+import Detail from "./Pages/speed-typing/Detail.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <DefaultLayout/>,
+    element: <DefaultLayout />,
     children: [
       {
         path: "/users",
-        element: <Users/>,
+        element: <Users />,
       },
       {
         path: "/",
-        element: <Home/>,
+        element: <Index />,
       },
       {
-        path: "/home",
-        element: <Home/>,
+        path: "/speed-typing",
+        element: <Index />,
+      },
+      {
+        path: "/speed-typing/:id",
+        element: <Detail />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+      {
+        path: "/cangjie",
+        children: [
+          {
+            path: "",
+            element: <CangjieIndex />,
+          },
+        ],
+      },
+      {
+        path: "/jyutping",
+        children: [
+          {
+            path: "",
+            element: <JyutpingIndex />,
+          },
+          {
+            path: "initial-practice",
+            element: <JyutpingIndex />,
+          },
+        ],
       },
     ],
   },
   {
     path: "/",
-    element: <GuestLayout/>,
+    element: <GuestLayout />,
     children: [
       {
         path: "/login",
-        element: <Login/>,
+        element: <Login />,
       },
       {
         path: "/register",
-        element: <Register/>,
+        element: <Register />,
       },
 
       {
         path: "*",
-        element: <NotFound/>,
+        element: <NotFound />,
       },
       {
         path: "/home",
-        element: <Home/>,
+        element: <Index />,
       },
     ],
   },
