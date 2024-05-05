@@ -39,7 +39,7 @@ export default function Login() {
   };
   return (
     <div className="flex flex-col items-center justify-center gap-4 rounded-lg">
-      <div>Register</div>
+      <div>Login</div>
       <input ref={emailRef} type="email" placeholder="Email Address" />
       <input ref={passwordRef} type="password" placeholder="Password" />
       <button
