@@ -40,4 +40,19 @@ class ArticleController extends Controller
             'message' => 'Article created successfully',
         ], 201);
     }
+
+    public function show($article_id)
+    {
+        $article = Article::find($article_id);
+
+        if (!$article) {
+            return response()->json([
+                'message' => 'Article not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'article' => $article,
+        ]);
+    }
 }
