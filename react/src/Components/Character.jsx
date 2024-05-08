@@ -24,7 +24,7 @@ export default function Character({
           className={`${currentWordIndex} absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[200px] md:text-[300px] xl:text-[400px] 2xl:text-[500px] cursor-default select-none -z-10
           ${
             currentCategory === "字形訓練" &&
-            "font-glyph text-[400px] md:text-[600px] xl:text-[800px] 2xl:text-[1000px]"
+            "font-glyph text-[200px] md:text-[300px] xl:text-[400px] 2xl:text-[500px]"
           }
           ${
             currentWordStatus === "correct"
