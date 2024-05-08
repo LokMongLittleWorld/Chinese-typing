@@ -16,6 +16,11 @@ class AuthController extends Controller
         ], 200);
     }
 
+    public function user(Request $request)
+    {
+        return $request->user();
+    }
+
     public function authenticatedTest(Request $request)
     {
         $user = $request->user();

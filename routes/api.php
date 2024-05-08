@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 // authenticated routes
 Route::middleware('auth:sanctum')->group(function () {
     Route::get ('/authenticated_test', [AuthController::class, 'authenticatedTest']);
+    Route::get('/user', [AuthController::class, 'user']);
     Route::post ('/logout', [AuthController::class, 'logout']);
 
     Route::prefix('article')->group(function () {
