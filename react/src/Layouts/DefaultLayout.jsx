@@ -13,7 +13,7 @@ export default function DefaultLayout() {
     "jyutping": "粵拼練習",
   };
   const [currentPage, setCurrentPage] = useState(
-    localStorage.getItem("currentPage") || "speed-typing"
+    sessionStorage.getItem("currentPage") || "speed-typing"
   );
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function DefaultLayout() {
                 <Link
                   onClick={() => {
                     setCurrentPage(key);
-                    localStorage.setItem("currentPage", key);
+                    sessionStorage.setItem("currentPage", key);
                   }}
                   key={key}
                   to={"/" + key}
