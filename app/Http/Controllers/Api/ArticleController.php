@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
@@ -20,7 +19,6 @@ class ArticleController extends Controller
         ]);
 
         Article::create([
-            'ulid' =>Str::ulid()->toBase32(),
             'title' => $data['title'],
             'user_id' => Auth::id(),
             'content' => $data['content'],
