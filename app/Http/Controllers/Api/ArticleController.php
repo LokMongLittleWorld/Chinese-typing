@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
+
+    public function index()
+    {
+        //TODO: Add pagination
+        $articles = Article::all();
+
+        return response()->json([
+            'articles' => $articles,
+        ]);
+    }
     public function store(Request $request)
     {
         $data = $request->validate([
