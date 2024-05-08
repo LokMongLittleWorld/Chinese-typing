@@ -21,7 +21,7 @@ export default function Article({
     }
   }, [currentLineIndex]);
   return (
-    <div className="fixed top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center z-[-1]">
+    <div className="fixed top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center z-[-1] select-none">
       <div className="text-4xl mb-4">《{article?.title}》</div>
       <div
         ref={containerRef}
