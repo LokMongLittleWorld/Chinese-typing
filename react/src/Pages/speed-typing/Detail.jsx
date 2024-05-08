@@ -4,15 +4,11 @@ import React, { useEffect, useState } from "react";
 import useArticleHelper from "../../hooks/useArticleHelper.jsx";
 import axiosClient from "../../axios-client.js";
 import NotFound from "../../Components/NotFound.jsx";
-import useHelper from "../../hooks/useHelper.jsx";
 import Article from "../../Components/Article.jsx";
 
 export default function Detail() {
   const { id: articleId } = useParams();
-  const [article, setArticle] = useState({
-    title: "123",
-    content: "o\np\ne\nn",
-  });
+  const [article, setArticle] = useState({});
   const [isNotFound, setIsNotFound] = useState(false);
 
   useEffect(() => {
@@ -38,8 +34,6 @@ export default function Detail() {
     wrongWordIndex,
   } = useArticleHelper(article?.content);
 
-  const { handleTextColor } = useHelper();
-
   if (isNotFound) {
     return <NotFound message="Article not found" />;
   }
@@ -58,7 +52,6 @@ export default function Detail() {
         currentWordIndex={currentWordIndex}
         wrongWordIndex={wrongWordIndex}
         inputRef={inputRef}
-        handleTextColor={handleTextColor}
       />
     </main>
   );
