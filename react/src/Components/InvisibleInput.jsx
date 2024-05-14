@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Input from "./Input.jsx";
+import CompositedInput from "./CompositedInput.jsx";
 
 export default function InvisibleInput({
   handleKeyDown,
@@ -12,7 +12,7 @@ export default function InvisibleInput({
     inputRef.current.focus();
   }, []);
   return (
-    <Input
+    <CompositedInput
       handleKeyDown={handleKeyDown}
       handleChange={handleChange}
       className="cursor-default absolute h-2 w-2 bottom-0 z-[-10] opacity-0"

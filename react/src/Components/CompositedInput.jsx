@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-const Input = ({
+const CompositedInput = ({
   inputRef,
   handleChange,
   className,
@@ -39,4 +39,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default CompositedInput;
