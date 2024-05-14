@@ -4,7 +4,7 @@ const Model = ({ showModal = false, children }) => {
   return (
     <>
       {showModal && (
-        <div className="fixed top-0 right-0 left-0 bottom-0 z-100 flex justify-center items-center select-none">
+        <div className="fixed top-0 right-0 left-0 bottom-0 z-100 flex justify-center items-center select-none backdrop-blur-sm bg-white/30">
           {/* main modal content */}
           <div className="bg-gray-50 rounded-lg shadow dark:bg-gray-700 items-center justify-center">
             {children}
