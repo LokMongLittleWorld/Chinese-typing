@@ -22,7 +22,9 @@ export default function Article({
   }, [currentLineIndex]);
   return (
     <div className="fixed top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center z-[-1] select-none">
+      {/*title*/}
       <div className="text-4xl mb-4">《{article?.title}》</div>
+      {/*display current 6 lines*/}
       <div
         ref={containerRef}
         className="max-w-4xl max-h-[300px] px-2 text-4xl leading-[50px] text-gray-700 overflow-y-hidden scrollbar-hide"
