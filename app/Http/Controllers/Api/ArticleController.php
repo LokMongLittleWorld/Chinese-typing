@@ -33,11 +33,33 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
+            'id' => ['nullable', 'string'],
             'title'    => ['required', 'string', 'min:3', 'max:255'],
             'content'  => ['required', 'string'],
             'category' => ['nullable', 'string', 'min:3', 'max:255'],
-            'details'  => ['nullable', 'string'],
         ]);
+
+        if($data['id']){
+            $article = Article::find($data['id']);
+            if(!$article){
+                return response()->json([
+                    'message' => 'Article not found',
+                ], 404);
+            }
+            if($article->user_id !== Auth::id()){
+                return response()->json([
+                    'message' => 'You are not the owner of this article',
+                ], 403);
+            }
+            $article->update([
+                'title' => $data['title'],
+                'content' => $data['content'],
+                'category' => $data['category'] ?? null,
+            ]);
+            return response()->json([
+                'message' => 'Article updated successfully',
+            ], 200);
+        }
 
         Article::create([
             'title' => $data['title'],

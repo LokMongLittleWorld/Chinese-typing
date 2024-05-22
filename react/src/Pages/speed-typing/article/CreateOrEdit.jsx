@@ -18,6 +18,7 @@ export default function CreateOrEdit() {
 
   const handleSubmit = () => {
     const values = {
+      id: articleId,
       title: article.title,
       content: handleContent(article.content),
     };
@@ -26,8 +27,16 @@ export default function CreateOrEdit() {
       .post("/article", values)
       .then(({ data }) => {})
       .catch((error) => {
-        console.log(error);
-        setErrors(error.response.data.errors);
+        if (error.response && error.response.data) {
+          const { message, errors } = error.response.data;
+          if (errors) {
+            setErrors(errors);
+          } else {
+            setErrors({ message: message });
+          }
+        } else {
+          console.log("An unexpected error occurred:", error);
+        }
       });
   };
 
