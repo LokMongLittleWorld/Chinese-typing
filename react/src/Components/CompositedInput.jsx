@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-const Input = ({
+const CompositedInput = ({
   inputRef,
   handleChange,
   className,
@@ -11,7 +11,7 @@ const Input = ({
   const compositionRef = useRef(false);
 
   const preHandleChange = (e) => {
-    if (!compositionRef.current) {
+    if (!compositionRef.current && handleChange !== undefined) {
       handleChange(e);
     }
   };
@@ -39,4 +39,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default CompositedInput;

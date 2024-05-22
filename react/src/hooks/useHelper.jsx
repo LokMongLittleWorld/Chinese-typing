@@ -11,6 +11,16 @@ const useHelper = () => {
     }
   };
 
+  const handleTextColor = (index, wrongWordIndex, currentWordIndex) => {
+    if (wrongWordIndex?.includes(index)) {
+      return "text-rose-400";
+    }
+    if (index < currentWordIndex) {
+      return "text-gray-700";
+    }
+    return "text-gray-500";
+  };
+
   const getCurrentWords = (currentWordIndex, accWordLength, randomWords) => {
     let words = [];
     let firstWordIndex = 0;
@@ -28,7 +38,7 @@ const useHelper = () => {
     return { words, firstWordIndex };
   };
 
-  return { getCurrentWordLength, getCurrentWords };
+  return { getCurrentWordLength, getCurrentWords, handleTextColor };
 };
 
 export default useHelper;

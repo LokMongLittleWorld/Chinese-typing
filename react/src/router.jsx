@@ -2,13 +2,14 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "./Pages/Login.jsx";
 import Register from "./Pages/Register.jsx";
 import Users from "./Pages/Users.jsx";
-import NotFound from "./Pages/NotFound.jsx";
+import NotFound from "./Components/NotFound.jsx";
 import DefaultLayout from "./Layouts/DefaultLayout.jsx";
 import GuestLayout from "./Layouts/GuestLayout.jsx";
 import Index from "./Pages/speed-typing/Index.jsx";
 import CangjieIndex from "./Pages/cangjie/index.jsx";
 import JyutpingIndex from "./Pages/jyutping/Index.jsx";
 import Detail from "./Pages/speed-typing/Detail.jsx";
+import CreateArticle from "./Pages/speed-typing/CreateArticle.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,10 +33,6 @@ const router = createBrowserRouter([
         element: <Detail />,
       },
       {
-        path: "*",
-        element: <NotFound />,
-      },
-      {
         path: "/cangjie",
         children: [
           {
@@ -57,15 +54,19 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // {
-      //   path: "/article",
-      //   children: [
-      //     {
-      //       path: "create",
-      //       element: <CreateArticle />,
-      //     },
-      //   ],
-      // },
+      {
+        path: "/article",
+        children: [
+          {
+            path: "create",
+            element: <CreateArticle />,
+          },
+        ],
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
     ],
   },
   {

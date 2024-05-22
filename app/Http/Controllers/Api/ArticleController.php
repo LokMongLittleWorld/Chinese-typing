@@ -5,9 +5,20 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
+
+    public function index()
+    {
+        //TODO: Add pagination
+        $articles = Article::all();
+
+        return response()->json([
+            'articles' => $articles,
+        ]);
+    }
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -17,16 +28,31 @@ class ArticleController extends Controller
             'details'  => ['nullable', 'string'],
         ]);
 
-        $article = Article::create([
-            'title'    => $data['title'],
-            'user_id'  => $request->user()->id,
-            'content'  => $data['content'],
+        Article::create([
+            'title' => $data['title'],
+            'user_id' => Auth::id(),
+            'content' => $data['content'],
             'category' => $data['category'] ?? null,
-            'details'  => $data['details'] ?? null,
+            'details' => $data['details'] ?? null,
         ]);
 
         return response()->json([
             'message' => 'Article created successfully',
         ], 201);
+    }
+
+    public function show($article_id)
+    {
+        $article = Article::find($article_id);
+
+        if (!$article) {
+            return response()->json([
+                'message' => 'Article not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'article' => $article,
+        ]);
     }
 }
