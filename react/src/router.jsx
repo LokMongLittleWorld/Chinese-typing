@@ -9,7 +9,7 @@ import Index from "./Pages/speed-typing/Index.jsx";
 import CangjieIndex from "./Pages/cangjie/index.jsx";
 import JyutpingIndex from "./Pages/jyutping/Index.jsx";
 import Detail from "./Pages/speed-typing/Detail.jsx";
-import CreateArticle from "./Pages/speed-typing/CreateArticle.jsx";
+import Create from "./Pages/speed-typing/article/Create.jsx";
 
 const router = createBrowserRouter([
   {
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "create",
-            element: <CreateArticle />,
+            element: <Create />,
           },
         ],
       },
