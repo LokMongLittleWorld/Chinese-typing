@@ -82,7 +82,7 @@ export default function CreateOrEdit() {
 
   return (
     <div className="relative flex justify-center items-center mt-4">
-      <div className="flex flex-col items-center justify-center gap-4 rounded-lg bg-white shadow-sm w-[768px]">
+      <div className="flex flex-col mt-4 items-center justify-center gap-4 rounded-lg bg-white shadow-sm w-[768px]">
         {/*heading*/}
         <div className="w-full en p-4 md:p-5 border-b rounded-t dark:border-gray-600 flex flex-col items-center justify-center">
           <h3 className="text-4xl text-center font-semibold text-gray-700 dark:text-white select-none mb-4">
