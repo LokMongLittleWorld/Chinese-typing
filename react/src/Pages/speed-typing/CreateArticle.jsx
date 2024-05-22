@@ -14,7 +14,13 @@ export default function CreateArticle() {
       content: handleContent(content),
     };
 
-    axiosClient.post("/article", values).then(({ data }) => {});
+    axiosClient
+      .post("/article", values)
+      .then(({ data }) => {})
+      .catch((error) => {
+        console.log(error);
+        setErrors(error.response.data.errors);
+      });
   };
 
   const handleContent = (content) => {
@@ -37,12 +43,18 @@ export default function CreateArticle() {
 
   return (
     <div className="relative flex justify-center items-center mt-4">
-      <div className="flex flex-col items-center justify-center gap-4 rounded-lg mt-4 bg-white shadow-sm w-[768px]">
+      <div className="flex flex-col items-center justify-center gap-4 rounded-lg bg-white shadow-sm w-[768px]">
         {/*heading*/}
-        <div className="w-full en p-4 md:p-5 border-b rounded-t dark:border-gray-600 flex items-center justify-center">
-          <h3 className="text-4xl text-center font-semibold text-gray-700 dark:text-white select-none">
+        <div className="w-full en p-4 md:p-5 border-b rounded-t dark:border-gray-600 flex flex-col items-center justify-center">
+          <h3 className="text-4xl text-center font-semibold text-gray-700 dark:text-white select-none mb-4">
             建立新的速打文章
           </h3>
+          {errors &&
+            Object.entries(errors).map(([key, value]) => (
+              <div key={key} className="text-red-500">
+                {value}
+              </div>
+            ))}
         </div>
         {/*title*/}
         <div
