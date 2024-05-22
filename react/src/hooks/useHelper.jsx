@@ -48,7 +48,7 @@ const useHelper = () => {
       if (contentArray[i] === "\n") {
         lastNewLineCharacterIndex = i + 1;
       }
-      if (i - lastNewLineCharacterIndex + 1 === 4) {
+      if (i - lastNewLineCharacterIndex + 1 === 12) {
         newContentArray.push("\n");
         lastNewLineCharacterIndex = i + 1;
       }
