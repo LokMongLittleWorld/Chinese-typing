@@ -39,6 +39,7 @@ const useHelper = () => {
   };
 
   const handleContent = (content) => {
+    if (content === undefined) return;
     //   for every last 12 characters doesn't contain a newline character, add a newline character
     const contentArray = content.split("");
     const newContentArray = [];
