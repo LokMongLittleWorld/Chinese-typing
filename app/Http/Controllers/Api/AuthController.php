@@ -34,10 +34,11 @@ class AuthController extends Controller
             'current_access_token' => $user->currentAccessToken(),
         ], 200);
     }
+
     public function register(Request $request)
     {
         $data = $request->validate([
-            'username'     => ['required', 'string', 'min:3', 'max:55'],
+            'username'     => ['required', 'string', "regex:/[^\W@]+/", 'min:8', 'max:55', 'unique:users,name'],
             'email'    => ['required', 'string', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'max:255'],
         ]);
@@ -60,7 +61,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email'    => ['required', 'email', 'exists:users,email'],
+            $this->username() => ['required', 'string'],
             'password' => ['required', 'string'],
         ]);
         if (!Auth::attempt($credentials)) {
@@ -77,11 +78,19 @@ class AuthController extends Controller
             'token'   => $token,
         ], 201);
     }
+
     public function logout(Request $request)
     {
         /** @var User $user */
         $user = $request->user();
         $user->currentAccessToken()->delete();
         return response('', 204);
+    }
+
+    public function username()
+    {
+        $field = (filter_var(request()->email, FILTER_VALIDATE_EMAIL) || !request()->email) ? 'email' : 'name';
+        request()->merge([$field => request()->email]);
+        return $field;
     }
 }
