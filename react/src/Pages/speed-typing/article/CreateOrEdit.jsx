@@ -13,15 +13,13 @@ export default function CreateOrEdit() {
   const titleRef = createRef();
   const contentRef = createRef();
   const [focusedArea, setFocusedArea] = useState(""); // ["title", "content"]
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
   const [errors, setErrors] = useState({});
   const { handleContent } = useHelper();
 
   const handleSubmit = () => {
     const values = {
-      title: title,
-      content: handleContent(content),
+      title: article.title,
+      content: handleContent(article.content),
     };
 
     axiosClient
@@ -42,7 +40,11 @@ export default function CreateOrEdit() {
       .get("/article/" + articleId)
       .then(({ data }) => {
         setIsOwner(data.is_owner);
-        setArticle(data.article);
+        setArticle({
+          ...article,
+          title: data.article.title,
+          content: data.article.content,
+        });
       })
       .catch((error) => {
         if (error.response.status === 404) {
@@ -53,6 +55,10 @@ export default function CreateOrEdit() {
         setIsLoading(false);
       });
   }, []);
+
+  const onChange = (e) => {
+    setArticle({ ...article, [e.target.name]: e.target.value });
+  };
 
   if (isNotFound && !isLoading) {
     return <Empty message={`There is no article with id ${articleId}`} />;
@@ -71,7 +77,7 @@ export default function CreateOrEdit() {
         {/*heading*/}
         <div className="w-full en p-4 md:p-5 border-b rounded-t dark:border-gray-600 flex flex-col items-center justify-center">
           <h3 className="text-4xl text-center font-semibold text-gray-700 dark:text-white select-none mb-4">
-            建立新的速打文章
+            {articleId ? "編輯速打文章" : "建立新的速打文章"}
           </h3>
           {errors &&
             Object.entries(errors).map(([key, value]) => (
@@ -89,13 +95,13 @@ export default function CreateOrEdit() {
           }}
         >
           <span>《</span>
-          <span>{title}</span>
+          <span>{article.title}</span>
           {focusedArea === "title" ? (
             <div className="transform translate-y-[4px] w-[3px] h-8 rounded-lg animate-typing bg-gray-500" />
           ) : (
             <div className="w-[3px]" />
           )}
-          <span className="text-gray-400">{title ? "" : "標題"}</span>
+          <span className="text-gray-400">{article.title ? "" : "標題"}</span>
           <span>》</span>
         </div>
         {/*content*/}
@@ -106,8 +112,10 @@ export default function CreateOrEdit() {
           <textarea
             ref={contentRef}
             placeholder="內容"
+            name="content"
+            value={article.content}
             className="text-4xl text-gray-700 w-[500px] h-[300px] p-4 rounded-lg overflow-y-scroll border-0 focus:ring-0 resize-none"
-            onChange={(e) => setContent(e.target.value)}
+            onChange={onChange}
           />
         </div>
         <button
@@ -120,8 +128,10 @@ export default function CreateOrEdit() {
         <input
           ref={titleRef}
           type="title"
+          name="title"
+          value={article.title}
           className="opacity-0 absolute top-0 left-0"
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={onChange}
         />
       </div>
     </div>
