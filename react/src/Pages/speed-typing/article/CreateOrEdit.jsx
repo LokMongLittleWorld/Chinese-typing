@@ -1,13 +1,23 @@
-import { createRef, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import axiosClient from "../../../axios-client.js";
+import { useParams } from "react-router-dom";
+import useHelper from "../../../hooks/useHelper.jsx";
+import Empty from "../../../Components/Empty.jsx";
 
-export default function Create() {
+export default function CreateOrEdit() {
+  const { id: articleId } = useParams();
+  const [article, setArticle] = useState({});
+  const [isNotFound, setIsNotFound] = useState(false);
+  const [isOwner, setIsOwner] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const titleRef = createRef();
   const contentRef = createRef();
   const [focusedArea, setFocusedArea] = useState(""); // ["title", "content"]
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [errors, setErrors] = useState({});
+  const { handleContent } = useHelper();
+
   const handleSubmit = () => {
     const values = {
       title: title,
@@ -23,23 +33,37 @@ export default function Create() {
       });
   };
 
-  const handleContent = (content) => {
-    //   for every last 12 characters doesn't contain a newline character, add a newline character
-    const contentArray = content.split("");
-    const newContentArray = [];
-    let lastNewLineCharacterIndex = 0;
-    for (let i = 0; i < contentArray.length; i++) {
-      newContentArray.push(contentArray[i]);
-      if (contentArray[i] === "\n") {
-        lastNewLineCharacterIndex = i + 1;
-      }
-      if (i - lastNewLineCharacterIndex + 1 === 4) {
-        newContentArray.push("\n");
-        lastNewLineCharacterIndex = i + 1;
-      }
+  useEffect(() => {
+    if (articleId === undefined) {
+      setIsLoading(false);
+      return;
     }
-    return newContentArray.join("");
-  };
+    axiosClient
+      .get("/article/" + articleId)
+      .then(({ data }) => {
+        setIsOwner(data.is_owner);
+        setArticle(data.article);
+      })
+      .catch((error) => {
+        if (error.response.status === 404) {
+          setIsNotFound(true);
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isNotFound && !isLoading) {
+    return <Empty message={`There is no article with id ${articleId}`} />;
+  }
+
+  if (!isOwner && !isLoading) {
+    return <Empty message="You are not the owner of this article" />;
+  }
+
+  // TODO: style
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="relative flex justify-center items-center mt-4">

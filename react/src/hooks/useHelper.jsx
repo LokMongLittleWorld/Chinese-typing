@@ -38,7 +38,30 @@ const useHelper = () => {
     return { words, firstWordIndex };
   };
 
-  return { getCurrentWordLength, getCurrentWords, handleTextColor };
+  const handleContent = (content) => {
+    //   for every last 12 characters doesn't contain a newline character, add a newline character
+    const contentArray = content.split("");
+    const newContentArray = [];
+    let lastNewLineCharacterIndex = 0;
+    for (let i = 0; i < contentArray.length; i++) {
+      newContentArray.push(contentArray[i]);
+      if (contentArray[i] === "\n") {
+        lastNewLineCharacterIndex = i + 1;
+      }
+      if (i - lastNewLineCharacterIndex + 1 === 4) {
+        newContentArray.push("\n");
+        lastNewLineCharacterIndex = i + 1;
+      }
+    }
+    return newContentArray.join("");
+  };
+
+  return {
+    getCurrentWordLength,
+    getCurrentWords,
+    handleTextColor,
+    handleContent,
+  };
 };
 
 export default useHelper;

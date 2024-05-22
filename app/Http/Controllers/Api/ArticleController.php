@@ -62,8 +62,11 @@ class ArticleController extends Controller
             ], 404);
         }
 
+        $is_owner = $article->user_id === Auth::id();
+
         return response()->json([
             'article' => $article,
+            'is_owner' => $is_owner,
         ]);
     }
 }
