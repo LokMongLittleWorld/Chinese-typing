@@ -1,7 +1,7 @@
 import { createRef, useState } from "react";
-import axiosClient from "../../axios-client.js";
+import axiosClient from "../../../axios-client.js";
 
-export default function CreateArticle() {
+export default function Create() {
   const titleRef = createRef();
   const contentRef = createRef();
   const [focusedArea, setFocusedArea] = useState(""); // ["title", "content"]
