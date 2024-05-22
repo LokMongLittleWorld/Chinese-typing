@@ -64,36 +64,15 @@ export default function CreateArticle() {
         </div>
         {/*content*/}
         <div
-          className="relative text-4xl w-[500px] h-[300px] rounded-lg border p-4 overflow-y-scroll"
-          onClick={() => {
-            setFocusedArea("content");
-            contentRef.current.focus();
-          }}
+          className="rounded-lg border"
+          onClick={() => setFocusedArea("content")}
         >
-          {content.split("")?.map((character, index) => {
-            return (
-              <>
-                {character === "\n" ? (
-                  <br key={index} />
-                ) : (
-                  <span key={index} className="text-gray-700">
-                    {character}
-                  </span>
-                )}
-                {focusedArea === "content" && index === content.length - 1 ? (
-                  // text cursor
-                  <span className="absolute transform translate-y-[4px] w-[3px] h-8 rounded-lg animate-typing bg-gray-500 inline-block" />
-                ) : null}
-              </>
-            );
-          })}
-          {focusedArea === "content" && content.length === 0 ? (
-            // text cursor
-            <span className="absolute transform translate-y-[4px] w-[3px] h-8 rounded-lg animate-typing bg-gray-500 inline-block" />
-          ) : (
-            <span className="inline-block" />
-          )}
-          <span className="text-gray-400">{content ? "" : "內容"}</span>
+          <textarea
+            ref={contentRef}
+            placeholder="內容"
+            className="text-4xl text-gray-700 w-[500px] h-[300px] p-4 rounded-lg overflow-y-scroll border-0 focus:ring-0 resize-none"
+            onChange={(e) => setContent(e.target.value)}
+          />
         </div>
         <button
           onClick={handleSubmit}
@@ -108,13 +87,40 @@ export default function CreateArticle() {
           className="opacity-0 absolute top-0 left-0"
           onChange={(e) => setTitle(e.target.value)}
         />
-        <textarea
-          ref={contentRef}
-          placeholder="內容"
-          className="opacity-0 absolute top-0 left-0"
-          onChange={(e) => setContent(e.target.value)}
-        />
       </div>
     </div>
   );
 }
+
+//         <div
+//           className="relative text-4xl w-[500px] h-[300px] rounded-lg border p-4 overflow-y-scroll"
+//           onClick={() => {
+//             setFocusedArea("content");
+//             contentRef.current.focus();
+//           }}
+//         >
+//           {content.split("")?.map((character, index) => {
+//             return (
+//               <>
+//                 {character === "\n" ? (
+//                   <br key={index} />
+//                 ) : (
+//                   <span key={index} className="text-gray-700">
+//                     {character}
+//                   </span>
+//                 )}
+//                 {focusedArea === "content" && index === content.length - 1 ? (
+//                   // text cursor
+//                   <span className="absolute transform translate-y-[4px] w-[3px] h-8 rounded-lg animate-typing bg-gray-500 inline-block" />
+//                 ) : null}
+//               </>
+//             );
+//           })}
+//           {focusedArea === "content" && content.length === 0 ? (
+//             // text cursor
+//             <span className="absolute transform translate-y-[4px] w-[3px] h-8 rounded-lg animate-typing bg-gray-500 inline-block" />
+//           ) : (
+//             <span className="inline-block" />
+//           )}
+//           <span className="text-gray-400">{content ? "" : "內容"}</span>
+//         </div>
