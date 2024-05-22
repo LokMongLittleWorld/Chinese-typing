@@ -19,6 +19,17 @@ class ArticleController extends Controller
             'articles' => $articles,
         ]);
     }
+
+    public function user()
+    {
+        $user = Auth::user();
+        $articles = Article::where('user_id', $user->id)->get();
+
+        return response()->json([
+            'articles' => $articles,
+        ]);
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([
