@@ -14,6 +14,7 @@ export default function CreateOrEdit() {
   const contentRef = createRef();
   const [focusedArea, setFocusedArea] = useState(""); // ["title", "content"]
   const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState("");
   const { handleContent } = useHelper();
 
   const handleSubmit = () => {
@@ -25,7 +26,9 @@ export default function CreateOrEdit() {
 
     axiosClient
       .post("/article", values)
-      .then(({ data }) => {})
+      .then(({ data }) => {
+        setMessage(data.message);
+      })
       .catch((error) => {
         if (error.response && error.response.data) {
           const { message, errors } = error.response.data;
@@ -88,6 +91,7 @@ export default function CreateOrEdit() {
           <h3 className="text-4xl text-center font-semibold text-gray-700 dark:text-white select-none mb-4">
             {articleId ? "編輯速打文章" : "建立新的速打文章"}
           </h3>
+          {message && <div className="text-emerald-500">{message}</div>}
           {errors &&
             Object.entries(errors).map(([key, value]) => (
               <div key={key} className="text-red-500">
