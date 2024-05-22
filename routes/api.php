@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('article')->group(function () {
         Route::get ('/', [ArticleController::class, 'index']);
+        Route::get ('/user', [ArticleController::class, 'user']);
         Route::post ('/', [ArticleController::class, 'store']);
         Route::get ('/{article_id}', [ArticleController::class, 'show']);
         Route::put ('/{article_id}', [ArticleController::class, 'update']);
