@@ -8,7 +8,7 @@ export default function Empty({ message = "Not Found" }) {
         alt="error 404"
         className="rounded-lg shadow-lg aspect-auto min-w-[40%] w-[400px]"
       />
-      <div className="font-nunito text-5xl text-gray-700">{message}</div>
+      <div className="font-nunito text-2xl text-gray-700">{message}</div>
     </div>
   );
 }
