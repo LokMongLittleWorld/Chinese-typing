@@ -3,6 +3,7 @@ import axiosClient from "../../../axios-client.js";
 import { useParams } from "react-router-dom";
 import useHelper from "../../../hooks/useHelper.jsx";
 import Empty from "../../../Components/Empty.jsx";
+import SelectComponent from "../../../Components/SelectComponent.jsx";
 
 export default function CreateOrEdit() {
   const { id: articleId } = useParams();
@@ -117,6 +118,8 @@ export default function CreateOrEdit() {
           <span className="text-gray-400">{article.title ? "" : "標題"}</span>
           <span>》</span>
         </div>
+        {/*category*/}
+        <SelectComponent />
         {/*content*/}
         <div
           className="rounded-lg border"
