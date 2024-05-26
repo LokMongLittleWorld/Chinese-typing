@@ -3,6 +3,7 @@ import Login from "./Pages/Login.jsx";
 import Register from "./Pages/Register.jsx";
 import Users from "./Pages/Users.jsx";
 import NotFound from "./Components/NotFound.jsx";
+import Callback from "./Pages/Callback.jsx";
 import DefaultLayout from "./Layouts/DefaultLayout.jsx";
 import GuestLayout from "./Layouts/GuestLayout.jsx";
 import Index from "./Pages/speed-typing/Index.jsx";
@@ -95,7 +96,10 @@ const router = createBrowserRouter([
         path: "/register",
         element: <Register />,
       },
-
+      {
+        path: "/callback",
+        element: <Callback />,
+      },
       {
         path: "*",
         element: <NotFound />,
