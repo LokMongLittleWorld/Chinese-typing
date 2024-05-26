@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import useHelper from "../../../hooks/useHelper.jsx";
 import Empty from "../../../Components/Empty.jsx";
 import SelectComponent from "../../../Components/SelectComponent.jsx";
+import toast from "react-hot-toast";
 
 export default function CreateOrEdit() {
   const { id: articleId } = useParams();
@@ -34,7 +35,9 @@ export default function CreateOrEdit() {
     axiosClient
       .post("/article", values)
       .then(({ data }) => {
-        setMessage(data.message);
+        articleId
+          ? toast.success("文章己更新 ლ(╹◡╹ლ)")
+          : toast.success("文章己建立 ヽ(́◕◞౪◟◕‵)ﾉ");
       })
       .catch((error) => {
         if (error.response && error.response.data) {
@@ -45,7 +48,7 @@ export default function CreateOrEdit() {
             setErrors({ message: message });
           }
         } else {
-          console.log("An unexpected error occurred:", error);
+          toast.error("An unexpected error occurred:", error);
         }
       });
   };
@@ -58,7 +61,7 @@ export default function CreateOrEdit() {
           setCategories(toValueLabel(data?.categories));
         })
         .catch((error) => {
-          console.log("An unexpected error occurred:", error);
+          toast.error("An unexpected error occurred:", error);
         })
         .finally(() => {
           setIsLoading(false);

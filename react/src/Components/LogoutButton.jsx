@@ -1,5 +1,6 @@
 import axiosClient from "../axios-client.js";
 import { useStateContext } from "../Contexts/ContextProvider.jsx";
+import toast from "react-hot-toast";
 
 export default function LogoutButton() {
   const { user, setUser, setToken } = useStateContext();
@@ -9,9 +10,10 @@ export default function LogoutButton() {
       .then(() => {
         setUser({});
         setToken(null);
+        toast.success("登出成功~.");
       })
       .catch((error) => {
-        console.log(error.message);
+        toast.error(error.message);
       });
   };
   return (

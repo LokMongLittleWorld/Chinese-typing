@@ -16,6 +16,7 @@
     "dependencies": {
         "eslint-config-prettier": "^9.0.0",
         "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
-        "eslint-plugin-unused-imports": "^3.0.0"
+        "eslint-plugin-unused-imports": "^3.0.0",
+        "react-hot-toast": "^2.4.1"
     }
 }
