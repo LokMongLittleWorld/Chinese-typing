@@ -33,13 +33,15 @@ const customStyles = {
   }),
 };
 
-export default function SelectComponent({ options }) {
+export default function SelectComponent({ options, onChange, defaultValue }) {
   return (
     <Select
-      defaultValue={optionsSample[0]}
-      options={optionsSample}
+      defaultValue={defaultValue}
+      options={options}
       className="w-[500px]"
       styles={customStyles}
+      required={true}
+      onChange={onChange}
     />
   );
 }
