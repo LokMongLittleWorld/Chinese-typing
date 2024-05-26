@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { Toaster } from "react-hot-toast";
 
 const StateContext = createContext({
   user: null,
@@ -21,6 +22,7 @@ export const ContextProvider = ({ children }) => {
   };
   return (
     <StateContext.Provider value={{ user, token, setUser, setToken }}>
+      <Toaster />
       {children}
     </StateContext.Provider>
   );
