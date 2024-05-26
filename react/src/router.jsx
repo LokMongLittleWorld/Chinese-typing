@@ -100,10 +100,6 @@ const router = createBrowserRouter([
         path: "*",
         element: <NotFound />,
       },
-      {
-        path: "/home",
-        element: <Index />,
-      },
     ],
   },
 ]);
