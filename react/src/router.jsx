@@ -11,12 +11,17 @@ import JyutpingIndex from "./Pages/jyutping/Index.jsx";
 import Detail from "./Pages/speed-typing/Detail.jsx";
 import CreateOrEdit from "./Pages/speed-typing/article/CreateOrEdit.jsx";
 import ArticleIndex from "./Pages/speed-typing/article/Index.jsx";
+import Test from "./Pages/test.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <DefaultLayout />,
     children: [
+      {
+        path: "/test",
+        element: <Test />,
+      },
       {
         path: "/users",
         element: <Users />,
