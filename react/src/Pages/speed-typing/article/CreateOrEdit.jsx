@@ -7,7 +7,12 @@ import SelectComponent from "../../../Components/SelectComponent.jsx";
 
 export default function CreateOrEdit() {
   const { id: articleId } = useParams();
-  const [article, setArticle] = useState({});
+  const [article, setArticle] = useState({
+    title: "",
+    category: "",
+    content: "",
+  });
+  const [categories, setCategories] = useState([]);
   const [isNotFound, setIsNotFound] = useState(false);
   const [isOwner, setIsOwner] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -16,12 +21,13 @@ export default function CreateOrEdit() {
   const [focusedArea, setFocusedArea] = useState(""); // ["title", "content"]
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
-  const { handleContent } = useHelper();
+  const { handleContent, toValueLabel } = useHelper();
 
   const handleSubmit = () => {
     const values = {
-      id: articleId,
+      id: articleId ? articleId : null,
       title: article.title,
+      category: article.category,
       content: handleContent(article.content),
     };
 
@@ -46,17 +52,29 @@ export default function CreateOrEdit() {
 
   useEffect(() => {
     if (articleId === undefined) {
-      setIsLoading(false);
+      axiosClient
+        .get("/article/category")
+        .then(({ data }) => {
+          setCategories(toValueLabel(data?.categories));
+        })
+        .catch((error) => {
+          console.log("An unexpected error occurred:", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
       return;
     }
     axiosClient
       .get("/article/" + articleId)
       .then(({ data }) => {
         setIsOwner(data.is_owner);
+        setCategories(toValueLabel(data?.categories));
         setArticle({
           ...article,
           title: data.article.title,
           content: data.article.content,
+          category: data.article.category,
         });
       })
       .catch((error) => {
@@ -119,7 +137,17 @@ export default function CreateOrEdit() {
           <span>》</span>
         </div>
         {/*category*/}
-        <SelectComponent />
+        <SelectComponent
+          options={categories}
+          defaultValue={
+            categories?.filter(
+              (category) => category.value === article.category
+            ) || null
+          }
+          onChange={(e) => {
+            setArticle({ ...article, category: e.value });
+          }}
+        />
         {/*content*/}
         <div
           className="rounded-lg border"
@@ -153,36 +181,3 @@ export default function CreateOrEdit() {
     </div>
   );
 }
-
-//         <div
-//           className="relative text-4xl w-[500px] h-[300px] rounded-lg border p-4 overflow-y-scroll"
-//           onClick={() => {
-//             setFocusedArea("content");
-//             contentRef.current.focus();
-//           }}
-//         >
-//           {content.split("")?.map((character, index) => {
-//             return (
-//               <>
-//                 {character === "\n" ? (
-//                   <br key={index} />
-//                 ) : (
-//                   <span key={index} className="text-gray-700">
-//                     {character}
-//                   </span>
-//                 )}
-//                 {focusedArea === "content" && index === content.length - 1 ? (
-//                   // text cursor
-//                   <span className="absolute transform translate-y-[4px] w-[3px] h-8 rounded-lg animate-typing bg-gray-500 inline-block" />
-//                 ) : null}
-//               </>
-//             );
-//           })}
-//           {focusedArea === "content" && content.length === 0 ? (
-//             // text cursor
-//             <span className="absolute transform translate-y-[4px] w-[3px] h-8 rounded-lg animate-typing bg-gray-500 inline-block" />
-//           ) : (
-//             <span className="inline-block" />
-//           )}
-//           <span className="text-gray-400">{content ? "" : "內容"}</span>
-//         </div>

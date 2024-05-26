@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Options\CategoryOptions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,14 +31,27 @@ class ArticleController extends Controller
         ]);
     }
 
+    public function category()
+    {
+        return response()->json([
+            'categories' => CategoryOptions::all(),
+        ]);
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([
             'id' => ['nullable', 'string'],
-            'title'    => ['required', 'string', 'min:3', 'max:255'],
+            'title'    => ['required', 'string', 'min:1', 'max:20'],
             'content'  => ['required', 'string'],
-            'category' => ['nullable', 'string', 'min:3', 'max:255'],
+            'category' => ['required', 'string', 'min:1', 'max:255'],
         ]);
+
+        if (!CategoryOptions::inArray($data['category'])) {
+            return response()->json([
+                'message' => 'Invalid category',
+            ], 400);
+        }
 
         if($data['id']){
             $article = Article::find($data['id']);
@@ -74,6 +88,8 @@ class ArticleController extends Controller
         ], 201);
     }
 
+
+
     public function show($article_id)
     {
         $article = Article::find($article_id);
@@ -84,11 +100,14 @@ class ArticleController extends Controller
             ], 404);
         }
 
+        $categories = CategoryOptions::all();
+
         $is_owner = $article->user_id === Auth::id();
 
         return response()->json([
             'article' => $article,
             'is_owner' => $is_owner,
+            'categories' => $categories,
         ]);
     }
 }

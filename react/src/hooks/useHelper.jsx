@@ -57,7 +57,15 @@ const useHelper = () => {
     return newContentArray.join("");
   };
 
+  const toValueLabel = (options) => {
+    if (options.length === 0) return [];
+    return Object.entries(options).map(([key, value]) => {
+      return { value: key, label: value };
+    });
+  };
+
   return {
+    toValueLabel,
     getCurrentWordLength,
     getCurrentWords,
     handleTextColor,
