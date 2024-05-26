@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Options\CategoryOptions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +12,10 @@ class AuthController extends Controller
 {
     public function test()
     {
+        $categoryOptions =  CategoryOptions::all();
         return response()->json([
+            'categoryOptions' => $categoryOptions,
+            'include' => isset($categoryOptions['123']),
             'message' => 'test',
         ], 200);
     }

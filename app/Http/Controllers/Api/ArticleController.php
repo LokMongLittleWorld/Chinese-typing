@@ -15,9 +15,11 @@ class ArticleController extends Controller
     {
         //TODO: Add pagination
         $articles = Article::all();
+        $categories = CategoryOptions::all();
 
         return response()->json([
             'articles' => $articles,
+            'categories' => $categories,
         ]);
     }
 
@@ -25,9 +27,11 @@ class ArticleController extends Controller
     {
         $user = Auth::user();
         $articles = Article::where('user_id', $user->id)->get();
+        $categories = CategoryOptions::all();
 
         return response()->json([
             'articles' => $articles,
+            'categories' => $categories,
         ]);
     }
 

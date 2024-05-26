@@ -6,6 +6,7 @@ import Empty from "../../../Components/Empty.jsx";
 
 export default function Index() {
   const [articles, setArticles] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // fetch articles
@@ -14,6 +15,7 @@ export default function Index() {
       .get("/article/user")
       .then(({ data }) => {
         setArticles(data.articles);
+        setCategories(data.categories);
       })
       .finally(() => {
         setIsLoading(false);
@@ -28,9 +30,13 @@ export default function Index() {
   return (
     <main className="flex justify-center items-center mt-8">
       <div className="grid grid-cols-3 gap-4 w-[80%]">
-        {Object.values(articles).map((essay) => (
-          <Link key={essay.id} to={"/article/" + essay.id}>
-            <ArticleDisplayCard title={essay?.title} content={essay?.content} />
+        {Object.values(articles).map((article) => (
+          <Link key={article.id} to={"/article/" + article.id}>
+            <ArticleDisplayCard
+              title={article?.title}
+              content={article?.content}
+              category={categories[article.category]}
+            />
           </Link>
         ))}
       </div>
