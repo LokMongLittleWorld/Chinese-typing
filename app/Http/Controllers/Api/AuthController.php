@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Options\CategoryOptions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class AuthController extends Controller
 {
@@ -70,6 +71,36 @@ class AuthController extends Controller
             ], 422);
         }
         $user = Auth::user();
+        $token = $user->createToken('main')->plainTextToken;
+
+        return response()->json([
+            'message' => 'User login successfully',
+            'user'    => $user,
+            'token'   => $token,
+        ], 201);
+    }
+
+    public function callbackLogin(Request $request)
+    {
+        $credentials = $request->validate([
+            'loginCode' => ['required', 'string'],
+        ]);
+        $userId = Cache::pull("login:" . $credentials["loginCode"]);
+        if (!$userId) {
+            return response()->json([
+                'message' => 'Invalid credentials',
+            ], 422);
+        }
+        $user = User::where([
+            'id' => $userId,
+        ])->first();
+        error_log("userid:". json_encode($userId));
+        if(!$user){
+            return response()->json([
+                'message' => 'Invalid user',
+            ], 422);
+        }
+        Auth::login($user);
         $token = $user->createToken('main')->plainTextToken;
 
         return response()->json([
