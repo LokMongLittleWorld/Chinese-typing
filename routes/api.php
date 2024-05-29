@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post ('/logout', [AuthController::class, 'logout']);
 
     Route::prefix('article')->group(function () {
-        Route::get ('/', [ArticleController::class, 'index']);
+        Route::post ('/index', [ArticleController::class, 'index']);
         Route::get ('/user', [ArticleController::class, 'user']);
         Route::get('/category', [ArticleController::class, 'category']);
         Route::post ('/', [ArticleController::class, 'store']);

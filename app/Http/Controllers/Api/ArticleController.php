@@ -11,10 +11,37 @@ use Illuminate\Support\Facades\Auth;
 class ArticleController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+        $data = $request->validate([
+            'topBarOption' => ['required', 'string'],
+            'category' => ['required', 'string', 'min:1', 'max:255'],
+        ]);
+
         //TODO: Add pagination
-        $articles = Article::all();
+        $articles = [];
+        switch ( $data['topBarOption'] ) {
+            case 'all':
+                if ($data['category'] === 'all')
+                    $articles = Article::all();
+                else
+                    $articles = Article::where('category', $data['category'])->get();
+                break;
+            case 'favorite':
+                //TODO: Implement favorite
+                if ($data['category'] === 'all')
+                    $articles = Article::all();
+                else
+                    $articles = Article::where('category', $data['category'])->get();
+                break;
+            case 'my':
+                if ($data['category'] === 'all')
+                    $articles = Article::where('user_id', Auth::id())->get();
+                else
+                    $articles = Article::where('category', $data['category'])->where('user_id', Auth::id())->get();
+                break;
+        }
+
         $categories = CategoryOptions::all();
 
         return response()->json([

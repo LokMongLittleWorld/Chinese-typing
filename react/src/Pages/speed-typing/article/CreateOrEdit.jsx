@@ -14,6 +14,7 @@ export default function CreateOrEdit() {
     content: "",
   });
   const [categories, setCategories] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState("all"); // { value: "", label: "" }
   const [isNotFound, setIsNotFound] = useState(false);
   const [isOwner, setIsOwner] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -141,6 +142,7 @@ export default function CreateOrEdit() {
         </div>
         {/*category*/}
         <SelectComponent
+          className="w-[500px]"
           options={categories}
           defaultValue={
             categories?.filter(
