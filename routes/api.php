@@ -37,4 +37,6 @@ Route::get('/test',[AuthController::class, 'test']);
 Route::post ('/register', [AuthController::class, 'register']);
 Route::post ('/login', [AuthController::class, 'login']);
 Route::post ('/callbackLogin', [AuthController::class, 'callbackLogin']);
+Route::get('/verify/{user_id}',[AuthController::class, 'verify'])->name('verify');
+Route::get('/reverify/{user_id}',[AuthController::class, 'reverify']);
 

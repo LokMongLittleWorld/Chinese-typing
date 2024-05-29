@@ -4,10 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\MailVerification;
+use App\Mail\RegisterMail;
 use App\Options\CategoryOptions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\URL;
+use Mail;
+use Str;
 
 class AuthController extends Controller
 {
@@ -52,6 +58,10 @@ class AuthController extends Controller
 
         $token =$user->createToken('main')->plainTextToken;
 
+        $url = URL::temporarySignedRoute('verify' , now()->addMinutes(15), ['user_id'=>$user->id], absolute: false);
+
+        Mail::to($user->email)->send(new RegisterMail($user, $url));
+        
         return response()->json([
             'message' => 'User created successfully',
             'user'    => $user,
@@ -118,10 +128,62 @@ class AuthController extends Controller
         return response('', 204);
     }
 
+    public function verify($user_id, Request $request) 
+    {
+        if (!($request->hasValidSignature(false))) {
+            return response()->json([
+                'message' => 'Invalid verify link',
+            ], 403);
+        }
+        try {
+            if (empty($user_id)) {
+                throw ValidationException::withMessages(['field_name' => 'Cannot find token']);
+            }
+            $user = User::where([
+                'id' => $user_id,
+            ])->first();
+
+            if (empty($user)) {
+                throw ValidationException::withMessages(['field_name' => 'Cannot find user']);
+            }
+            $user->email_verified_at = date('Y-m-d H:i:s');
+            $user->save();
+
+            return response()->json([
+                'message' => 'Verify success',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Invalid link or token',
+            ], 403);
+        }
+    }
+
     public function username()
     {
         $field = (filter_var(request()->email, FILTER_VALIDATE_EMAIL) || !request()->email) ? 'email' : 'name';
         request()->merge([$field => request()->email]);
         return $field;
+    }
+
+    public function reverify($user_id)
+    {
+        $user = User::where([
+            'id' => $user_id,
+        ])->first();
+        if(!isset($user)){
+            return response()->json([
+                'message' => 'User not found',
+            ], 422);
+        }
+
+        $url = URL::temporarySignedRoute('verify' , now()->addMinutes(15), ['user_id'=>$user->id], absolute: false);
+
+        Mail::to($user->email)->send(new RegisterMail($user, $url));
+
+        
+        return response()->json([
+            'message' => 'Verification mail is sent',
+        ], 201);
     }
 }
