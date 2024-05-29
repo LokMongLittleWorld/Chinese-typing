@@ -7,7 +7,7 @@ import Callback from "./Pages/Callback.jsx";
 import DefaultLayout from "./Layouts/DefaultLayout.jsx";
 import GuestLayout from "./Layouts/GuestLayout.jsx";
 import Index from "./Pages/speed-typing/Index.jsx";
-import CangjieIndex from "./Pages/cangjie/index.jsx";
+import CangjieIndex from "./Pages/cangjie/Index.jsx";
 import JyutpingIndex from "./Pages/jyutping/Index.jsx";
 import Detail from "./Pages/speed-typing/Detail.jsx";
 import CreateOrEdit from "./Pages/speed-typing/article/CreateOrEdit.jsx";
