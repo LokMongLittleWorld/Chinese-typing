@@ -20,6 +20,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get ('/authenticated_test', [AuthController::class, 'authenticatedTest']);
     Route::get('/user', [AuthController::class, 'user']);
     Route::post ('/logout', [AuthController::class, 'logout']);
+    Route::middleware(['throttle:email'])->group(function () {
+        Route::get('/reverify',[AuthController::class, 'reverify']); 
+    });
 
     Route::prefix('article')->group(function () {
         Route::get ('/', [ArticleController::class, 'index']);

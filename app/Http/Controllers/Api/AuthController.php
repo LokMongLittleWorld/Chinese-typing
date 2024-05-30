@@ -32,6 +32,29 @@ class AuthController extends Controller
         return $request->user();
     }
 
+    public function edit(Request $request)
+    {
+        $user = Auth::user();
+        $user = User::where([
+            'id' => $user->id,
+        ])->first();
+        $update_user = $request->update_user;
+        try {
+            foreach ($update_user as $key => $value) {
+                // TODO: only allow some field
+                // update email need reverify
+                $user[$key] = $value;
+            }
+        } catch(\Exception $e) {
+            return response()->json([
+                'message' => 'Invalid user update field',
+            ], 406);
+        }
+        return response()->json([
+            'message' => 'Update success',
+        ], 201);
+    }
+
     public function authenticatedTest(Request $request)
     {
         $user = $request->user();
@@ -166,16 +189,9 @@ class AuthController extends Controller
         return $field;
     }
 
-    public function reverify($user_id)
+    public function reverify()
     {
-        $user = User::where([
-            'id' => $user_id,
-        ])->first();
-        if(!isset($user)){
-            return response()->json([
-                'message' => 'User not found',
-            ], 422);
-        }
+        $user = Auth::user();
 
         $url = URL::temporarySignedRoute('verify' , now()->addMinutes(15), ['user_id'=>$user->id], absolute: false);
 
