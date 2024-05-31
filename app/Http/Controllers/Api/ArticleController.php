@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\Like;
 use App\Options\CategoryOptions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,16 +31,21 @@ class ArticleController extends Controller
             case 'favorite':
                 //TODO: Implement favorite
                 if ($data['category'] === 'all')
-                    $articles = Article::all();
+                    $articles = Auth::user()->likedArticles;
                 else
-                    $articles = Article::where('category', $data['category'])->get();
+                    $articles = Auth::user()->likedArticles()->where('category', $data['category'])->get();
                 break;
             case 'my':
                 if ($data['category'] === 'all')
-                    $articles = Article::where('user_id', Auth::id())->get();
+                    $articles = Article::all();
                 else
                     $articles = Article::where('category', $data['category'])->where('user_id', Auth::id())->get();
                 break;
+        }
+
+        // determine if the user likes the article
+        foreach ($articles as $article) {
+            $article->is_liked = $article->likeByUser(Auth::id());
         }
 
         $categories = CategoryOptions::all();
@@ -139,6 +145,38 @@ class ArticleController extends Controller
             'article' => $article,
             'is_owner' => $is_owner,
             'categories' => $categories,
+        ]);
+    }
+
+    public function like(Request $request)
+    {
+        $data = $request->validate([
+            'article_id' => ['required', 'string'],
+            'like' => ['required', 'boolean'],
+        ]);
+
+        $article = Article::find($data['article_id']);
+        if (!$article) {
+            return response()->json([
+                'message' => 'Article not found',
+            ], 404);
+        }
+
+        $like = Like::where('article_id', $article->id)->where('user_id', Auth::id())->first();
+        if ($like) {
+            $like->update([
+                'like' => $data['like'],
+            ]);
+        } else {
+            Like::create([
+                'article_id' => $article->id,
+                'user_id' => Auth::id(),
+                'like' => $data['like'],
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Like updated successfully',
         ]);
     }
 }

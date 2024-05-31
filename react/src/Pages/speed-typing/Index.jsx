@@ -64,6 +64,8 @@ export default function Index() {
     fetchArticles(currentBarOptionIndex, currentCategory);
   }, [currentBarOptionIndex, currentCategory]);
 
+  // console.log(articles);
+
   //TODO: lazy load
   return (
     <>
@@ -108,6 +110,8 @@ export default function Index() {
                   title={article?.title}
                   content={article?.content}
                   category={categories[article?.category]}
+                  articleID={article.id}
+                  _isLiked={article?.is_liked}
                 />
               </Link>
             ))}

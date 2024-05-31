@@ -29,6 +29,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get ('/{article_id}', [ArticleController::class, 'show']);
         Route::put ('/{article_id}', [ArticleController::class, 'update']);
         Route::delete ('/{article_id}', [ArticleController::class, 'destroy']);
+
+        Route::post ('/like', [ArticleController::class, 'like']);
     });
 });
 
