@@ -60,6 +60,29 @@ export default function Index() {
       });
   };
 
+  const clearFavoriteCache = () => {
+    setCache((prevCache) => {
+      const newCache = { ...prevCache };
+      Object.keys(newCache).forEach((key) => {
+        if (key.startsWith("1-")) {
+          //1 is the index for "favorite"
+          delete newCache[key];
+        }
+      });
+      return newCache;
+    });
+  };
+  const handleLikeUpdate = (articleID, newLikeStatus) => {
+    setArticles((prevArticles) =>
+      prevArticles.map((article) =>
+        article.id === articleID
+          ? { ...article, is_liked: newLikeStatus }
+          : article
+      )
+    );
+    clearFavoriteCache();
+  };
+
   useEffect(() => {
     fetchArticles(currentBarOptionIndex, currentCategory);
   }, [currentBarOptionIndex, currentCategory]);
@@ -111,7 +134,8 @@ export default function Index() {
                   content={article?.content}
                   category={categories[article?.category]}
                   articleID={article.id}
-                  _isLiked={article?.is_liked}
+                  like={article?.is_liked}
+                  handleLikeUpdate={handleLikeUpdate}
                 />
               </Link>
             ))}

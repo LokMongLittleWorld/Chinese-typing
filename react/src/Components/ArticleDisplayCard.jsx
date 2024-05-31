@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons/faHeart";
-import { useState } from "react";
 import axiosClient from "../axios-client.js";
 
 export default function ArticleDisplayCard({
@@ -8,23 +7,23 @@ export default function ArticleDisplayCard({
   articleID,
   content,
   category,
-  _isLiked = false,
+  like = false,
+  handleLikeUpdate,
   // handleOnClick,
   // numOfLike,
 }) {
   const handleLikeOnClick = (e) => {
     // e.stopPropagation();
     e.preventDefault();
-    setIsLiked(!isLiked);
+    handleLikeUpdate(articleID, !like);
 
     axiosClient
       .post("/article/like", {
         article_id: articleID,
-        like: !isLiked,
+        like: !like,
       })
       .then(({ data }) => {});
   };
-  const [isLiked, setIsLiked] = useState(_isLiked);
 
   return (
     <div className="relative block max-w-sm p-4 pb-5 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 h-full transform hover:-translate-y-1 transition">
@@ -40,7 +39,7 @@ export default function ArticleDisplayCard({
       <div
         onClick={handleLikeOnClick}
         className={`absolute bottom-2 right-4 hover:text-blue-200
-      ${isLiked ? "text-blue-400 hover:text-blue-400" : "text-gray-400"}
+      ${like ? "text-blue-400 hover:text-blue-400" : "text-gray-400"}
       `}
       >
         <FontAwesomeIcon icon={faHeart} />
