@@ -27,7 +27,14 @@ export const ContextProvider = ({ children }) => {
     <StateContext.Provider
       value={{ user, token, setUser, setToken, setShowAuthenticationModel }}
     >
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          style: {
+            backgroundColor: "#f9fafb",
+            color: "#374151",
+          },
+        }}
+      />
       <AuthenticationModel
         showModal={showAuthenticationModel}
         setShowModal={setShowAuthenticationModel}
