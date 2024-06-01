@@ -64,12 +64,22 @@ const useHelper = () => {
     });
   };
 
+  const getRandomInt = (max) => {
+    return Math.floor(Math.random() * max);
+  };
+
+  const isEmptyObject = (obj) => {
+    return Object.keys(obj).length === 0;
+  };
+
   return {
     toValueLabel,
     getCurrentWordLength,
     getCurrentWords,
     handleTextColor,
     handleContent,
+    getRandomInt,
+    isEmptyObject,
   };
 };
 

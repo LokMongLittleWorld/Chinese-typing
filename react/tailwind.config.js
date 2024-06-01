@@ -26,10 +26,19 @@ export default {
           "50%": { opacity: 0 },
           "100%": { opacity: 1 },
         },
+        shimmer: {
+          from: {
+            backgroundPosition: "-100% 0",
+          },
+          to: {
+            backgroundPosition: "-300% 0",
+          },
+        },
       },
       animation: {
         wiggle: "wiggle 1s ease-in-out infinite",
         typing: "typing 0.7s step-start infinite alternate",
+        shimmer: "shimmer 2s linear infinite",
       },
     },
   },
