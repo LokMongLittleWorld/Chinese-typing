@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Empty from "../../Components/Empty.jsx";
 import SelectComponent from "../../Components/SelectComponent.jsx";
 import useHelper from "../../hooks/useHelper.jsx";
+import toast from "react-hot-toast";
 
 const topBar = [
   {
@@ -54,6 +55,9 @@ export default function Index() {
           ...prevCache,
           [cacheKey]: data.articles,
         }));
+      })
+      .catch((error) => {
+        toast.error("依，你個野好似壞咗喎");
       })
       .finally(() => {
         setIsLoading(false);
