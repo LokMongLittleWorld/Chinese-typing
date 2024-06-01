@@ -27,14 +27,14 @@ function ReVerifyButton() {
     >
       {"重新發送驗證郵件"}
     </button>
-  )
+  );
 }
 
 export default function Users() {
   return (
     <>
       <div>Users</div>
-      <ReVerifyButton/>
+      <ReVerifyButton />
     </>
   );
 }
