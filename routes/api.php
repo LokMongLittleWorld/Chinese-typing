@@ -22,11 +22,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post ('/logout', [AuthController::class, 'logout']);
 
     Route::prefix('article')->group(function () {
-        Route::post ('/index', [ArticleController::class, 'index']);
         Route::get ('/user', [ArticleController::class, 'user']);
-        Route::get('/category', [ArticleController::class, 'category']);
         Route::post ('/', [ArticleController::class, 'store']);
-        Route::get ('/{article_id}', [ArticleController::class, 'show']);
         Route::put ('/{article_id}', [ArticleController::class, 'update']);
         Route::delete ('/{article_id}', [ArticleController::class, 'destroy']);
 
@@ -34,9 +31,18 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
+//test route
 Route::get('/test',[AuthController::class, 'test']);
 
+// Authentication routes
 Route::post ('/register', [AuthController::class, 'register']);
 Route::post ('/login', [AuthController::class, 'login']);
 Route::post ('/callbackLogin', [AuthController::class, 'callbackLogin']);
+
+// Article routes
+Route::prefix('article')->group(function () {
+    Route::post ('/index', [ArticleController::class, 'index']);
+    Route::get ('/category', [ArticleController::class, 'category']);
+    Route::get ('/{article_id}', [ArticleController::class, 'show']);
+});
 
