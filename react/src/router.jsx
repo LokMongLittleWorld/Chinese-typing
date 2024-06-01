@@ -11,6 +11,7 @@ import ArticleIndex from "./Pages/speed-typing/article/Index.jsx";
 import Test from "./Pages/test.jsx";
 import Login from "./Pages/Login.jsx";
 import Register from "./Pages/Register.jsx";
+import Callback from "./Pages/Callback.jsx";
 
 const router = createBrowserRouter([
   {
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: <NotFound />,
+      },
+      {
+        path: "/callback",
+        element: <Callback />,
       },
     ],
   },
