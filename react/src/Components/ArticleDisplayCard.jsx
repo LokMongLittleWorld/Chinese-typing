@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons/faHeart";
 import axiosClient from "../axios-client.js";
+import { useStateContext } from "../Contexts/ContextProvider.jsx";
+import toast from "react-hot-toast";
 
 export default function ArticleDisplayCard({
   title,
@@ -12,9 +14,15 @@ export default function ArticleDisplayCard({
   // handleOnClick,
   // numOfLike,
 }) {
+  const { token, setShowAuthenticationModel } = useStateContext();
   const handleLikeOnClick = (e) => {
     // e.stopPropagation();
     e.preventDefault();
+    if (!token) {
+      toast("依，你仲未登入喎");
+      setShowAuthenticationModel(true);
+      return;
+    }
     handleLikeUpdate(articleID, !like);
 
     axiosClient

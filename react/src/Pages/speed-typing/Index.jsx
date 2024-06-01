@@ -6,6 +6,7 @@ import Empty from "../../Components/Empty.jsx";
 import SelectComponent from "../../Components/SelectComponent.jsx";
 import useHelper from "../../hooks/useHelper.jsx";
 import toast from "react-hot-toast";
+import { useStateContext } from "../../Contexts/ContextProvider.jsx";
 
 const topBar = [
   {
@@ -23,6 +24,7 @@ const topBar = [
 ];
 
 export default function Index() {
+  const { token, setShowAuthenticationModel } = useStateContext();
   const [articles, setArticles] = useState([]);
   const [currentBarOptionIndex, setCurrentBarOptionIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -91,9 +93,7 @@ export default function Index() {
     fetchArticles(currentBarOptionIndex, currentCategory);
   }, [currentBarOptionIndex, currentCategory]);
 
-  // console.log(articles);
-
-  //TODO: lazy load
+  //TODO: lazy load, pagination
   return (
     <>
       {/*top bar*/}
@@ -107,6 +107,11 @@ export default function Index() {
                   : "text-gray-700"
               }`}
               onClick={() => {
+                if (index !== 0 && !token) {
+                  toast("依，你仲未登入喎");
+                  setShowAuthenticationModel(true);
+                  return;
+                }
                 setCurrentBarOptionIndex(index);
               }}
               key={index}

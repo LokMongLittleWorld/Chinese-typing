@@ -2,20 +2,12 @@ import { Link, Outlet } from "react-router-dom";
 import { useStateContext } from "../Contexts/ContextProvider.jsx";
 import axiosClient from "../axios-client.js";
 import { useEffect, useState } from "react";
-import useHelper from "../hooks/useHelper.jsx";
 import LogoutButton from "../Components/LogoutButton.jsx";
 
 //"中文速打", "倉頡練習", "粵拼練習"
 export default function DefaultLayout() {
-  const {
-    user,
-    token,
-    setUser,
-    setToken,
-    notification,
-    setShowAuthenticationModel,
-  } = useStateContext();
-  const { isEmptyObject } = useHelper();
+  const { user, token, setUser, setShowAuthenticationModel } =
+    useStateContext();
   const pages = {
     "speed-typing": "中文速打",
     "cangjie": "倉頡練習",
@@ -32,7 +24,7 @@ export default function DefaultLayout() {
   }, []);
 
   const handleOnClick = () => {
-    if (isEmptyObject(user)) {
+    if (!token) {
       setShowAuthenticationModel(true);
     }
   };
@@ -66,7 +58,7 @@ export default function DefaultLayout() {
               type="button"
               className="fixed right-8 hover:bg-[length:200%_100%] text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-transparent focus:outline-none font-md rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
             >
-              {isEmptyObject(user) ? "登入" : user.name}
+              {!token ? "登入" : user.name}
             </button>
           </div>
         </header>
