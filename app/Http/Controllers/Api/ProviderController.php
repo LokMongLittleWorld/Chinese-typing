@@ -47,11 +47,9 @@ class ProviderController extends Controller
             $temporaryCode = "login:" . Str::random(40);
             Cache::put($temporaryCode, $user->id, now()->addMinutes(5));
             // TODO: config env of url
-            return redirect("http://localhost:3000/callback?loginCode=$temporaryCode");
+            return redirect(env('FRONT_END_HOST') . "/callback?loginCode=$temporaryCode");
         } catch(\Exception $e) {
-            // dd($e);
-            return redirect('http://localhost:3000/');
+            return redirect(env('FRONT_END_HOST'));
         }
-        // return redirect('http://localhost:3000/');
     }
 }

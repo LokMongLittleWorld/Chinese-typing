@@ -1,8 +1,9 @@
 import { createRef, useState, useEffect } from "react";
 import axiosClient from "../axios-client.js";
 import { useStateContext } from "../Contexts/ContextProvider.jsx";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { isStringValid } from "../common/function.js";
+import axios from "axios";
 
 export default function Callback() {
   const [errors, setErrors] = useState({});
@@ -10,8 +11,10 @@ export default function Callback() {
   const { setUser, setToken } = useStateContext();
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigateTo = useNavigate();
 
   const loginCode = searchParams.get("loginCode");
+  const mailVerify = searchParams.get("mailVerify");
 
   // const handleSubmit = () => {
   //   console.log(errors);
@@ -43,6 +46,7 @@ export default function Callback() {
   // };
 
   useEffect(() => {
+    // login callback
     if(isStringValid(loginCode)) {
       const values = {
         loginCode: loginCode,
@@ -67,6 +71,31 @@ export default function Callback() {
           }
         });
     }
+
+    // email verification callback
+    if(isStringValid(mailVerify)) {
+      const verify_url = decodeURI(mailVerify);
+      axios.create({
+        baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
+      })
+      .get(verify_url)
+      .then(({ data }) => {
+        navigateTo('/');
+      })
+      .catch((error) => {
+        try {
+          const response = error.response;
+          if (response && response.status === 403) {
+            console.log("invalid link", response.data.message);
+            setErrors(response.data);
+          }
+        } catch (error) {
+          console.log("login error 2", error);
+          setErrors(error);
+        }
+      });
+    }
+
   },[])
 
   return (
