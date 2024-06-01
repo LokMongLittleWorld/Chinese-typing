@@ -15,7 +15,7 @@ export default function RegisterForm({
   return (
     <form
       onSubmit={(e) => handleRegisterSubmit(e)}
-      className="flex flex-col line-clamp-3 text-gray-700 gap-4 p-4 w-[450px]"
+      className="flex flex-col gap-4 w-full"
     >
       <Input
         label="用戶名"

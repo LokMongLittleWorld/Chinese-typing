@@ -14,7 +14,7 @@ export default function LoginForm({
   return (
     <form
       onSubmit={(e) => handleLoginSubmit(e)}
-      className="flex flex-col line-clamp-3 text-gray-700 gap-4 p-4 w-[450px]"
+      className="flex flex-col gap-4 w-full"
     >
       <Input
         label="你嘅電郵/用戶名"

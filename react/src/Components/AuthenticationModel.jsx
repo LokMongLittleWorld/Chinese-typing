@@ -191,7 +191,11 @@ export default function AuthenticationModel({
         </Model.Side>
         <div>
           <Model.Header handleOnClick={handleOnClick} title="觀迎返嚟~" />
-          <Model.Content>{RenderContent()}</Model.Content>
+          <Model.Content>
+            <div className="flex flex-col text-gray-700 p-4 w-[450px]">
+              {RenderContent()}
+            </div>
+          </Model.Content>
         </div>
       </div>
     </Model>
