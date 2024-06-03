@@ -183,9 +183,9 @@ export default function AuthenticationModel({
           <div className="relative w-[300px] border-r max-md:hidden">
             {/*TODO: background effect*/}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-semibold text-gray-700">
-              {"中文打字".split("").map((char, index) => {
+              {"捉緊中字".split("").map((char, index) => {
                 return (
-                  <div key={index} className="mb-2">
+                  <div key={index} className="mb-4">
                     {char}
                   </div>
                 );
