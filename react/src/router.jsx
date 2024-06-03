@@ -12,6 +12,8 @@ import Test from "./Pages/test.jsx";
 import Login from "./Pages/Authentication/Login.jsx";
 import Register from "./Pages/Authentication/Register.jsx";
 import Callback from "./Pages/Authentication/Callback.jsx";
+import Profile from "./Pages/User/Profile.jsx";
+import Settings from "./Pages/User/Settings.jsx";
 
 const router = createBrowserRouter([
   {
@@ -76,6 +78,14 @@ const router = createBrowserRouter([
             element: <CreateOrEdit />,
           },
         ],
+      },
+      {
+        path: "profile",
+        element: <Profile />,
+      },
+      {
+        path: "settings",
+        element: <Settings />,
       },
       {
         path: "/login",

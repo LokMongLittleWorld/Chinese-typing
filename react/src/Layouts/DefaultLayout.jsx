@@ -2,8 +2,9 @@ import { Link, Outlet } from "react-router-dom";
 import { useStateContext } from "../Contexts/ContextProvider.jsx";
 import axiosClient from "../axios-client.js";
 import { useEffect, useState } from "react";
-import LogoutButton from "../Components/LogoutButton.jsx";
 import { isStringValid } from "../common/function.js";
+import LoginButton from "../Components/LoginButton.jsx";
+import UserAccountDropdownMenu from "../Components/UserAccountDropdownMenu.jsx";
 
 //"中文速打", "倉頡練習", "粵拼練習"
 export default function DefaultLayout() {
@@ -26,10 +27,8 @@ export default function DefaultLayout() {
     }
   }, []);
 
-  const handleOnClick = () => {
-    if (!token) {
-      setShowAuthenticationModel(true);
-    }
+  const handleLoginOnClick = () => {
+    setShowAuthenticationModel(true);
   };
 
   return (
@@ -56,18 +55,15 @@ export default function DefaultLayout() {
                 );
               })}
             </div>
-            <button
-              onClick={handleOnClick}
-              type="button"
-              className="fixed right-8 hover:bg-[length:200%_100%] text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-transparent focus:outline-none font-md rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-            >
-              {!token ? "登入" : user.name}
-            </button>
+            <div className="fixed right-8 z-40">
+              {isStringValid(token) ? (
+                <UserAccountDropdownMenu />
+              ) : (
+                <LoginButton handleOnClick={handleLoginOnClick} />
+              )}
+            </div>
           </div>
         </header>
-        <div className="fixed bottom-2 right-2">
-          <LogoutButton />
-        </div>
         <Outlet />
       </div>
     </div>
