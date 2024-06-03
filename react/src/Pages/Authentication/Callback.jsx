@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import axiosClient from "../axios-client.js";
-import { useStateContext } from "../Contexts/ContextProvider.jsx";
+import { useEffect, useState } from "react";
+import axiosClient from "../../axios-client.js";
+import { useStateContext } from "../../Contexts/ContextProvider.jsx";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { isStringValid } from "../common/function.js";
+import { isStringValid } from "../../common/function.js";
 import axios from "axios";
 
 export default function Callback() {

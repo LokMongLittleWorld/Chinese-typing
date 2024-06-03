@@ -1,6 +1,6 @@
 import { createRef, useState } from "react";
-import axiosClient from "../axios-client.js";
-import { useStateContext } from "../Contexts/ContextProvider.jsx";
+import axiosClient from "../../axios-client.js";
+import { useStateContext } from "../../Contexts/ContextProvider.jsx";
 
 export default function Register() {
   const nameRef = createRef();

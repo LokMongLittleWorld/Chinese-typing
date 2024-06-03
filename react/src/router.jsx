@@ -9,9 +9,9 @@ import Detail from "./Pages/speed-typing/Detail.jsx";
 import CreateOrEdit from "./Pages/speed-typing/article/CreateOrEdit.jsx";
 import ArticleIndex from "./Pages/speed-typing/article/Index.jsx";
 import Test from "./Pages/test.jsx";
-import Login from "./Pages/Login.jsx";
-import Register from "./Pages/Register.jsx";
-import Callback from "./Pages/Callback.jsx";
+import Login from "./Pages/Authentication/Login.jsx";
+import Register from "./Pages/Authentication/Register.jsx";
+import Callback from "./Pages/Authentication/Callback.jsx";
 
 const router = createBrowserRouter([
   {
@@ -97,23 +97,10 @@ const router = createBrowserRouter([
   },
   // {
   //   path: "/",
-  //   element: <GuestLayout />,
   //   children: [
-  //     {
-  //       path: "/login",
-  //       element: <Login />,
-  //     },
-  //     {
-  //       path: "/register",
-  //       element: <Register />,
-  //     },
   //     {
   //       path: "/callback",
   //       element: <Callback />,
-  //     },
-  //     {
-  //       path: "*",
-  //       element: <NotFound />,
   //     },
   //   ],
   // },
