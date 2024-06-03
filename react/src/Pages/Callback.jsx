@@ -1,4 +1,4 @@
-import { createRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axiosClient from "../axios-client.js";
 import { useStateContext } from "../Contexts/ContextProvider.jsx";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -16,47 +16,18 @@ export default function Callback() {
   const loginCode = searchParams.get("loginCode");
   const mailVerify = searchParams.get("mailVerify");
 
-  // const handleSubmit = () => {
-  //   console.log(errors);
-
-  //   const values = {
-  //     email: emailRef.current.value,
-  //     password: passwordRef.current.value,
-  //   };
-
-  //   axiosClient
-  //     .post("/login", values)
-  //     .then(({ data }) => {
-  //       setUser(data.user);
-  //       setToken(data.token);
-  //       //auto redirect to home
-  //     })
-  //     .catch((error) => {
-  //       try {
-  //         const response = error.response;
-  //         if (response && response.status === 422) {
-  //           console.log("login error 1", response.data.message);
-  //           setErrors(response.data);
-  //         }
-  //       } catch (error) {
-  //         console.log("login error 2", error);
-  //         setErrors(error);
-  //       }
-  //     });
-  // };
-
   useEffect(() => {
     // login callback
-    if(isStringValid(loginCode)) {
+    if (isStringValid(loginCode)) {
       const values = {
-        loginCode: loginCode,
+        loginCode: decodeURI(loginCode),
       };
       axiosClient
         .post("/callbackLogin", values)
         .then(({ data }) => {
           setUser(data.user);
           setToken(data.token);
-          //auto redirect to home
+          navigateTo("/");
         })
         .catch((error) => {
           try {
@@ -73,30 +44,30 @@ export default function Callback() {
     }
 
     // email verification callback
-    if(isStringValid(mailVerify)) {
+    if (isStringValid(mailVerify)) {
       const verify_url = decodeURI(mailVerify);
-      axios.create({
-        baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
-      })
-      .get(verify_url)
-      .then(({ data }) => {
-        navigateTo('/');
-      })
-      .catch((error) => {
-        try {
-          const response = error.response;
-          if (response && response.status === 403) {
-            console.log("invalid link", response.data.message);
-            setErrors(response.data);
+      axios
+        .create({
+          baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
+        })
+        .get(verify_url)
+        .then(({ data }) => {
+          navigateTo("/");
+        })
+        .catch((error) => {
+          try {
+            const response = error.response;
+            if (response && response.status === 403) {
+              console.log("invalid link", response.data.message);
+              setErrors(response.data);
+            }
+          } catch (error) {
+            console.log("login error 2", error);
+            setErrors(error);
           }
-        } catch (error) {
-          console.log("login error 2", error);
-          setErrors(error);
-        }
-      });
+        });
     }
-
-  },[])
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 rounded-lg">

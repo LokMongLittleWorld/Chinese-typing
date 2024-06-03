@@ -27,13 +27,19 @@ class ProviderController extends Controller
     {
         try {
             $socialUser = Socialite::driver($provider)->user();
-            // dd($socialUser);
-            if(User::where('email', $socialUser->getEmail())->exists()){
-                // TODO: redirect to the same account
+            $user = User::where('email', $socialUser->getEmail())->first();
+            if($user && isset($user)){
+                $user[$provider . '_id'] = $socialUser->id;
+                $user[$provider . '_token'] = $socialUser->token;
+                if (!isset($user->email_verified_at)) {
+                    $user['email_verified_at'] = now();
+                }
+                $user->save();
+            } else {
+                $user = User::where([
+                    $provider . '_id' => $socialUser->id,
+                ])->first();
             };
-            $user = User::where([
-                $provider . '_id' => $socialUser->id,
-            ])->first();
             if(!$user){
                 $user = User::create([
                     'name' => User::generateUserName($socialUser->getName()),
@@ -44,10 +50,12 @@ class ProviderController extends Controller
                 ]);
             }
             Auth::login($user);
-            $temporaryCode = "login:" . Str::random(40);
-            Cache::put($temporaryCode, $user->id, now()->addMinutes(5));
-            // TODO: config env of url
-            return redirect(env('FRONT_END_HOST') . "/callback?loginCode=$temporaryCode");
+            for ($i = 0; $i<3; $i++ ) {
+                $temporaryCode = "login:" . Str::random(40);
+                $cached = Cache::add($temporaryCode, $user->id, now()->addMinutes(2));
+                if ($cached) break;
+            }
+            return redirect(env('FRONT_END_HOST') . "/callback?loginCode=" . urlencode($temporaryCode));
         } catch(\Exception $e) {
             return redirect(env('FRONT_END_HOST'));
         }

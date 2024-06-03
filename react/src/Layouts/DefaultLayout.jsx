@@ -3,6 +3,7 @@ import { useStateContext } from "../Contexts/ContextProvider.jsx";
 import axiosClient from "../axios-client.js";
 import { useEffect, useState } from "react";
 import LogoutButton from "../Components/LogoutButton.jsx";
+import { isStringValid } from "../common/function.js";
 
 //"中文速打", "倉頡練習", "粵拼練習"
 export default function DefaultLayout() {
@@ -18,9 +19,11 @@ export default function DefaultLayout() {
   );
 
   useEffect(() => {
-    axiosClient.get("/user").then(({ data }) => {
-      setUser(data);
-    });
+    if (isStringValid(token)) {
+      axiosClient.get("/user").then(({ data }) => {
+        setUser(data);
+      });
+    }
   }, []);
 
   const handleOnClick = () => {

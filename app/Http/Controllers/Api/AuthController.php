@@ -118,10 +118,10 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'loginCode' => ['required', 'string'],
         ]);
-        $userId = Cache::pull($credentials["loginCode"]);
+        $userId = Cache::get($credentials["loginCode"]);
         if (!$userId) {
             return response()->json([
-                'message' => 'Invalid credentials',
+                'message' => 'Invalid credentials.',
             ], 422);
         }
         $user = User::where([
