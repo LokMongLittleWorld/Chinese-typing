@@ -45,8 +45,11 @@ export default function Index() {
     }
 
     setIsLoading(true);
+
+    const routePath = getRoute();
+
     axiosClient
-      .post("/article/index", {
+      .post(routePath, {
         topBarOption: topBar[barIndex].value,
         category: category,
       })
@@ -64,6 +67,10 @@ export default function Index() {
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  const getRoute = () => {
+    return !token ? "/article/anonymous_index" : "/article/index";
   };
 
   const clearFavoriteCache = () => {

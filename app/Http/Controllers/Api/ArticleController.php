@@ -12,6 +12,36 @@ use Illuminate\Support\Facades\Auth;
 class ArticleController extends Controller
 {
 
+    public function anonymousIndex(Request $request)
+    {
+        error_log('anonymousIndex');
+        $data = $request->validate([
+            'topBarOption' => ['required', 'string'],
+            'category' => ['required', 'string', 'min:1', 'max:255'],
+        ]);
+
+        $articles = [];
+        switch ($data['topBarOption']) {
+            case 'all':
+                if ($data['category'] === 'all')
+                    $articles = Article::all();
+                else
+                    $articles = Article::where('category', $data['category'])->get();
+                break;
+            default:
+                return response()->json([
+                    'message' => 'Invalid topBarOption',
+                ], 400);
+        }
+        $categories = CategoryOptions::all();
+
+        return response()->json([
+            'articles' => $articles,
+            'categories' => $categories,
+        ]);
+    }
+
+
     public function index(Request $request)
     {
         $data = $request->validate([
