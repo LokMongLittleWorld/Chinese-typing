@@ -32,6 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post ('/index', [ArticleController::class, 'index']);
         Route::get ('/user', [ArticleController::class, 'user']);
         Route::post ('/', [ArticleController::class, 'store']);
+        Route::get('/{article_id}', [ArticleController::class, 'show']);
         Route::put ('/{article_id}', [ArticleController::class, 'update']);
         Route::delete ('/{article_id}', [ArticleController::class, 'destroy']);
         Route::post ('/like', [ArticleController::class, 'like']);
@@ -48,10 +49,11 @@ Route::post ('/callbackLogin', [AuthController::class, 'callbackLogin']);
 Route::get('/verify/{user_id}',[AuthController::class, 'verify'])->name('verify');
 Route::get('/reverify/{user_id}',[AuthController::class, 'reverify']);
 
+Route::prefix('anonymous')->group(function () {
 //anonymous Article routes
-Route::prefix('article')->group(function () {
-    Route::post ('/anonymous_index', [ArticleController::class, 'anonymousIndex']);
-    Route::get ('/category', [ArticleController::class, 'category']);
-    Route::get ('/{article_id}', [ArticleController::class, 'show']);
+    Route::prefix('article')->group(function () {
+        Route::post('/index', [ArticleController::class, 'anonymousIndex']);
+        Route::get('/category', [ArticleController::class, 'category']);
+        Route::get('/{article_id}', [ArticleController::class, 'show']);
+    });
 });
-

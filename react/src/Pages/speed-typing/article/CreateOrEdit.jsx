@@ -57,7 +57,7 @@ export default function CreateOrEdit() {
   useEffect(() => {
     if (articleId === undefined) {
       axiosClient
-        .get("/article/category")
+        .get("/anonymous/article/category")
         .then(({ data }) => {
           setCategories(toValueLabel(data?.categories));
         })

@@ -70,7 +70,7 @@ export default function Index() {
   };
 
   const getRoute = () => {
-    return !token ? "/article/anonymous_index" : "/article/index";
+    return !token ? "/anonymous/article/index" : "/article/index";
   };
 
   const clearFavoriteCache = () => {

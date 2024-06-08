@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\MailVerification;
 use App\Mail\RegisterMail;
+use App\Models\User;
 use App\Options\CategoryOptions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Validation\ValidationException;
 use Mail;
 use Str;
 
@@ -19,8 +18,10 @@ class AuthController extends Controller
 {
     public function test()
     {
+        $user = Auth::user() || null;
         $categoryOptions =  CategoryOptions::all();
         return response()->json([
+            'user' => $user,
             'categoryOptions' => $categoryOptions,
             'include' => isset($categoryOptions['123']),
             'message' => 'test',
@@ -84,7 +85,7 @@ class AuthController extends Controller
         $url = URL::temporarySignedRoute('verify' , now()->addMinutes(15), ['user_id'=>$user->id], absolute: false);
 
         Mail::to($user->email)->send(new RegisterMail($user, $url));
-        
+
         return response()->json([
             'message' => 'User created successfully',
             'user'    => $user,
@@ -151,7 +152,7 @@ class AuthController extends Controller
         return response('', 204);
     }
 
-    public function verify($user_id, Request $request) 
+    public function verify($user_id, Request $request)
     {
         if (!($request->hasValidSignature(false))) {
             return response()->json([
@@ -197,7 +198,7 @@ class AuthController extends Controller
 
         Mail::to($user->email)->send(new RegisterMail($user, $url));
 
-        
+
         return response()->json([
             'message' => 'Verification mail is sent',
         ], 201);

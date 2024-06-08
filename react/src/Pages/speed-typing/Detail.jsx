@@ -13,7 +13,7 @@ export default function Detail() {
 
   useEffect(() => {
     axiosClient
-      .get("/article/" + articleId)
+      .get("/anonymous/article/" + articleId)
       .then(({ data }) => {
         setArticle(data.article);
       })
