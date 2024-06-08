@@ -16,12 +16,12 @@ class ArticleController extends Controller
     {
         error_log('anonymousIndex');
         $data = $request->validate([
-            'topBarOption' => ['required', 'string'],
+            'filterOption' => ['required', 'string'],
             'category' => ['required', 'string', 'min:1', 'max:255'],
         ]);
 
         $articles = [];
-        switch ($data['topBarOption']) {
+        switch ($data['filterOption']) {
             case 'all':
                 if ($data['category'] === 'all')
                     $articles = Article::all();
@@ -45,13 +45,13 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         $data = $request->validate([
-            'topBarOption' => ['required', 'string'],
+            'filterOption' => ['required', 'string'],
             'category' => ['required', 'string', 'min:1', 'max:255'],
         ]);
 
         //TODO: Add pagination
         $articles = [];
-        switch ( $data['topBarOption'] ) {
+        switch ( $data['filterOption'] ) {
             case 'all':
                 if ($data['category'] === 'all')
                     $articles = Article::all();

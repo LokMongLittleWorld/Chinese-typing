@@ -71,6 +71,11 @@ const getCustomeStyles = (styleName) => {
 };
 
 export default function SelectComponent({
+  // options should be an array of objects,
+  // e.g. [{ value: "chocolate", label: "朱古力" }, ...]
+
+  // defaultValue should be an object,
+  // e.g. { value: "chocolate", label: "朱古力" }
   options,
   onChange,
   defaultValue,

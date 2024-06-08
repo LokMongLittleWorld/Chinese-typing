@@ -8,7 +8,7 @@ import useHelper from "../../hooks/useHelper.jsx";
 import toast from "react-hot-toast";
 import { useStateContext } from "../../Contexts/ContextProvider.jsx";
 
-const topBar = [
+const filterOptions = [
   {
     value: "all",
     label: "所有",
@@ -36,8 +36,8 @@ export default function Index() {
   const { toValueLabel } = useHelper();
 
   // fetch articles
-  const fetchArticles = (barIndex, category) => {
-    const cacheKey = `${barIndex}-${category}`;
+  const fetchArticles = (optionIndex, category) => {
+    const cacheKey = `${optionIndex}-${category}`;
     if (cache[cacheKey]) {
       setArticles(cache[cacheKey]);
       setIsLoading(false);
@@ -50,7 +50,7 @@ export default function Index() {
 
     axiosClient
       .post(routePath, {
-        topBarOption: topBar[barIndex].value,
+        filterOption: filterOptions[optionIndex].value,
         category: category,
       })
       .then(({ data }) => {
@@ -103,30 +103,15 @@ export default function Index() {
   //TODO: lazy load, pagination
   return (
     <>
-      {/*top bar*/}
+      {/*header*/}
       <section className="flex flex-row justify-center items-center gap-4 py-1 px-2 select-none mt-4">
-        <div className="flex flex-row items-center bg-gray-200 gap-4 py-1 px-2 rounded-lg select-none">
-          {topBar.map((item, index) => (
-            <div
-              className={`text-2xl cursor-pointer ${
-                currentBarOptionIndex === index
-                  ? "text-blue-500"
-                  : "text-gray-700"
-              }`}
-              onClick={() => {
-                if (index !== 0 && !token) {
-                  toast("依，你仲未登入喎");
-                  setShowAuthenticationModel(true);
-                  return;
-                }
-                setCurrentBarOptionIndex(index);
-              }}
-              key={index}
-            >
-              {item.label}
-            </div>
-          ))}
-        </div>
+        <FilterOptions
+          token={token}
+          filterOptions={filterOptions}
+          currentBarOptionIndex={currentBarOptionIndex}
+          setCurrentBarOptionIndex={setCurrentBarOptionIndex}
+          setShowAuthenticationModel={setShowAuthenticationModel}
+        />
         <SelectComponent
           className="w-40 rounded-lg"
           defaultValue={allCategories}
@@ -161,3 +146,34 @@ export default function Index() {
     </>
   );
 }
+
+const FilterOptions = ({
+  token,
+  filterOptions,
+  currentBarOptionIndex,
+  setCurrentBarOptionIndex,
+  setShowAuthenticationModel,
+}) => {
+  return (
+    <div className="flex flex-row items-center bg-gray-200 gap-4 py-1 px-2 rounded-lg select-none">
+      {filterOptions.map((item, index) => (
+        <div
+          className={`text-2xl cursor-pointer ${
+            currentBarOptionIndex === index ? "text-blue-500" : "text-gray-700"
+          }`}
+          onClick={() => {
+            if (index !== 0 && !token) {
+              toast("依，你仲未登入喎");
+              setShowAuthenticationModel(true);
+              return;
+            }
+            setCurrentBarOptionIndex(index);
+          }}
+          key={index}
+        >
+          {item.label}
+        </div>
+      ))}
+    </div>
+  );
+};
