@@ -49,7 +49,10 @@ const useHelper = () => {
       if (contentArray[i] === "\n") {
         lastNewLineCharacterIndex = i + 1;
       }
-      if (i - lastNewLineCharacterIndex + 1 === 12) {
+      if (
+        i - lastNewLineCharacterIndex === 11 &&
+        !contentArray[i + 1] === "\n"
+      ) {
         newContentArray.push("\n");
         lastNewLineCharacterIndex = i + 1;
       }
