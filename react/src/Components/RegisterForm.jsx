@@ -30,6 +30,7 @@ export default function RegisterForm({
           label="用戶名"
           innerRef={nameRef}
           placeholder="username"
+          minLength={8}
           type="text"
           error={errors?.username}
           required

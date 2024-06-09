@@ -7,6 +7,7 @@ export default function Input({
   type,
   error,
   required,
+  minLength,
 }) {
   return (
     <div>
@@ -17,6 +18,7 @@ export default function Input({
       <input
         ref={innerRef}
         type={type}
+        minLength={minLength}
         className="bg-gray-100 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 border border-gray-300 focus:ring-transparent focus:border-gray-300"
         placeholder={placeholder}
         required={required}
