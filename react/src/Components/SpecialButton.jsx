@@ -14,7 +14,7 @@ export default function SpecialButton({
       className={`text-gray-200 bg-blue-500 h-12 items-center justify-center rounded-lg px-6 font-md
       ${className} ${
         isLoading
-          ? "opacity-80"
+          ? "opacity-80 cursor-not-allowed"
           : "hover:animate-shimmer transition hover:text-white hover:bg-[linear-gradient(110deg,#3b82f6,45%,#7dd3fc,55%,#3b82f6)] hover:bg-[length:200%_100%]"
       }`}
       disabled={isLoading}

@@ -25,10 +25,10 @@ export default function ForgotPasswordForm({
         className="flex flex-col gap-2 w-full"
       >
         <Input
-          label="你嘅電郵/用戶名"
+          label="你嘅電郵"
           innerRef={emailRef}
-          placeholder="email Address／username"
-          type="string"
+          placeholder="email Address"
+          type="email"
           error={errors?.email}
           required
         />
