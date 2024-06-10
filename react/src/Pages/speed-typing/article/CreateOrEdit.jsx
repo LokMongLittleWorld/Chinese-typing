@@ -1,10 +1,10 @@
 import { createRef, useEffect, useState } from "react";
 import axiosClient from "../../../axios-client.js";
 import { useParams } from "react-router-dom";
-import useHelper from "../../../hooks/useHelper.jsx";
 import Empty from "../../../Components/error/Empty.jsx";
 import SelectComponent from "../../../Components/common/SelectComponent.jsx";
 import toast from "react-hot-toast";
+import { handleContent, toValueLabel } from "../../../common/function.js";
 
 export default function CreateOrEdit() {
   const { id: articleId } = useParams();
@@ -23,7 +23,6 @@ export default function CreateOrEdit() {
   const [focusedArea, setFocusedArea] = useState(""); // ["title", "content"]
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
-  const { handleContent, toValueLabel } = useHelper();
 
   const handleSubmit = () => {
     const values = {

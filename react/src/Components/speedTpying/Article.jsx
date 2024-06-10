@@ -1,6 +1,6 @@
 import InvisibleInput from "../common/InvisibleInput.jsx";
 import React, { useEffect, useRef } from "react";
-import useHelper from "../../hooks/useHelper.jsx";
+import { handleTextColor } from "../../common/function.js";
 
 export default function Article({
   article,
@@ -11,7 +11,6 @@ export default function Article({
   wrongWordIndex,
   inputRef,
 }) {
-  const { handleTextColor } = useHelper();
   const containerRef = useRef(null);
   useEffect(() => {
     // Scroll to a specific position when currentWordIndex changes

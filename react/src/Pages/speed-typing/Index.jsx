@@ -4,9 +4,9 @@ import axiosClient from "../../axios-client.js";
 import { useEffect, useState } from "react";
 import Empty from "../../Components/error/Empty.jsx";
 import SelectComponent from "../../Components/common/SelectComponent.jsx";
-import useHelper from "../../hooks/useHelper.jsx";
 import toast from "react-hot-toast";
 import { useStateContext } from "../../Contexts/ContextProvider.jsx";
+import { toValueLabel } from "../../common/function.js";
 
 const filterOptions = [
   {
@@ -32,8 +32,6 @@ export default function Index() {
   const allCategories = { value: "all", label: "所有標籤" };
   const [cache, setCache] = useState({});
   const [currentCategory, setCurrentCategory] = useState(allCategories.value);
-
-  const { toValueLabel } = useHelper();
 
   // fetch articles
   const fetchArticles = (optionIndex, category) => {

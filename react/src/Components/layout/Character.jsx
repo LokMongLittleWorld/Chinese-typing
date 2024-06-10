@@ -1,5 +1,8 @@
 import React from "react";
-import useHelper from "../../hooks/useHelper.jsx";
+import {
+  getCurrentWordLength,
+  getCurrentWords,
+} from "../../common/function.js";
 
 export default function Character({
   shouldTransition,
@@ -9,8 +12,6 @@ export default function Character({
   currentWordStatus,
   randomWords,
 }) {
-  const { getCurrentWordLength, getCurrentWords } = useHelper();
-
   const { words, firstWordIndex } = getCurrentWords(
     currentWordIndex,
     accWordLength,
