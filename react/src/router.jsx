@@ -11,9 +11,9 @@ import ArticleIndex from "./Pages/speed-typing/article/Index.jsx";
 import Profile from "./Pages/User/Profile.jsx";
 import Settings from "./Pages/User/Settings.jsx";
 import Racing from "./Components/speedTpying/Racing.jsx";
-import Login from "./Pages/authenticationRename/Login.jsx";
-import Register from "./Pages/authenticationRename/Register.jsx";
-import Callback from "./Pages/authenticationRename/Callback.jsx";
+import Login from "./Pages/authentication/Login.jsx";
+import Register from "./Pages/authentication/Register.jsx";
+import Callback from "./Pages/authentication/Callback.jsx";
 
 const router = createBrowserRouter([
   {
