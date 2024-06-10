@@ -8,12 +8,12 @@ import JyutpingIndex from "./Pages/jyutping/Index.jsx";
 import Detail from "./Pages/speed-typing/Detail.jsx";
 import CreateOrEdit from "./Pages/speed-typing/article/CreateOrEdit.jsx";
 import ArticleIndex from "./Pages/speed-typing/article/Index.jsx";
-import Login from "./Pages/authentication/Login.jsx";
-import Register from "./Pages/authentication/Register.jsx";
-import Callback from "./Pages/authentication/Callback.jsx";
 import Profile from "./Pages/User/Profile.jsx";
 import Settings from "./Pages/User/Settings.jsx";
 import Racing from "./Components/speedTpying/Racing.jsx";
+import Login from "./Pages/authentication/Login.jsx";
+import Register from "./Pages/authentication/Register.jsx";
+import Callback from "./Pages/authentication/Callback.jsx";
 
 const router = createBrowserRouter([
   {
@@ -96,12 +96,12 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "*",
-        element: <NotFound />,
-      },
-      {
         path: "/callback",
         element: <Callback />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
