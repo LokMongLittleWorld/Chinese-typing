@@ -1,7 +1,7 @@
 import React from "react";
 import CheatSheet from "../../static/cangjie/cheatsheet.json";
 import Radical from "../../static/cangjie/radicals.json";
-import Model from "./Model.jsx";
+import Model from "./common/Model.jsx";
 
 export default function cheatSheetModel({ showModal = false, setShowModal }) {
   const handleOnClick = () => {

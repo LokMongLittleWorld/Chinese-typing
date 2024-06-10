@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { Toaster } from "react-hot-toast";
-import AuthenticationModel from "../Components/AuthenticationModel.jsx";
+import AuthenticationModel from "../Components/authentication/AuthenticationModel.jsx";
 
 const StateContext = createContext({
   user: null,

@@ -1,4 +1,4 @@
-import empty from "../../../public/images/empty.jpeg";
+import empty from "../../../../public/images/empty.jpeg";
 
 export default function Empty({ message = "Not Found" }) {
   return (

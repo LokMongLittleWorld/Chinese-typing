@@ -2,7 +2,7 @@ import ArticleDisplayCard from "../../../Components/ArticleDisplayCard.jsx";
 import { Link } from "react-router-dom";
 import axiosClient from "../../../axios-client.js";
 import { useEffect, useState } from "react";
-import Empty from "../../../Components/Empty.jsx";
+import Empty from "../../../Components/error/Empty.jsx";
 
 export default function Index() {
   const [articles, setArticles] = useState([]);

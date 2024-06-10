@@ -1,6 +1,6 @@
 import ArticlePreview from "./ArticlePreview.jsx";
-import SegmentedControl from "../SegmentedControl.jsx";
-import SpecialButton from "../SpecialButton.jsx";
+import SegmentedControl from "../common/SegmentedControl.jsx";
+import SpecialButton from "../common/SpecialButton.jsx";
 import React from "react";
 
 export default function Configuration({

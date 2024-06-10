@@ -1,4 +1,4 @@
-import radicalsWithCategory from "../../static/cangjie/radicals_with_category.json";
+import radicalsWithCategory from "../../../static/cangjie/radicals_with_category.json";
 
 export default function RadicalsDisplay({ keysRecord }) {
   const handleTextColor = (speed) => {

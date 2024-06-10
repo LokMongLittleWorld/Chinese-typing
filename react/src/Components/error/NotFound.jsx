@@ -1,4 +1,4 @@
-import error404 from "../../../public/images/error404.jpeg";
+import error404 from "../../../../public/images/error404.jpeg";
 
 export default function NotFound({ status = 404, message = "Not Found" }) {
   return (

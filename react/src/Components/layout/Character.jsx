@@ -1,5 +1,5 @@
 import React from "react";
-import useHelper from "../hooks/useHelper.jsx";
+import useHelper from "../../hooks/useHelper.jsx";
 
 export default function Character({
   shouldTransition,
@@ -30,9 +30,9 @@ export default function Character({
             currentWordStatus === "correct"
               ? "text-gray-700"
               : currentWordStatus === "wrong"
-              ? //TODO: add animation for wrong input
-                "text-rose-400"
-              : "text-gray-500"
+                ? //TODO: add animation for wrong input
+                  "text-rose-400"
+                : "text-gray-500"
           }`}
         >
           {randomWords[currentWordIndex]}

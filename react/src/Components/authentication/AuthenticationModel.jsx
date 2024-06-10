@@ -1,7 +1,7 @@
-import Model from "./Model.jsx";
+import Model from "../common/Model.jsx";
 import React, { useRef, useState } from "react";
-import axiosClient from "../axios-client.js";
-import { useStateContext } from "../Contexts/ContextProvider.jsx";
+import axiosClient from "../../axios-client.js";
+import { useStateContext } from "../../Contexts/ContextProvider.jsx";
 import toast from "react-hot-toast";
 import LoginForm from "./LoginForm.jsx";
 import RegisterForm from "./RegisterForm.jsx";

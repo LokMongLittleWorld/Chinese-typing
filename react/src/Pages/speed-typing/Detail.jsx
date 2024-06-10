@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axiosClient from "../../axios-client.js";
-import NotFound from "../../Components/NotFound.jsx";
+import NotFound from "../../Components/error/NotFound.jsx";
 import { getFirstProperty, toValueLabel } from "../../common/function.js";
 import Racing from "../../Components/speedTpying/Racing.jsx";
 import Configuration from "../../Components/speedTpying/Configuration.jsx";

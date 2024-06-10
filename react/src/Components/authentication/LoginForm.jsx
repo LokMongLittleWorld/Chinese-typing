@@ -1,15 +1,14 @@
-import Input from "./Input.jsx";
-import SpecialButton from "./SpecialButton.jsx";
+import Input from "../common/Input.jsx";
+import SpecialButton from "../common/SpecialButton.jsx";
 import React from "react";
 import ContinueWithGoogleButton from "./ContinueWithGoogleButton.jsx";
 
-export default function RegisterForm({
-  handleRegisterSubmit,
-  handleLogin,
-  nameRef,
+export default function LoginForm({
+  handleLoginSubmit,
+  handleRegister,
+  handleForgotPassword,
   emailRef,
   passwordRef,
-  passwordConfirmationRef,
   isLoading,
   errors,
 }) {
@@ -23,22 +22,14 @@ export default function RegisterForm({
         <hr className="h-px bg-gray-200 border-1 dark:bg-gray-700 w-[150px]" />
       </div>
       <form
-        onSubmit={(e) => handleRegisterSubmit(e)}
+        onSubmit={(e) => handleLoginSubmit(e)}
         className="flex flex-col gap-4 w-full"
       >
         <Input
-          label="用戶名"
-          innerRef={nameRef}
-          placeholder="username"
-          type="text"
-          error={errors?.username}
-          required
-        />
-        <Input
-          label="你嘅電郵"
+          label="你嘅電郵/用戶名"
           innerRef={emailRef}
-          placeholder="email Address"
-          type="email"
+          placeholder="email Address／username"
+          type="string"
           error={errors?.email}
           required
         />
@@ -46,16 +37,8 @@ export default function RegisterForm({
           label="密碼"
           innerRef={passwordRef}
           placeholder="password"
-          type="password"
+          type="new-password"
           error={errors?.password}
-          required
-        />
-        <Input
-          label="入多次密碼"
-          innerRef={passwordConfirmationRef}
-          placeholder="password confirmation"
-          type="password"
-          error={errors?.password_confirmation}
           required
         />
         <SpecialButton
@@ -67,13 +50,19 @@ export default function RegisterForm({
 
         <div className="flex items-center justify-between">
           <div className="text-md -mt-1">
-            <span>己經有帳號？</span>
+            <span>仲未有帳號？</span>
             <span
-              onClick={handleLogin}
+              onClick={handleRegister}
               className="cursor-pointer text-blue-400 hover:text-blue-600 border-b border-blue-400 hover:border-blue-600"
             >
-              馬上登入！
+              馬上註冊！
             </span>
+          </div>
+          <div
+            onClick={handleForgotPassword}
+            className="text-md -mt-1 cursor-pointer text-blue-400 hover:text-blue-600 border-b border-blue-400 hover:border-blue-600"
+          >
+            忘記密碼？
           </div>
         </div>
       </form>

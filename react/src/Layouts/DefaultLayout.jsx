@@ -3,8 +3,8 @@ import { useStateContext } from "../Contexts/ContextProvider.jsx";
 import axiosClient from "../axios-client.js";
 import { useEffect } from "react";
 import { isStringValid } from "../common/function.js";
-import LoginButton from "../Components/LoginButton.jsx";
-import UserAccountDropdownMenu from "../Components/UserAccountDropdownMenu.jsx";
+import LoginButton from "../Components/authentication/LoginButton.jsx";
+import UserAccountDropdownMenu from "../Components/authentication/UserAccountDropdownMenu.jsx";
 
 const pages = {
   "speed-typing": "中文速打",

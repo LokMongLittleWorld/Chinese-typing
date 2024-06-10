@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Record from "../../Components/Record.jsx";
-import PracticeCategory from "../../Components/PracticeCategory.jsx";
+import Record from "../../Components/layout/Record.jsx";
+import PracticeCategory from "../../Components/layout/PracticeCategory.jsx";
 import Hiragana from "../../../static/japanese/hiragana.json";
 import Katakana from "../../../static/japanese/katakana.json";
 import useKeyDownHandler from "../../hooks/useKeyDownHandler.jsx";
 import useCharacterHelper from "../../hooks/useCharacterHelper.jsx";
-import Character from "../../Components/Character.jsx";
-import AmountSelector from "../../Components/AmountSelector.jsx";
-import InputDisplay from "../../Components/InputDisplay.jsx";
+import Character from "../../Components/layout/Character.jsx";
+import AmountSelector from "../../Components/common/AmountSelector.jsx";
+import InputDisplay from "../../Components/common/InputDisplay.jsx";
 
 //prettier-ignore
 const initials = ["ア","イ", "ウ", "エ", "オ"];

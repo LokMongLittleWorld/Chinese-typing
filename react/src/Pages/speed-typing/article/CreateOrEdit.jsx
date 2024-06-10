@@ -2,8 +2,8 @@ import { createRef, useEffect, useState } from "react";
 import axiosClient from "../../../axios-client.js";
 import { useParams } from "react-router-dom";
 import useHelper from "../../../hooks/useHelper.jsx";
-import Empty from "../../../Components/Empty.jsx";
-import SelectComponent from "../../../Components/SelectComponent.jsx";
+import Empty from "../../../Components/error/Empty.jsx";
+import SelectComponent from "../../../Components/common/SelectComponent.jsx";
 import toast from "react-hot-toast";
 
 export default function CreateOrEdit() {

@@ -1,6 +1,6 @@
-import InvisibleInput from "./InvisibleInput.jsx";
+import InvisibleInput from "../common/InvisibleInput.jsx";
 import React, { useEffect, useRef } from "react";
-import useHelper from "../hooks/useHelper.jsx";
+import useHelper from "../../hooks/useHelper.jsx";
 
 export default function Article({
   article,

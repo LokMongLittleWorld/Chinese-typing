@@ -1,9 +1,9 @@
-import DropdownMenu from "./DropdownMenu.jsx";
+import DropdownMenu from "../common/DropdownMenu.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faUser } from "@fortawesome/free-solid-svg-icons";
-import { useStateContext } from "../Contexts/ContextProvider.jsx";
+import { useStateContext } from "../../Contexts/ContextProvider.jsx";
 import { Link, useNavigate } from "react-router-dom";
-import axiosClient from "../axios-client.js";
+import axiosClient from "../../axios-client.js";
 import toast from "react-hot-toast";
 
 export default function UserAccountDropdownMenu() {

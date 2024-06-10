@@ -1,6 +1,6 @@
-import Input from "./Input.jsx";
+import Input from "../common/Input.jsx";
 import React from "react";
-import SpecialButton from "./SpecialButton.jsx";
+import SpecialButton from "../common/SpecialButton.jsx";
 
 export default function ForgotPasswordForm({
   handleForgotPasswordSubmit,

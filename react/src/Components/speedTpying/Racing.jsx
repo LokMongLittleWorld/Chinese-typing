@@ -1,9 +1,9 @@
-import Record from "../Record.jsx";
+import Record from "../layout/Record.jsx";
 import React, { useEffect, useState } from "react";
 import useArticleHelper from "../../hooks/useArticleHelper.jsx";
 import axiosClient from "../../axios-client.js";
-import NotFound from "../NotFound.jsx";
-import Article from "../Article.jsx";
+import NotFound from "../error/NotFound.jsx";
+import Article from "./Article.jsx";
 
 export default function Racing({ raceType }) {
   // const { id: articleId } = useParams();

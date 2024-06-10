@@ -1,14 +1,15 @@
-import Input from "./Input.jsx";
-import SpecialButton from "./SpecialButton.jsx";
+import Input from "../common/Input.jsx";
+import SpecialButton from "../common/SpecialButton.jsx";
 import React from "react";
 import ContinueWithGoogleButton from "./ContinueWithGoogleButton.jsx";
 
-export default function LoginForm({
-  handleLoginSubmit,
-  handleRegister,
-  handleForgotPassword,
+export default function RegisterForm({
+  handleRegisterSubmit,
+  handleLogin,
+  nameRef,
   emailRef,
   passwordRef,
+  passwordConfirmationRef,
   isLoading,
   errors,
 }) {
@@ -22,14 +23,22 @@ export default function LoginForm({
         <hr className="h-px bg-gray-200 border-1 dark:bg-gray-700 w-[150px]" />
       </div>
       <form
-        onSubmit={(e) => handleLoginSubmit(e)}
+        onSubmit={(e) => handleRegisterSubmit(e)}
         className="flex flex-col gap-4 w-full"
       >
         <Input
-          label="你嘅電郵/用戶名"
+          label="用戶名"
+          innerRef={nameRef}
+          placeholder="username"
+          type="text"
+          error={errors?.username}
+          required
+        />
+        <Input
+          label="你嘅電郵"
           innerRef={emailRef}
-          placeholder="email Address／username"
-          type="string"
+          placeholder="email Address"
+          type="email"
           error={errors?.email}
           required
         />
@@ -37,8 +46,16 @@ export default function LoginForm({
           label="密碼"
           innerRef={passwordRef}
           placeholder="password"
-          type="new-password"
+          type="password"
           error={errors?.password}
+          required
+        />
+        <Input
+          label="入多次密碼"
+          innerRef={passwordConfirmationRef}
+          placeholder="password confirmation"
+          type="password"
+          error={errors?.password_confirmation}
           required
         />
         <SpecialButton
@@ -50,19 +67,13 @@ export default function LoginForm({
 
         <div className="flex items-center justify-between">
           <div className="text-md -mt-1">
-            <span>仲未有帳號？</span>
+            <span>己經有帳號？</span>
             <span
-              onClick={handleRegister}
+              onClick={handleLogin}
               className="cursor-pointer text-blue-400 hover:text-blue-600 border-b border-blue-400 hover:border-blue-600"
             >
-              馬上註冊！
+              馬上登入！
             </span>
-          </div>
-          <div
-            onClick={handleForgotPassword}
-            className="text-md -mt-1 cursor-pointer text-blue-400 hover:text-blue-600 border-b border-blue-400 hover:border-blue-600"
-          >
-            忘記密碼？
           </div>
         </div>
       </form>

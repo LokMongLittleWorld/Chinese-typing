@@ -1,17 +1,17 @@
 import React, { useRef } from "react";
-import Record from "../../Components/Record.jsx";
-import PracticeCategory from "../../Components/PracticeCategory.jsx";
+import Record from "../../Components/layout/Record.jsx";
+import PracticeCategory from "../../Components/layout/PracticeCategory.jsx";
 import Radicals from "../../../static/cangjie/radicals.json";
 import RadicalSWithCategory from "../../../static/cangjie/radicals_with_category.json";
 import GlyphsWithCategory from "../../../static/cangjie/glyphs_with_category.json";
 import Words from "../../../static/cangjie/words.json";
 import useCharacterHelper from "../../hooks/useCharacterHelper.jsx";
-import AmountSelector from "../../Components/AmountSelector.jsx";
-import InputDisplay from "../../Components/InputDisplay.jsx";
-import Character from "../../Components/Character.jsx";
+import AmountSelector from "../../Components/common/AmountSelector.jsx";
+import InputDisplay from "../../Components/common/InputDisplay.jsx";
+import Character from "../../Components/layout/Character.jsx";
 import CheatSheetModel from "../../Components/CheatSheetModel.jsx";
-import RadicalsDisplay from "../../Components/RadicalsDisplay.jsx";
-import InvisibleInput from "../../Components/InvisibleInput.jsx";
+import RadicalsDisplay from "../../Components/layout/RadicalsDisplay.jsx";
+import InvisibleInput from "../../Components/common/InvisibleInput.jsx";
 
 export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
