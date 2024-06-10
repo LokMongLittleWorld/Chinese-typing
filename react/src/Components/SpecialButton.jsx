@@ -11,7 +11,7 @@ export default function SpecialButton({
     <button
       onClick={onClick}
       type={type}
-      className={`text-gray-200 bg-blue-500 h-12 items-center justify-center rounded-lg px-6 font-md
+      className={`text-gray-200 bg-blue-500 h-12 items-center justify-center rounded-lg px-6
       ${className} ${
         isLoading
           ? "opacity-80"
