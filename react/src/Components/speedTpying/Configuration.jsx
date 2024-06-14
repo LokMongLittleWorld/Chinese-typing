@@ -11,7 +11,7 @@ export default function Configuration({
   handlePageChange,
 }) {
   return (
-    <div className="flex flex-col gap-4 w-[768px]">
+    <div className="flex flex-col gap-4 w-[768px] mt-4">
       {/* article preview*/}
       <ArticlePreview article={article} />
       <SegmentedControl

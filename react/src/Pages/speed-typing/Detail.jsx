@@ -11,7 +11,7 @@ export default function Detail() {
   const [article, setArticle] = useState({});
   const [page, setPage] = useState(1);
   const [isNotFound, setIsNotFound] = useState(false);
-  const [isloading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [raceTypes, setRaceTypes] = useState();
   const [raceType, setRaceType] = useState({
     value: "",
@@ -37,18 +37,18 @@ export default function Detail() {
       });
   }, []);
 
-  // TODO: handle fallback in general
-  if (isloading) {
-    return <div>Loading...</div>;
-  }
-
-  const HandleRaceTypeOnChange = (raceType) => {
-    setRaceType(raceType);
+  const HandleRaceTypeOnChange = (newRaceType) => {
+    setRaceType(newRaceType);
   };
 
   const handlePageChange = (page) => {
     setPage(page);
   };
+
+  // TODO: handle fallback in general
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   if (isNotFound) {
     return <NotFound message="Article not found" />;
@@ -74,7 +74,7 @@ export default function Detail() {
   return (
     <main
       key={articleId}
-      className="relative flex justify-center items-center mt-8 "
+      className="relative flex justify-center items-center mt-4"
     >
       {renderContent()}
     </main>

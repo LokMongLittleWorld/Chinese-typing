@@ -8,7 +8,7 @@ class RaceTypeOptions
 
     const SECOND_30 = '30_seconds';
     const SECOND_60 = '60_seconds';
-    const SECOND_120 = '90_seconds';
+    const SECOND_120 = '120_seconds';
 
     public static function all(): array
     {
