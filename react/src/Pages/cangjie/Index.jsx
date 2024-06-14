@@ -12,6 +12,7 @@ import Character from "../../Components/layout/Character.jsx";
 import CheatSheetModel from "../../Components/CheatSheetModel.jsx";
 import RadicalsDisplay from "../../Components/layout/RadicalsDisplay.jsx";
 import InvisibleInput from "../../Components/common/InvisibleInput.jsx";
+import MaskContainer from "../../Components/layout/MaskContainer.jsx";
 
 export default function Index() {
   const category = ["字根訓練", "字形訓練", "單字訓練"];
@@ -75,34 +76,36 @@ export default function Index() {
         {/* TODO: hover to display speed and accuracy, color to indicate proficiency */}
         <RadicalsDisplay keysRecord={keysRecord} />
         <CheatSheetModel showModal={showModal} setShowModal={setShowModal} />
-        <Character
-          shouldTransition={
-            (answerMap.get(randomWords[currentWordIndex]) || "").length === 1
-          }
-          accWordLength={accWordLength}
-          currentCategory={category[currentCategoryIndex]}
-          currentWordIndex={currentWordIndex}
-          currentWordStatus={currentWordStatus}
-          randomWords={randomWords}
-        />
+        <MaskContainer isRunning={isRunning}>
+          <Character
+            shouldTransition={
+              (answerMap.get(randomWords[currentWordIndex]) || "").length === 1
+            }
+            accWordLength={accWordLength}
+            currentCategory={category[currentCategoryIndex]}
+            currentWordIndex={currentWordIndex}
+            currentWordStatus={currentWordStatus}
+            randomWords={randomWords}
+          />
+          <section className="flex flex-col items-center absolute bottom-[10vh] left-1/2 -translate-x-1/2 gap-6">
+            <InputDisplay
+              answer={answerMap.get(randomWords[currentWordIndex]) || ""}
+              input={inputDisplay}
+              currentWordIndex={currentWordIndex}
+              currentWordStatus={currentWordStatus}
+              Radicals={Radicals}
+            />
+            <InvisibleInput handleKeyDown={handleKeyDown} inputRef={inputRef} />
+            <AmountSelector
+              amounts={amounts}
+              amount={amount}
+              setAmount={setAmount}
+              isRunning={isRunning}
+              handleAmountChange={handleAmountChange}
+            />
+          </section>
+        </MaskContainer>
       </main>
-      <section className="flex flex-col items-center absolute bottom-[10vh] left-1/2 -translate-x-1/2 gap-6">
-        <InputDisplay
-          answer={answerMap.get(randomWords[currentWordIndex]) || ""}
-          input={inputDisplay}
-          currentWordIndex={currentWordIndex}
-          currentWordStatus={currentWordStatus}
-          Radicals={Radicals}
-        />
-        <InvisibleInput handleKeyDown={handleKeyDown} inputRef={inputRef} />
-        <AmountSelector
-          amounts={amounts}
-          amount={amount}
-          setAmount={setAmount}
-          isRunning={isRunning}
-          handleAmountChange={handleAmountChange}
-        />
-      </section>
     </>
   );
 }

@@ -35,10 +35,15 @@ export default {
             backgroundPosition: "-300% 0",
           },
         },
+        fadeIn: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
       },
       animation: {
         wiggle: "wiggle 1s ease-in-out infinite",
         typing: "typing 0.7s step-start infinite alternate",
+        fade: "fadeIn 0.3s ease-in",
         shimmer: "shimmer 2s linear infinite",
       },
     },

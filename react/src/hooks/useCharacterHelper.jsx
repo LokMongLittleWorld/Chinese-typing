@@ -38,15 +38,17 @@ function useCharacterHelper(words, _keysRecord, _keysRecordName) {
 
   const handleKeyDown = (e) => {
     // handle keydown event
-
-    // start, initialize the timer
-    if (currentWordIndex === 0) {
-      setIsRunning(true);
-    }
-
     if (e.key === "Tab") {
       e.preventDefault();
       setShowModal((prevState) => !prevState);
+      return;
+    }
+
+    // press enter to start the game
+    if (!isRunning && e.key === "Enter") {
+      setIsRunning(true);
+      return;
+    } else if (!isRunning) {
       return;
     }
 

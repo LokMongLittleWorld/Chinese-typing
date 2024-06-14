@@ -30,7 +30,7 @@ export default function DefaultLayout() {
   };
 
   return (
-    <div id="defaultLayout" className="w-full p-6">
+    <div id="defaultLayout" className="w-full py-6">
       <header className="flex flex-col justify-center items-center mt-2">
         <div className="relative flex flex-row">
           {/*nav bar*/}
