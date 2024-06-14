@@ -13,14 +13,14 @@ export default function UserAccountDropdownMenu() {
   const handleLogout = () => {
     axiosClient
       .post("/logout")
-      .then(() => {
+      .catch(() => {
+        // toast.error(error.message);
+      })
+      .finally(() => {
         setUser({});
         setToken(null);
         toast.success("登出成功~.");
         navigate("/");
-      })
-      .catch((error) => {
-        toast.error(error.message);
       });
   };
 
