@@ -1,7 +1,11 @@
 import KBD from "../common/KBD.jsx";
 import { useEffect, useState } from "react";
 
-export default function MaskContainer({ isRunning = false, children }) {
+export default function MaskContainer({
+  isRunning = false,
+  className,
+  children,
+}) {
   const [delayedIsRunning, setDelayedIsRunning] = useState(isRunning);
 
   useEffect(() => {
@@ -20,8 +24,8 @@ export default function MaskContainer({ isRunning = false, children }) {
   }, [isRunning]);
   return (
     <div
-      className="
-    fixed flex items-center justify-center w-full h-screen top-0 min-h-[600px] -z-10 select-none"
+      className={`
+        fixed flex items-center justify-center w-full h-screen top-0 -z-10 select-none ${className}`}
     >
       {!delayedIsRunning && (
         <div

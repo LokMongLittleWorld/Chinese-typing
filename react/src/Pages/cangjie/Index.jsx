@@ -76,7 +76,7 @@ export default function Index() {
         {/* TODO: hover to display speed and accuracy, color to indicate proficiency */}
         <RadicalsDisplay keysRecord={keysRecord} />
         <CheatSheetModel showModal={showModal} setShowModal={setShowModal} />
-        <MaskContainer isRunning={isRunning}>
+        <MaskContainer isRunning={isRunning} className="min-h-[700px]">
           <Character
             shouldTransition={
               (answerMap.get(randomWords[currentWordIndex]) || "").length === 1

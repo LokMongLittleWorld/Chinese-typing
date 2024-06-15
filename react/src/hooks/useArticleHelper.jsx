@@ -16,15 +16,16 @@ function useArticleHelper(text) {
 
   const handleKeyDown = (e) => {
     //   TODO: add hot key function
+    if (!isRunning && e.key === "Enter") {
+      setIsRunning(true);
+    }
   };
 
   const handleChange = (e) => {
     e.preventDefault();
-    const character = inputRef.current.value.at(-1);
+    if (!isRunning) return;
 
-    if (currentWordIndex === 0) {
-      setIsRunning(true);
-    }
+    const character = inputRef.current.value.at(-1);
 
     // incorrect input
     //prettier-ignore
@@ -59,6 +60,7 @@ function useArticleHelper(text) {
   const inputRef = useRef(null);
 
   return {
+    time,
     handleChange,
     handleKeyDown,
     currentWordIndex,
@@ -66,6 +68,7 @@ function useArticleHelper(text) {
     inputRef,
     record,
     wrongWordIndex,
+    isRunning,
   };
 }
 export default useArticleHelper;

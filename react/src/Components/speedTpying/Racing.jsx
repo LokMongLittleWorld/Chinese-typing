@@ -1,29 +1,11 @@
 import Record from "../layout/Record.jsx";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useArticleHelper from "../../hooks/useArticleHelper.jsx";
-import axiosClient from "../../axios-client.js";
-import NotFound from "../error/NotFound.jsx";
 import Article from "./Article.jsx";
+import useTimeCountdown from "../../hooks/useTimeCountdown.jsx";
+import MaskContainer from "../layout/MaskContainer.jsx";
 
-export default function Racing({ raceType }) {
-  // const { id: articleId } = useParams();
-  const articleId = "01hzy1nj0pgg705xvwmxnr11jh";
-  const [article, setArticle] = useState({});
-  const [isNotFound, setIsNotFound] = useState(false);
-
-  useEffect(() => {
-    axiosClient
-      .get("/anonymous/article/" + articleId)
-      .then(({ data }) => {
-        setArticle(data.article);
-      })
-      .catch((error) => {
-        if (error.response.status === 404) {
-          setIsNotFound(true);
-        }
-      });
-  }, []);
-
+export default function Racing({ raceType, article }) {
   const {
     handleChange,
     handleKeyDown,
@@ -32,27 +14,43 @@ export default function Racing({ raceType }) {
     inputRef,
     record,
     wrongWordIndex,
+    isRunning,
   } = useArticleHelper(article?.content);
 
-  if (isNotFound) {
-    return <NotFound message="Article not found" />;
-  }
+  const { timeLeft, start, pause, reset } = useTimeCountdown(
+    parseInt(raceType.value)
+  );
+
+  const handleStart = () => {
+    start();
+  };
+
   return (
     <>
       {/*Record*/}
-      <div className="flex items-center justify-center mt-4">
-        <Record speed={record.speed} accuracy={record.accuracy} />
+      <div
+        onClick={handleStart}
+        className="flex flex-row gap-4 items-center justify-center mt-2"
+      >
+        <Record
+          speed={record.speed}
+          accuracy={record.accuracy}
+          time={timeLeft}
+          displayTime
+        />
       </div>
       {/*Article*/}
-      <Article
-        article={article}
-        currentLineIndex={currentLineIndex}
-        handleKeyDown={handleKeyDown}
-        handleChange={handleChange}
-        currentWordIndex={currentWordIndex}
-        wrongWordIndex={wrongWordIndex}
-        inputRef={inputRef}
-      />
+      <MaskContainer isRunning={isRunning} className="min-h-[680px]">
+        <Article
+          article={article}
+          currentLineIndex={currentLineIndex}
+          handleKeyDown={handleKeyDown}
+          handleChange={handleChange}
+          currentWordIndex={currentWordIndex}
+          wrongWordIndex={wrongWordIndex}
+          inputRef={inputRef}
+        />
+      </MaskContainer>
     </>
   );
 }

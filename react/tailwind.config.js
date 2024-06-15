@@ -43,7 +43,7 @@ export default {
       animation: {
         wiggle: "wiggle 1s ease-in-out infinite",
         typing: "typing 0.7s step-start infinite alternate",
-        fade: "fadeIn 0.3s ease-in",
+        fade: "fadeIn 0.1s ease-in",
         shimmer: "shimmer 2s linear infinite",
       },
     },

@@ -67,7 +67,7 @@ export default function Detail() {
           />
         );
       case 2:
-        return <Racing raceType={raceType} />;
+        return <Racing article={article} raceType={raceType} />;
     }
   };
 
