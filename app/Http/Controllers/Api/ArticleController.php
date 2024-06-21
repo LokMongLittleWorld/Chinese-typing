@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Like;
 use App\Options\CategoryOptions;
-use App\Options\RaceTypeOptions;
+use App\Options\RaceModeOptions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -169,7 +169,7 @@ class ArticleController extends Controller
         }
 
         $categories = CategoryOptions::all();
-        $race_types = RaceTypeOptions::all();
+        $race_modes = RaceModeOptions::all();
 
         $is_owner = $article->user_id === Auth::id();
 
@@ -177,7 +177,7 @@ class ArticleController extends Controller
             'article' => $article,
             'is_owner' => $is_owner,
             'categories' => $categories,
-            'race_types' => $race_types
+            'race_modes' => $race_modes
         ]);
     }
 

@@ -1,22 +1,22 @@
-import ArticlePreview from "./ArticlePreview.jsx";
+import ArticleDisplay from "./ArticleDisplay.jsx";
 import SegmentedControl from "../common/SegmentedControl.jsx";
 import SpecialButton from "../common/SpecialButton.jsx";
 import React from "react";
 
 export default function Configuration({
   article,
-  raceType,
-  raceTypes,
+  raceMode,
+  raceModes,
   HandleRaceTypeOnChange,
   handlePageChange,
 }) {
   return (
-    <div className="flex flex-col gap-4 w-[768px] mt-4">
+    <section className="flex flex-col gap-4 w-[768px] mt-4">
       {/* article preview*/}
-      <ArticlePreview article={article} />
+      <ArticleDisplay article={article} type="預覽" />
       <SegmentedControl
-        selectedSegment={raceType}
-        segments={raceTypes}
+        selectedSegment={raceMode}
+        segments={raceModes}
         handleOnClick={HandleRaceTypeOnChange}
       />
       {/*  TODO: table to show current 3times record and world record*/}
@@ -26,6 +26,6 @@ export default function Configuration({
           onClick={() => handlePageChange(2)}
         />
       </div>
-    </div>
+    </section>
   );
 }

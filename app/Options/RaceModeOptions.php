@@ -2,7 +2,7 @@
 
 namespace App\Options;
 
-class RaceTypeOptions
+class RaceModeOptions
 {
     const FUll = 'full';
 

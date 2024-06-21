@@ -82,3 +82,8 @@ export const getRandomInt = (max) => {
 export const isEmptyObject = (obj) => {
   return Object.keys(obj).length === 0;
 };
+
+export const toDisplayFloat = (float) => {
+  if (typeof float !== "number" || isNaN(float)) return;
+  return float.toFixed(2);
+};

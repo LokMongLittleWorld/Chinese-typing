@@ -10,7 +10,7 @@ import CreateOrEdit from "./Pages/speed-typing/article/CreateOrEdit.jsx";
 import ArticleIndex from "./Pages/speed-typing/article/Index.jsx";
 import Profile from "./Pages/User/Profile.jsx";
 import Settings from "./Pages/User/Settings.jsx";
-import Racing from "./Components/speedTpying/Racing.jsx";
+import Racing from "./Pages/speed-typing/detailSubpage/Racing.jsx";
 import Login from "./Pages/authentication/Login.jsx";
 import Register from "./Pages/authentication/Register.jsx";
 import Callback from "./Pages/authentication/Callback.jsx";

@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import axiosClient from "../../axios-client.js";
 import NotFound from "../../Components/error/NotFound.jsx";
 import { getFirstProperty, toValueLabel } from "../../common/function.js";
-import Racing from "../../Components/speedTpying/Racing.jsx";
+import Racing from "./detailSubpage/Racing.jsx";
 import Configuration from "../../Components/speedTpying/Configuration.jsx";
+import Review from "./detailSubpage/Review.jsx";
 
 export default function Detail() {
   const { id: articleId } = useParams();
@@ -12,20 +13,28 @@ export default function Detail() {
   const [page, setPage] = useState(1);
   const [isNotFound, setIsNotFound] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [raceTypes, setRaceTypes] = useState();
-  const [raceType, setRaceType] = useState({
+  const [raceModes, setRaceModes] = useState();
+  const [raceMode, setRaceMode] = useState({
     value: "",
     label: "",
   });
+  const [result, setResult] = useState({
+    time: 48,
+    speed: 69,
+    accuracy: 0.7,
+    completion: 1,
+    raceMode: "120秒",
+  });
+  const [resultWrongWordIndex, setResultWrongWordIndex] = useState([]);
 
   useEffect(() => {
     axiosClient
       .get("/anonymous/article/" + articleId)
       .then(({ data }) => {
         setArticle(data.article);
-        const raceTypesTemp = toValueLabel(data.race_types);
-        setRaceType(getFirstProperty(raceTypesTemp));
-        setRaceTypes(raceTypesTemp);
+        const raceModesTemp = toValueLabel(data.race_modes);
+        setRaceMode(getFirstProperty(raceModesTemp));
+        setRaceModes(raceModesTemp);
       })
       .catch((error) => {
         if (error.response.status === 404) {
@@ -38,11 +47,15 @@ export default function Detail() {
   }, []);
 
   const HandleRaceTypeOnChange = (newRaceType) => {
-    setRaceType(newRaceType);
+    setRaceMode(newRaceType);
   };
 
   const handlePageChange = (page) => {
     setPage(page);
+  };
+
+  const handleResult = (result) => {
+    setResult(result);
   };
 
   // TODO: handle fallback in general
@@ -60,14 +73,34 @@ export default function Detail() {
         return (
           <Configuration
             article={article}
-            raceType={raceType}
-            raceTypes={raceTypes}
+            raceMode={raceMode}
+            raceModes={raceModes}
             HandleRaceTypeOnChange={HandleRaceTypeOnChange}
             handlePageChange={handlePageChange}
           />
         );
       case 2:
-        return <Racing article={article} raceType={raceType} />;
+        return (
+          <Racing
+            article={article}
+            raceMode={raceMode}
+            handlePageChange={handlePageChange}
+            handleResult={handleResult}
+            setResultWrongWordIndex={setResultWrongWordIndex}
+          />
+        );
+      case 3:
+        return (
+          <Review
+            article={article}
+            result={result}
+            raceMode={raceMode}
+            raceModes={raceModes}
+            handlePageChange={handlePageChange}
+            HandleRaceTypeOnChange={HandleRaceTypeOnChange}
+            resultWrongWordIndex={resultWrongWordIndex}
+          />
+        );
     }
   };
 

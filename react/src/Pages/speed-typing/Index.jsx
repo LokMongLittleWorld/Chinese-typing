@@ -102,7 +102,7 @@ export default function Index() {
   return (
     <>
       {/*header*/}
-      <section className="flex flex-row justify-center items-center gap-4 py-1 px-2 select-none mt-4">
+      <section className="flex flex-row justify-center items-center gap-4 px-2 select-none mt-4">
         <FilterOptions
           token={token}
           filterOptions={filterOptions}
