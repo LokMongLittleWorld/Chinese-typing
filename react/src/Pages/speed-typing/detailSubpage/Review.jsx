@@ -66,7 +66,7 @@ export default function Review({
         article={article}
         type="回帶"
         wrongWordIndex={resultWrongWordIndex}
-        lastWordIndex={result.completion * (article.content.length - 1)}
+        lastWordIndex={result.completion * article.content.length}
       />
       <SegmentedControl
         selectedSegment={raceMode}

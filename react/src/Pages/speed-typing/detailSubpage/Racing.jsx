@@ -29,7 +29,7 @@ export default function Racing({
   } = useArticleHelper(article?.content);
 
   const { timeLeft, start, pause, reset, isTimeUp } = useTimeCountdown(
-    // 10
+    // 3
     parseInt(raceMode.value)
   );
   const isCountDown = !isNaN(parseInt(raceMode.value));
@@ -71,7 +71,7 @@ export default function Racing({
         time: toDisplayFloat(time),
         speed: speed(articleLength, time),
         accuracy: accuracy(articleLength, wrongWordIndex.length),
-        completion: toDisplayFloat(currentWordIndex / (articleLength - 1.0)),
+        completion: toDisplayFloat(currentWordIndex / articleLength),
         raceMode: raceMode.label,
       };
       handleResult(result);

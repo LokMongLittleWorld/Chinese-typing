@@ -5,7 +5,7 @@ export default function ArticleDisplay({
   article,
   type,
   wrongWordIndex,
-  lastWordIndex,
+  lastWordIndex = 100000,
 }) {
   return (
     <div className="relative flex flex-col bg-white rounded-lg shadow items-center justify-center p-6">

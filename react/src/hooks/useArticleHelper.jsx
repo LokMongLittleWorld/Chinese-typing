@@ -29,7 +29,7 @@ function useArticleHelper(text) {
     setIsRunning(false);
     setCurrentWordIndex(0);
     setWrongWordIndex([]);
-    inputRef.current.value = "";
+    inputRef.current = "";
     setIsEndGame(false);
   };
 
@@ -53,6 +53,7 @@ function useArticleHelper(text) {
     if (character === text[currentWordIndex]) {
       // endGame
       if (currentWordIndex === text.length - 1) {
+        setCurrentWordIndex(currentWordIndex + 1);
         endGame();
         return;
       }
