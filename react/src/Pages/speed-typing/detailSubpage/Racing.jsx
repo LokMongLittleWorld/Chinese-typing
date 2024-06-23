@@ -16,7 +16,7 @@ export default function Racing({
 }) {
   const {
     time,
-    handleChange,
+    handleOnChange,
     handleKeyDown,
     currentWordIndex,
     currentLineIndex,
@@ -32,9 +32,11 @@ export default function Racing({
     // 3
     parseInt(raceMode.value)
   );
+
   const isCountDown = !isNaN(parseInt(raceMode.value));
   const [displayTime, setDisplayTime] = useState(0);
   const { speed, accuracy } = useRecorder();
+  const [inputDisplay, setInputDisplay] = useState("");
 
   useEffect(() => {
     let interval;
@@ -69,7 +71,7 @@ export default function Racing({
       const articleLength = article.content.length;
       const result = {
         time: toDisplayFloat(time),
-        speed: speed(articleLength, time),
+        speed: speed(currentWordIndex, time),
         accuracy: accuracy(articleLength, wrongWordIndex.length),
         completion: toDisplayFloat(currentWordIndex / articleLength),
         raceMode: raceMode.label,
@@ -84,6 +86,10 @@ export default function Racing({
       clearInterval(interval);
     };
   }, [isRunning, isTimeUp]);
+
+  const handleInputDisplayOnChange = (input) => {
+    setInputDisplay(input);
+  };
 
   return (
     <>
@@ -101,12 +107,18 @@ export default function Racing({
           article={article}
           currentLineIndex={currentLineIndex}
           handleKeyDown={handleKeyDown}
-          handleChange={handleChange}
+          handleOnChange={handleOnChange}
+          handleInputDisplayOnChange={handleInputDisplayOnChange}
           currentWordIndex={currentWordIndex}
           wrongWordIndex={wrongWordIndex}
           inputRef={inputRef}
         />
+        <InputDisplay input={inputDisplay} />
       </MaskContainer>
     </>
   );
 }
+
+const InputDisplay = ({ input }) => {
+  return <div className="text-2xl text-gray-700 text-center h-10">{input}</div>;
+};

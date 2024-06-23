@@ -33,7 +33,7 @@ function useArticleHelper(text) {
     setIsEndGame(false);
   };
 
-  const handleChange = (e) => {
+  const handleOnChange = (e) => {
     e.preventDefault();
     // if (!isRunning) return;
 
@@ -41,7 +41,7 @@ function useArticleHelper(text) {
       setIsRunning(true);
     }
 
-    const character = inputRef.current.value.at(-1);
+    const character = inputRef.current.value;
 
     // incorrect input
     //prettier-ignore
@@ -71,7 +71,7 @@ function useArticleHelper(text) {
 
   return {
     time,
-    handleChange,
+    handleOnChange,
     handleKeyDown,
     currentWordIndex,
     currentLineIndex,

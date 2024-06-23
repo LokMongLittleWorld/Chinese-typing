@@ -3,7 +3,8 @@ import CompositedInput from "./CompositedInput.jsx";
 
 export default function InvisibleInput({
   handleKeyDown,
-  handleChange,
+  handleOnChange,
+  handleInputDisplayOnChange,
   stayFocus = true,
   inputRef,
 }) {
@@ -14,7 +15,8 @@ export default function InvisibleInput({
   return (
     <CompositedInput
       handleKeyDown={handleKeyDown}
-      handleChange={handleChange}
+      handleOnChange={handleOnChange}
+      handleInputDisplayOnChange={handleInputDisplayOnChange}
       className="cursor-default absolute h-2 w-2 bottom-0 z-[-10] opacity-0"
       onBlur={(e) => e.target.focus()}
       inputRef={inputRef}

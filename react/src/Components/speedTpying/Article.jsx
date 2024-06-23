@@ -6,7 +6,8 @@ export default function Article({
   article,
   currentLineIndex,
   handleKeyDown,
-  handleChange,
+  handleOnChange,
+  handleInputDisplayOnChange,
   currentWordIndex,
   wrongWordIndex,
   inputRef,
@@ -49,7 +50,8 @@ export default function Article({
                   {index === currentWordIndex && (
                     <InvisibleInput
                       handleKeyDown={handleKeyDown}
-                      handleChange={handleChange}
+                      handleOnChange={handleOnChange}
+                      handleInputDisplayOnChange={handleInputDisplayOnChange}
                       inputRef={inputRef}
                     />
                   )}

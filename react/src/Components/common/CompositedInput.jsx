@@ -2,17 +2,19 @@ import { useRef } from "react";
 
 const CompositedInput = ({
   inputRef,
-  handleChange,
+  handleOnChange,
   className,
   onBlur,
   handleKeyDown,
+  handleInputDisplayOnChange,
 }) => {
   // Add a state to track Chinese input state
   const compositionRef = useRef(false);
 
   const preHandleChange = (e) => {
-    if (!compositionRef.current && handleChange !== undefined) {
-      handleChange(e);
+    handleInputDisplayOnChange(e.target.value);
+    if (!compositionRef.current && handleOnChange !== undefined) {
+      handleOnChange(e);
     }
   };
 
