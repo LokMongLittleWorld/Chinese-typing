@@ -26,7 +26,7 @@ export default function useTimeCountdown(_time) {
     if (isRunning) {
       interval = setInterval(() => {
         setTimeLeft((prevTime) => {
-          if (prevTime <= 0) {
+          if (prevTime <= 1) {
             clearInterval(interval);
             setIsTimeUp(true);
             setIsRunning(false);
