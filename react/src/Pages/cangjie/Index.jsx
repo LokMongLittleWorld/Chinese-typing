@@ -87,12 +87,13 @@ export default function Index() {
             currentWordStatus={currentWordStatus}
             randomWords={randomWords}
           />
-          <section className="flex flex-col items-center absolute bottom-[10vh] left-1/2 -translate-x-1/2 gap-6">
+          <section className="flex flex-col items-center absolute bottom-[12vh] left-1/2 -translate-x-1/2 gap-6">
             <InputDisplay
               answer={answerMap.get(randomWords[currentWordIndex]) || ""}
               input={inputDisplay}
               currentWordIndex={currentWordIndex}
               currentWordStatus={currentWordStatus}
+              isRunning={isRunning}
               Radicals={Radicals}
             />
             <InvisibleInput handleKeyDown={handleKeyDown} inputRef={inputRef} />

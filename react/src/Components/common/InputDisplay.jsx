@@ -5,6 +5,7 @@ export default function InputDisplay({
   input,
   currentWordIndex,
   currentWordStatus,
+  isRunning,
   Radicals,
 }) {
   const getKeyByValue = (value) => {
@@ -20,7 +21,7 @@ export default function InputDisplay({
   };
   return (
     <>
-      {answer.length > 1 && (
+      {isRunning && answer.length > 1 && (
         <div className="flex flex-row items-end gap-4">
           {[...answer].map((char, index) => {
             const isLastWrong =
