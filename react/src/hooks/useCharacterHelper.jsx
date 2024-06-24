@@ -126,10 +126,7 @@ function useCharacterHelper(words, _keysRecord, _keysRecordName) {
     // game reset based on new wordJSON
 
     // handle record reset for the new category
-    if (
-      currentCategoryIndex !==
-      parseInt(localStorage.getItem("currentCategoryIndex"))
-    ) {
+    if (currentCategoryIndex !== localStorage.getItem("currentCategoryIndex")) {
       setRecord({ speed: 0, accuracy: 0 });
     }
 
