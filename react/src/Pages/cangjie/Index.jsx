@@ -37,6 +37,7 @@ export default function Index() {
     currentCategoryIndex,
     setCurrentCategoryIndex,
     record,
+    setRecord,
     currentWordIndex,
     currentWordStatus,
     amounts,
@@ -60,6 +61,7 @@ export default function Index() {
     // TODO: dynamic import
     setCurrentCategoryIndex(index);
     localStorage.setItem("currentCategoryIndex", index);
+    setRecord({ speed: 0, accuracy: 0 });
     reset(wordJSON[index], keysRecords[index], keysRecordNames[index]);
   };
   return (

@@ -125,11 +125,6 @@ function useCharacterHelper(words, _keysRecord, _keysRecordName) {
   const reset = (newWordJSON, newKeyRecord, newKeyRecordName) => {
     // game reset based on new wordJSON
 
-    // handle record reset for the new category
-    if (currentCategoryIndex !== localStorage.getItem("currentCategoryIndex")) {
-      setRecord({ speed: 0, accuracy: 0 });
-    }
-
     // handle key record
     if (newKeyRecord) {
       setKeysRecord(newKeyRecord);
@@ -332,6 +327,7 @@ function useCharacterHelper(words, _keysRecord, _keysRecordName) {
 
     //record
     record,
+    setRecord,
     isRunning,
 
     //Cangjie, keysRecord related
