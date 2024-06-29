@@ -5,15 +5,18 @@ import AuthenticationModel from "../Components/authentication/AuthenticationMode
 const StateContext = createContext({
   user: null,
   token: null,
+  isHiddenFooter: false,
   setUser: () => {},
   setToken: () => {},
   setShowAuthenticationModel: () => {},
+  setIsHiddenFooter: () => {},
 });
 
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [token, _setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
   const [showAuthenticationModel, setShowAuthenticationModel] = useState(false);
+  const [isHiddenFooter, setIsHiddenFooter] = useState(false);
 
   const setToken = (token) => {
     _setToken(token);
@@ -25,7 +28,15 @@ export const ContextProvider = ({ children }) => {
   };
   return (
     <StateContext.Provider
-      value={{ user, token, setUser, setToken, setShowAuthenticationModel }}
+      value={{
+        user,
+        token,
+        isHiddenFooter,
+        setUser,
+        setToken,
+        setShowAuthenticationModel,
+        setIsHiddenFooter,
+      }}
     >
       <Toaster
         toastOptions={{
