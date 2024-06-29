@@ -2,6 +2,7 @@ import {
   faCircleInfo,
   faCodeBranch,
   faEnvelope,
+  faLock,
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,12 +20,12 @@ export default function Footer() {
       }`}
     >
       <div className="w-full py-6 px-12 flex justify-between items-cneter">
-        <div className="flex gap-6">
+        <div className="flex gap-4">
           {leftFooter.map((item, index) => (
             <IconWithText key={index} icon={item.icon} text={item.text} />
           ))}
         </div>
-        <div className="flex gap-6">
+        <div className="flex gap-4">
           {RightFooter.map((item, index) => (
             <IconWithText key={index} icon={item.icon} text={item.text} />
           ))}
@@ -38,6 +39,10 @@ const leftFooter = [
   {
     icon: <FontAwesomeIcon icon={faCircleInfo} />,
     text: "About",
+  },
+  {
+    icon: <FontAwesomeIcon icon={faLock} />,
+    text: "Privacy",
   },
   {
     icon: <FontAwesomeIcon icon={faEnvelope} />,
