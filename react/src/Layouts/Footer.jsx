@@ -19,7 +19,7 @@ export default function Footer() {
         isHiddenFooter ? "hidden" : ""
       }`}
     >
-      <div className="w-full py-6 px-12 flex justify-between items-cneter">
+      <div className="group w-full py-6 px-12 flex justify-between items-cneter">
         <div className="flex gap-4">
           {leftFooter.map((item, index) => (
             <IconWithText key={index} icon={item.icon} text={item.text} />
@@ -38,29 +38,29 @@ export default function Footer() {
 const leftFooter = [
   {
     icon: <FontAwesomeIcon icon={faCircleInfo} />,
-    text: "About",
+    text: "關於",
   },
   {
     icon: <FontAwesomeIcon icon={faLock} />,
-    text: "Privacy",
+    text: "私隱",
   },
   {
     icon: <FontAwesomeIcon icon={faEnvelope} />,
-    text: "Contact us",
+    text: "聯絡我們",
   },
   {
     icon: <FontAwesomeIcon icon={faGithub} />,
-    text: "Source Code",
+    text: "源代碼",
   },
 ];
 
 const RightFooter = [
   {
     icon: <FontAwesomeIcon icon={faTriangleExclamation} />,
-    text: "Issue Report",
+    text: "問題報告",
   },
   {
     icon: <FontAwesomeIcon icon={faCodeBranch} />,
-    text: "alpha v0.1.0",
+    text: "alpha版本 v0.1.0",
   },
 ];
